@@ -77,19 +77,33 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "AproVest — Sua aprovação no vestibular com IA" },
+      {
+        name: "description",
+        content:
+          "Plataforma de estudos para o vestibular com IA adaptativa, correção de redação e simulados preditivos.",
+      },
+      { name: "author", content: "AproVest" },
+      { property: "og:title", content: "AproVest — Sua aprovação no vestibular com IA" },
+      {
+        property: "og:description",
+        content:
+          "Estude o que importa: IA adaptativa, correção híbrida de redação e simulados preditivos.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:site", content: "@AproVest" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
+      },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap",
       },
     ],
   }),
