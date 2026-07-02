@@ -14,7 +14,153 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      diagnostic_answers: {
+        Row: {
+          answered_at: string
+          attempt_id: string
+          id: string
+          is_correct: boolean
+          question_id: string
+          selected_key: string
+          user_id: string
+        }
+        Insert: {
+          answered_at?: string
+          attempt_id: string
+          id?: string
+          is_correct: boolean
+          question_id: string
+          selected_key: string
+          user_id: string
+        }
+        Update: {
+          answered_at?: string
+          attempt_id?: string
+          id?: string
+          is_correct?: boolean
+          question_id?: string
+          selected_key?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "diagnostic_answers_attempt_id_fkey"
+            columns: ["attempt_id"]
+            isOneToOne: false
+            referencedRelation: "diagnostic_attempts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "diagnostic_answers_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "diagnostic_questions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      diagnostic_attempts: {
+        Row: {
+          completed_at: string | null
+          id: string
+          score: number | null
+          score_by_area: Json | null
+          started_at: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          id?: string
+          score?: number | null
+          score_by_area?: Json | null
+          started_at?: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          id?: string
+          score?: number | null
+          score_by_area?: Json | null
+          started_at?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      diagnostic_questions: {
+        Row: {
+          area: string
+          choices: Json
+          correct_key: string
+          created_at: string
+          difficulty: number
+          id: string
+          position: number
+          statement: string
+          subject: string
+        }
+        Insert: {
+          area: string
+          choices: Json
+          correct_key: string
+          created_at?: string
+          difficulty?: number
+          id?: string
+          position?: number
+          statement: string
+          subject: string
+        }
+        Update: {
+          area?: string
+          choices?: Json
+          correct_key?: string
+          created_at?: string
+          difficulty?: number
+          id?: string
+          position?: number
+          statement?: string
+          subject?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          onboarding_completed: boolean
+          school: string | null
+          target_course: string | null
+          target_year: number | null
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id: string
+          onboarding_completed?: boolean
+          school?: string | null
+          target_course?: string | null
+          target_year?: number | null
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          onboarding_completed?: boolean
+          school?: string | null
+          target_course?: string | null
+          target_year?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
