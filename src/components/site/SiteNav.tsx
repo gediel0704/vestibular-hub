@@ -1,6 +1,8 @@
 import { Link } from "@tanstack/react-router";
+import { useAuth } from "@/hooks/useAuth";
 
 export function SiteNav() {
+  const { user } = useAuth();
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
@@ -35,13 +37,13 @@ export function SiteNav() {
           </Link>
         </nav>
 
-        <a
-          href="#cta"
+        <Link
+          to={user ? "/dashboard" : "/auth"}
           className="hidden rounded-full px-5 py-2 text-sm font-semibold text-brand-foreground transition-transform hover:-translate-y-0.5 md:inline-flex"
           style={{ backgroundColor: "var(--brand)" }}
         >
-          Começar grátis
-        </a>
+          {user ? "Meu painel" : "Entrar / Criar conta"}
+        </Link>
       </div>
     </header>
   );
