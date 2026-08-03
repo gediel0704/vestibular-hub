@@ -1,0 +1,122 @@
+{
+  "version": 1,
+  "sdk_version": "0.26.1",
+  "path": "/mcp",
+  "auth": {
+    "type": "oauth",
+    "issuer": "https://itbxygyfvghiktvdlosl.supabase.co/auth/v1",
+    "accepted_audiences": [
+      "authenticated"
+    ]
+  },
+  "mcp": {
+    "server": {
+      "name": "aprovest",
+      "version": "0.1.0",
+      "title": "AproVest"
+    },
+    "tools": [
+      {
+        "name": "get_my_profile",
+        "title": "Ver meu perfil",
+        "description": "Retorna o perfil do estudante autenticado no AproVest: nome, curso-alvo, ano do vestibular, escola e se o onboarding foi concluído.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "update_my_profile",
+        "title": "Atualizar meu perfil",
+        "description": "Atualiza os dados de estudo do estudante autenticado (nome, curso-alvo, ano do vestibular, escola). Apenas os campos informados são alterados.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "full_name": {
+              "description": "Nome completo do estudante.",
+              "type": "string"
+            },
+            "target_course": {
+              "description": "Curso-alvo, ex: Medicina.",
+              "type": "string"
+            },
+            "target_year": {
+              "description": "Ano do vestibular, ex: 2027.",
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            },
+            "school": {
+              "description": "Escola atual.",
+              "type": "string"
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_diagnostic_results",
+        "title": "Resultados do diagnóstico",
+        "description": "Retorna os diagnósticos concluídos do estudante autenticado, com pontuação geral e pontuação por área (Matemática, Linguagens, Humanas, Natureza), do mais recente ao mais antigo.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "limit": {
+              "description": "Quantidade máxima de tentativas (padrão 5).",
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_diagnostic_questions",
+        "title": "Listar questões do diagnóstico",
+        "description": "Lista as questões do banco de diagnóstico do AproVest (enunciado, área, matéria, alternativas). Útil para estudar ou revisar conteúdos por área.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "area": {
+              "description": "Filtra por área, ex: Matemática, Linguagens, Humanas, Natureza.",
+              "type": "string"
+            },
+            "limit": {
+              "description": "Quantidade máxima de questões (padrão 10).",
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            }
+          }
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}

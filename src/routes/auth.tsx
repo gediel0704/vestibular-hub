@@ -10,6 +10,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/auth")({
+  validateSearch: (s: Record<string, unknown>): { next?: string } => {
+    const raw = s.next;
+    return typeof raw === "string" && raw.startsWith("/") && !raw.startsWith("//")
+      ? { next: raw }
+      : {};
+  },
   head: () => ({
     meta: [
       { title: "Entrar — AproVest" },
@@ -21,6 +27,7 @@ export const Route = createFileRoute("/auth")({
 
 function AuthPage() {
   const navigate = useNavigate();
+  const { next } = Route.useSearch();
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,13 +35,19 @@ function AuthPage() {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate({ to: "/dashboard" });
+      if (data.session) {
+        if (next) window.location.replace(next);
+        else navigate({ to: "/dashboard" });
+      }
     });
     const { data: sub } = supabase.auth.onAuthStateChange((event, s) => {
-      if (event === "SIGNED_IN" && s) navigate({ to: "/dashboard" });
+      if (event === "SIGNED_IN" && s) {
+        if (next) window.location.replace(next);
+        else navigate({ to: "/dashboard" });
+      }
     });
     return () => sub.subscription.unsubscribe();
-  }, [navigate]);
+  }, [navigate, next]);
 
   async function handleSignIn(e: React.FormEvent) {
     e.preventDefault();
@@ -52,7 +65,7 @@ function AuthPage() {
       email,
       password,
       options: {
-        emailRedirectTo: `${window.location.origin}/dashboard`,
+        emailRedirectTo: `${window.location.origin}${next ?? "/dashboard"}`,
         data: { full_name: fullName },
       },
     });
@@ -64,7 +77,8 @@ function AuthPage() {
   async function oauth(provider: "google" | "apple") {
     setLoading(true);
     const result = await lovable.auth.signInWithOAuth(provider, {
-      redirect_uri: window.location.origin + "/auth",
+      redirect_uri:
+        window.location.origin + "/auth" + (next ? `?next=${encodeURIComponent(next)}` : ""),
     });
     if (result.error) {
       setLoading(false);
