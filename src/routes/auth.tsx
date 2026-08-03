@@ -10,9 +10,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/auth")({
-  validateSearch: (s: Record<string, unknown>) => ({
-    next: typeof s.next === "string" && s.next.startsWith("/") && !s.next.startsWith("//") ? s.next : undefined,
-  }),
+  validateSearch: (s: Record<string, unknown>): { next?: string } => {
+    const raw = s.next;
+    return typeof raw === "string" && raw.startsWith("/") && !raw.startsWith("//")
+      ? { next: raw }
+      : {};
+  },
   head: () => ({
     meta: [
       { title: "Entrar — AproVest" },
