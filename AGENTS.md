@@ -1,0 +1,4 @@
+# Project Architecture Rules
+
+- Keep the academic React/Vite/JavaScript delivery isolated under `deliverables/aprovest-react-js`; the main TanStack product must not import from it.
+- The academic app must render a visible configuration or runtime error screen instead of failing to a blank page, so local setup problems remain diagnosable.
