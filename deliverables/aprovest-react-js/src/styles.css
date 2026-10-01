@@ -19,6 +19,27 @@ body {
   background: var(--white);
   line-height: 1.55;
 }
+.startup-error {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: var(--surface);
+}
+.startup-error .panel {
+  width: min(100%, 620px);
+}
+.startup-error h1 {
+  margin-bottom: 8px;
+}
+.startup-error p,
+.startup-error li {
+  color: var(--muted);
+}
+.startup-error ol {
+  padding-left: 22px;
+  margin: 20px 0 0;
+}
 h1,
 h2,
 h3,

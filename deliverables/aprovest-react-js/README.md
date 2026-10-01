@@ -10,7 +10,11 @@ Projeto acadêmico desenvolvido com React 19, JavaScript, Vite, React Router, Bo
 4. Execute `npm run dev`.
 5. Abra o endereço exibido no terminal.
 
-O arquivo `.env` incluído conecta esta entrega à mesma base de dados do AproVest. O `.env.example` mostra o padrão de configuração.
+O arquivo `.env` incluído conecta esta entrega acadêmica à base de dados do AproVest. Não apague, não renomeie e não deixe as duas linhas vazias. O Vite somente lê esse arquivo ao iniciar; portanto, reinicie `npm run dev` depois de qualquer alteração.
+
+O `.env.example` serve apenas como modelo. Ele não substitui o `.env`.
+
+Se a configuração estiver ausente, o projeto agora mostra instruções na própria página em vez de permanecer com a tela vazia.
 
 ## Funcionalidades
 
