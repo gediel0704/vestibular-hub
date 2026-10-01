@@ -236,12 +236,26 @@ export default function Essays() {
 
               <label>
                 Título
-                <input maxLength="120" minLength="3" name="title" onChange={updateField} required value={form.title} />
+                <input
+                  maxLength="120"
+                  minLength="3"
+                  name="title"
+                  onChange={updateField}
+                  required
+                  value={form.title}
+                />
               </label>
 
               <label>
                 Tema
-                <input maxLength="180" minLength="3" name="theme" onChange={updateField} required value={form.theme} />
+                <input
+                  maxLength="180"
+                  minLength="3"
+                  name="theme"
+                  onChange={updateField}
+                  required
+                  value={form.theme}
+                />
               </label>
 
               <label>
@@ -254,7 +268,14 @@ export default function Essays() {
 
               <label>
                 Texto da redação
-                <textarea maxLength="12000" minLength="20" name="content" onChange={updateField} required value={form.content} />
+                <textarea
+                  maxLength="12000"
+                  minLength="20"
+                  name="content"
+                  onChange={updateField}
+                  required
+                  value={form.content}
+                />
               </label>
 
               <div className="editor-meta">
@@ -276,10 +297,20 @@ export default function Essays() {
               <div className="essay-toolbar">
                 <label>
                   <span className="visually-hidden">Buscar redação</span>
-                  <input maxLength="120" onChange={(event) => setSearch(event.target.value)} placeholder="Buscar por título ou tema" type="search" value={search} />
+                  <input
+                    maxLength="120"
+                    onChange={(event) => setSearch(event.target.value)}
+                    placeholder="Buscar por título ou tema"
+                    type="search"
+                    value={search}
+                  />
                 </label>
 
-                <select aria-label="Filtrar por situação" onChange={(event) => setStatusFilter(event.target.value)} value={statusFilter}>
+                <select
+                  aria-label="Filtrar por situação"
+                  onChange={(event) => setStatusFilter(event.target.value)}
+                  value={statusFilter}
+                >
                   <option value="all">Todas as situações</option>
                   <option value="draft">Rascunhos</option>
                   <option value="submitted">Enviadas</option>
@@ -300,17 +331,29 @@ export default function Essays() {
                         <h2>{essay.title}</h2>
                         <p className="essay-theme">{essay.theme}</p>
                         <p className="essay-excerpt">
-                          {essay.content.length > 180 ? `${essay.content.slice(0, 180)}…` : essay.content}
+                          {essay.content.length > 180
+                            ? `${essay.content.slice(0, 180)}…`
+                            : essay.content}
                         </p>
                         <div className="essay-meta">
                           <span>{essay.word_count} palavras</span>
-                          <span>Atualizada em {new Date(essay.updated_at).toLocaleDateString("pt-BR")}</span>
+                          <span>
+                            Atualizada em {new Date(essay.updated_at).toLocaleDateString("pt-BR")}
+                          </span>
                         </div>
                         <div className="essay-actions">
-                          <button className="btn secondary" type="button" onClick={() => startEditing(essay)}>
+                          <button
+                            className="btn secondary"
+                            type="button"
+                            onClick={() => startEditing(essay)}
+                          >
                             Visualizar e editar
                           </button>
-                          <button className="btn danger" type="button" onClick={() => deleteEssay(essay)}>
+                          <button
+                            className="btn danger"
+                            type="button"
+                            onClick={() => deleteEssay(essay)}
+                          >
                             Excluir
                           </button>
                         </div>
@@ -318,8 +361,16 @@ export default function Essays() {
                     ))
                   ) : (
                     <section className="panel empty-state">
-                      {search || statusFilter !== "all" ? <Search size={34} /> : <FilePenLine size={34} />}
-                      <h2>{search || statusFilter !== "all" ? "Nenhuma redação encontrada" : "Seu caderno está vazio"}</h2>
+                      {search || statusFilter !== "all" ? (
+                        <Search size={34} />
+                      ) : (
+                        <FilePenLine size={34} />
+                      )}
+                      <h2>
+                        {search || statusFilter !== "all"
+                          ? "Nenhuma redação encontrada"
+                          : "Seu caderno está vazio"}
+                      </h2>
                       <p>
                         {search || statusFilter !== "all"
                           ? "Altere a busca ou o filtro para ver outros resultados."
