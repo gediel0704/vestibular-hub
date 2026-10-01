@@ -12,4 +12,4 @@
 - [x] Validar funcionamento e empacotar nova versão do ZIP
 - [x] Corrigir a inicialização local sem configuração e revisar o pacote acadêmico completo
 - [x] Validar a versão configurada e a mensagem para configuração ausente
-- [ ] Gerar um novo ZIP acadêmico com o arquivo `.env` incluído
+- [x] Gerar um novo ZIP acadêmico com o arquivo `.env` incluído
