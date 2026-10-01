@@ -125,6 +125,42 @@ export type Database = {
         }
         Relationships: []
       }
+      essays: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          status: string
+          theme: string
+          title: string
+          updated_at: string
+          user_id: string
+          word_count: number
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          status?: string
+          theme: string
+          title: string
+          updated_at?: string
+          user_id: string
+          word_count?: number
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          status?: string
+          theme?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+          word_count?: number
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
