@@ -34,7 +34,13 @@ export default function Onboarding() {
     if (clean.full_name.length < 2 || clean.target_course.length < 2)
       return toast.error("Preencha nome e curso.");
     const { error } = await supabase.from("profiles").upsert(clean);
-    error ? toast.error("Não foi possível salvar.") : nav("/diagnostico");
+
+    if (error) {
+      toast.error("Não foi possível salvar.");
+      return;
+    }
+
+    nav("/diagnostico");
   }
   return (
     <>

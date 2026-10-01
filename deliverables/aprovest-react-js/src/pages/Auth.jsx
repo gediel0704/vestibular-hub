@@ -44,7 +44,13 @@ export default function Auth() {
     });
     setBusy(false);
     if (error) return toast.error(error.message);
-    data.session ? nav("/onboarding") : toast.success("Confirme seu email para entrar.");
+
+    if (data.session) {
+      nav("/onboarding");
+      return;
+    }
+
+    toast.success("Confirme seu email para entrar.");
   }
   async function oauth(provider) {
     setBusy(true);

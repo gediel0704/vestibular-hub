@@ -75,7 +75,13 @@ export default function Diagnostic() {
         score_by_area,
       })
       .eq("id", attempt);
-    e ? toast.error("Não foi possível concluir.") : nav("/dashboard");
+
+    if (e) {
+      toast.error("Não foi possível concluir.");
+      return;
+    }
+
+    nav("/dashboard");
   }
   if (loading) return <main className="center">Carregando questões…</main>;
   const q = questions[index];
