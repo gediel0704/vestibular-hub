@@ -7,6 +7,6 @@
 - [x] Elaborar plano operacional, administrativo e financeiro de 3 anos
 - [x] Gerar e revisar DOCX e PDF
 ## Trabalho atual
-- [ ] Reformatar o código acadêmico para estruturas legíveis em múltiplas linhas
-- [ ] Implementar CRUD de redações na versão acadêmica
-- [ ] Validar funcionamento e empacotar nova versão do ZIP
+- [x] Reformatar o código acadêmico para estruturas legíveis em múltiplas linhas
+- [x] Implementar CRUD de redações na versão acadêmica
+- [x] Validar funcionamento e empacotar nova versão do ZIP
