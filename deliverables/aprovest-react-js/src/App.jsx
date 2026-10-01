@@ -7,6 +7,7 @@ import Onboarding from "./pages/Onboarding";
 import Diagnostic from "./pages/Diagnostic";
 import Dashboard from "./pages/Dashboard";
 import Password from "./pages/Password";
+import Essays from "./pages/Essays";
 export default function App() {
   const p = (x) => <Protected>{x}</Protected>;
   return (
@@ -19,6 +20,7 @@ export default function App() {
       <Route path="/onboarding" element={p(<Onboarding />)} />
       <Route path="/diagnostico" element={p(<Diagnostic />)} />
       <Route path="/dashboard" element={p(<Dashboard />)} />
+      <Route path="/redacoes" element={p(<Essays />)} />
       <Route
         path="*"
         element={

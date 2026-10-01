@@ -33,9 +33,22 @@ export default function Dashboard() {
   }, [nav]);
   if (loading) return <main className="center">Montando seu painel…</main>;
   const modules = [
-    [BrainCircuit, "Banca adaptativa"],
-    [FilePenLine, "Redação híbrida"],
-    [ChartNoAxesCombined, "Simulado preditivo"],
+    {
+      Icon: BrainCircuit,
+      title: "Banca adaptativa",
+      description: "Próxima etapa do projeto AproVest.",
+    },
+    {
+      Icon: FilePenLine,
+      title: "Caderno de redações",
+      description: "Crie, consulte, edite e organize suas redações.",
+      path: "/redacoes",
+    },
+    {
+      Icon: ChartNoAxesCombined,
+      title: "Simulado preditivo",
+      description: "Próxima etapa do projeto AproVest.",
+    },
   ];
   return (
     <>
@@ -80,15 +93,27 @@ export default function Dashboard() {
             </section>
           )}
           <div className="modules">
-            {modules.map(([Icon, title]) => (
-              <article className="panel" key={title}>
-                <Icon />
-                <div>
-                  <h3>{title}</h3>
-                  <p>Próxima etapa do projeto AproVest.</p>
-                </div>
-              </article>
-            ))}
+            {modules.map(({ Icon, title, description, path }) => {
+              const content = (
+                <>
+                  <Icon />
+                  <div>
+                    <h3>{title}</h3>
+                    <p>{description}</p>
+                  </div>
+                </>
+              );
+
+              return path ? (
+                <Link className="panel module-link" key={title} to={path}>
+                  {content}
+                </Link>
+              ) : (
+                <article className="panel" key={title}>
+                  {content}
+                </article>
+              );
+            })}
           </div>
         </div>
       </main>
