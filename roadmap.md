@@ -10,3 +10,6 @@
 - [x] Reformatar o código acadêmico para estruturas legíveis em múltiplas linhas
 - [x] Implementar CRUD de redações na versão acadêmica
 - [x] Validar funcionamento e empacotar nova versão do ZIP
+- [x] Corrigir a inicialização local sem configuração e revisar o pacote acadêmico completo
+- [x] Validar a versão configurada e a mensagem para configuração ausente
+- [x] Gerar um novo ZIP acadêmico com o arquivo `.env` incluído
