@@ -19,4 +19,19 @@ O arquivo `.env` incluído conecta esta entrega à mesma base de dados do AproVe
 - Perfil inicial do vestibulando;
 - Diagnóstico com 20 questões reais;
 - Resultado geral e por área salvo na conta;
+- CRUD completo de redações: criar, consultar, editar e excluir;
+- Busca, filtro por situação e contagem automática de palavras;
 - Rotas privadas e logout.
+
+## Estrutura principal
+
+- `index.html`: documento HTML carregado pelo navegador;
+- `src/main.jsx`: inicia o React e os provedores globais;
+- `src/App.jsx`: define as páginas e os endereços da aplicação;
+- `src/pages`: contém cada página em JavaScript com JSX;
+- `src/components`: contém estruturas visuais reutilizáveis;
+- `src/contexts`: controla informações compartilhadas, como o login;
+- `src/lib`: concentra a conexão com o banco de dados;
+- `src/styles.css`: reúne as regras visuais do projeto.
+
+O código-fonte foi formatado com estruturas distribuídas em múltiplas linhas para facilitar leitura, revisão e manutenção.

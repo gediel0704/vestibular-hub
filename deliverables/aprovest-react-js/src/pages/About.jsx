@@ -1,2 +1,69 @@
-import {BarChart3,Clock3,GraduationCap,ShieldCheck} from 'lucide-react';import {Link} from 'react-router-dom';import {PublicLayout} from '../components/Layout'
-export default function About(){const values=[[BarChart3,'Dados acima do palpite'],[Clock3,'Respeito ao tempo'],[GraduationCap,'Aprender com o erro'],[ShieldCheck,'Privacidade e segurança']];return <PublicLayout><main><section className="intro"><div className="container narrow"><span className="kicker">SOBRE O PROJETO</span><h1>Preparação de alto desempenho não pode ser um privilégio.</h1><p>O AproVest transforma dados de aprendizagem em escolhas de estudo mais claras, acessíveis e eficazes.</p></div></section><section className="section"><div className="container split"><div><span className="kicker">NOSSA MISSÃO</span><h2>Dar direção a quem tem uma grande meta.</h2></div><div><p>O vestibulando enfrenta excesso de conteúdo, pouco tempo e dificuldade para entender suas prioridades.</p><p>O AproVest reúne diagnóstico, personalização e acompanhamento para mostrar onde o aluno está e qual é seu próximo passo.</p></div></div></section><section className="section muted"><div className="container"><span className="kicker">PRINCÍPIOS</span><h2>O que orienta cada decisão.</h2><div className="values">{values.map(([Icon,title])=><article key={title}><Icon/><h3>{title}</h3><p>Uma experiência clara, responsável e centrada na evolução real do estudante.</p></article>)}</div></div></section><section className="section center-block"><h2>Seu plano começa com um diagnóstico.</h2><p>Crie sua conta e descubra quais áreas merecem sua atenção agora.</p><Link className="btn primary" to="/auth">Criar conta gratuita</Link></section></main></PublicLayout>}
+import { BarChart3, Clock3, GraduationCap, ShieldCheck } from "lucide-react";
+import { Link } from "react-router-dom";
+import { PublicLayout } from "../components/Layout";
+export default function About() {
+  const values = [
+    [BarChart3, "Dados acima do palpite"],
+    [Clock3, "Respeito ao tempo"],
+    [GraduationCap, "Aprender com o erro"],
+    [ShieldCheck, "Privacidade e segurança"],
+  ];
+  return (
+    <PublicLayout>
+      <main>
+        <section className="intro">
+          <div className="container narrow">
+            <span className="kicker">SOBRE O PROJETO</span>
+            <h1>Preparação de alto desempenho não pode ser um privilégio.</h1>
+            <p>
+              O AproVest transforma dados de aprendizagem em escolhas de estudo mais claras,
+              acessíveis e eficazes.
+            </p>
+          </div>
+        </section>
+        <section className="section">
+          <div className="container split">
+            <div>
+              <span className="kicker">NOSSA MISSÃO</span>
+              <h2>Dar direção a quem tem uma grande meta.</h2>
+            </div>
+            <div>
+              <p>
+                O vestibulando enfrenta excesso de conteúdo, pouco tempo e dificuldade para entender
+                suas prioridades.
+              </p>
+              <p>
+                O AproVest reúne diagnóstico, personalização e acompanhamento para mostrar onde o
+                aluno está e qual é seu próximo passo.
+              </p>
+            </div>
+          </div>
+        </section>
+        <section className="section muted">
+          <div className="container">
+            <span className="kicker">PRINCÍPIOS</span>
+            <h2>O que orienta cada decisão.</h2>
+            <div className="values">
+              {values.map(([Icon, title]) => (
+                <article key={title}>
+                  <Icon />
+                  <h3>{title}</h3>
+                  <p>
+                    Uma experiência clara, responsável e centrada na evolução real do estudante.
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+        <section className="section center-block">
+          <h2>Seu plano começa com um diagnóstico.</h2>
+          <p>Crie sua conta e descubra quais áreas merecem sua atenção agora.</p>
+          <Link className="btn primary" to="/auth">
+            Criar conta gratuita
+          </Link>
+        </section>
+      </main>
+    </PublicLayout>
+  );
+}

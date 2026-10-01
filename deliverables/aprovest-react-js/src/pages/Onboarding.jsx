@@ -1,2 +1,85 @@
-import {useEffect,useState} from 'react';import {useNavigate} from 'react-router-dom';import {toast} from 'sonner';import {AppHeader} from '../components/Layout';import {supabase} from '../lib/supabase'
-export default function Onboarding(){const year=new Date().getFullYear()+1,[form,setForm]=useState({full_name:'',target_course:'',target_year:year,school:''}),nav=useNavigate();useEffect(()=>{(async()=>{const{data:a}=await supabase.auth.getUser();if(!a.user)return;const{data}=await supabase.from('profiles').select('*').eq('id',a.user.id).maybeSingle();if(data?.onboarding_completed)return nav('/dashboard');if(data)setForm({...form,...data})})()},[]);async function submit(e){e.preventDefault();const{data:a}=await supabase.auth.getUser(),clean={id:a.user.id,full_name:form.full_name.trim().slice(0,100),target_course:form.target_course.trim().slice(0,100),target_year:Number(form.target_year),school:form.school.trim().slice(0,120),onboarding_completed:true};if(clean.full_name.length<2||clean.target_course.length<2)return toast.error('Preencha nome e curso.');const{error}=await supabase.from('profiles').upsert(clean);error?toast.error('Não foi possível salvar.'):nav('/diagnostico')}return <><AppHeader/><main className="student"><div className="form-page"><span className="kicker">PERSONALIZAÇÃO</span><h1>Conte um pouco sobre você</h1><p>Isso ajuda a organizar sua preparação.</p><form className="panel" onSubmit={submit}>{[['full_name','Nome completo'],['target_course','Curso-alvo'],['school','Escola atual (opcional)']].map(([key,label])=><label key={key}>{label}<input required={key!=='school'} maxLength="120" value={form[key]??''} onChange={e=>setForm({...form,[key]:e.target.value})}/></label>)}<label>Ano do vestibular<input type="number" min={new Date().getFullYear()} max="2035" value={form.target_year} onChange={e=>setForm({...form,target_year:e.target.value})}/></label><button className="btn primary full">Salvar e iniciar diagnóstico</button></form></div></main></>}
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { AppHeader } from "../components/Layout";
+import { supabase } from "../lib/supabase";
+export default function Onboarding() {
+  const year = new Date().getFullYear() + 1,
+    [form, setForm] = useState({ full_name: "", target_course: "", target_year: year, school: "" }),
+    nav = useNavigate();
+  useEffect(() => {
+    (async () => {
+      const { data: a } = await supabase.auth.getUser();
+      if (!a.user) return;
+      const { data } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", a.user.id)
+        .maybeSingle();
+      if (data?.onboarding_completed) return nav("/dashboard");
+      if (data) setForm({ ...form, ...data });
+    })();
+  }, []);
+  async function submit(e) {
+    e.preventDefault();
+    const { data: a } = await supabase.auth.getUser(),
+      clean = {
+        id: a.user.id,
+        full_name: form.full_name.trim().slice(0, 100),
+        target_course: form.target_course.trim().slice(0, 100),
+        target_year: Number(form.target_year),
+        school: form.school.trim().slice(0, 120),
+        onboarding_completed: true,
+      };
+    if (clean.full_name.length < 2 || clean.target_course.length < 2)
+      return toast.error("Preencha nome e curso.");
+    const { error } = await supabase.from("profiles").upsert(clean);
+
+    if (error) {
+      toast.error("Não foi possível salvar.");
+      return;
+    }
+
+    nav("/diagnostico");
+  }
+  return (
+    <>
+      <AppHeader />
+      <main className="student">
+        <div className="form-page">
+          <span className="kicker">PERSONALIZAÇÃO</span>
+          <h1>Conte um pouco sobre você</h1>
+          <p>Isso ajuda a organizar sua preparação.</p>
+          <form className="panel" onSubmit={submit}>
+            {[
+              ["full_name", "Nome completo"],
+              ["target_course", "Curso-alvo"],
+              ["school", "Escola atual (opcional)"],
+            ].map(([key, label]) => (
+              <label key={key}>
+                {label}
+                <input
+                  required={key !== "school"}
+                  maxLength="120"
+                  value={form[key] ?? ""}
+                  onChange={(e) => setForm({ ...form, [key]: e.target.value })}
+                />
+              </label>
+            ))}
+            <label>
+              Ano do vestibular
+              <input
+                type="number"
+                min={new Date().getFullYear()}
+                max="2035"
+                value={form.target_year}
+                onChange={(e) => setForm({ ...form, target_year: e.target.value })}
+              />
+            </label>
+            <button className="btn primary full">Salvar e iniciar diagnóstico</button>
+          </form>
+        </div>
+      </main>
+    </>
+  );
+}

@@ -1,2 +1,41 @@
-import {useState} from 'react';import {Link} from 'react-router-dom';import {toast} from 'sonner';import {Brand} from '../components/Layout';import {supabase} from '../lib/supabase'
-export default function Password(){const[email,setEmail]=useState('');async function submit(e){e.preventDefault();const{error}=await supabase.auth.resetPasswordForEmail(email.trim(),{redirectTo:`${location.origin}/senha`});if(error)toast.error('Não foi possível enviar o link.');else toast.success('Verifique seu email.')}return <main className="auth"><div className="auth-wrap"><Brand/><section className="panel"><span className="kicker">RECUPERAR ACESSO</span><h1>Redefina sua senha</h1><form onSubmit={submit}><label>Email<input type="email" maxLength="255" required value={email} onChange={e=>setEmail(e.target.value)}/></label><button className="btn primary full">Enviar link</button></form></section><Link to="/auth">← Voltar para entrar</Link></div></main>}
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { toast } from "sonner";
+import { Brand } from "../components/Layout";
+import { supabase } from "../lib/supabase";
+export default function Password() {
+  const [email, setEmail] = useState("");
+  async function submit(e) {
+    e.preventDefault();
+    const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+      redirectTo: `${location.origin}/senha`,
+    });
+    if (error) toast.error("Não foi possível enviar o link.");
+    else toast.success("Verifique seu email.");
+  }
+  return (
+    <main className="auth">
+      <div className="auth-wrap">
+        <Brand />
+        <section className="panel">
+          <span className="kicker">RECUPERAR ACESSO</span>
+          <h1>Redefina sua senha</h1>
+          <form onSubmit={submit}>
+            <label>
+              Email
+              <input
+                type="email"
+                maxLength="255"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </label>
+            <button className="btn primary full">Enviar link</button>
+          </form>
+        </section>
+        <Link to="/auth">← Voltar para entrar</Link>
+      </div>
+    </main>
+  );
+}
