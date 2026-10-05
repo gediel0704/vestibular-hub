@@ -23,9 +23,9 @@ function ConfigurationError() {
         <h1>O AproVest ainda não está conectado</h1>
         <p>{configurationError}</p>
         <ol>
-          <li>Confirme que o arquivo se chama exatamente .env.</li>
-          <li>Confirme que as duas linhas VITE_SUPABASE estão preenchidas.</li>
+          <li>Confirme que o computador está conectado à internet.</li>
           <li>Pare o servidor e execute novamente npm run dev.</li>
+          <li>Consulte o terminal caso o problema continue.</li>
         </ol>
       </section>
     </main>
