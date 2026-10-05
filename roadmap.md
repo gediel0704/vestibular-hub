@@ -13,3 +13,6 @@
 - [x] Corrigir a inicialização local sem configuração e revisar o pacote acadêmico completo
 - [x] Validar a versão configurada e a mensagem para configuração ausente
 - [x] Gerar um novo ZIP acadêmico com o arquivo `.env` incluído
+- [x] Tornar a configuração pública da versão acadêmica independente do arquivo `.env`
+- [ ] Validar a versão acadêmica sem `.env` em páginas públicas e autenticadas
+- [ ] Gerar e inspecionar um novo ZIP portátil
