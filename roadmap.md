@@ -16,3 +16,5 @@
 - [x] Tornar a configuração pública da versão acadêmica independente do arquivo `.env`
 - [x] Validar a versão acadêmica sem `.env` em páginas públicas e autenticadas
 - [x] Gerar e inspecionar um novo ZIP portátil
+- [ ] Eliminar a dependência nativa do Rollup na entrega acadêmica e testar instalação limpa
+- [ ] Gerar e inspecionar o ZIP acadêmico atualizado para a correção do Windows
