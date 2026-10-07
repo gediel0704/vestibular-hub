@@ -4,7 +4,7 @@ Projeto acadêmico desenvolvido com React 19, JavaScript, Vite, React Router, Bo
 
 ## Executar
 
-1. Instale o Node.js 20 ou superior.
+1. Instale o Node.js 20.19+ ou 22.12+ (recomendado: versão LTS).
 2. Abra esta pasta no terminal.
 3. Execute `npm install`.
 4. Execute `npm run dev`.
@@ -39,3 +39,9 @@ O endereço local pertence ao computador onde o comando foi executado. Em outra 
 - `src/styles.css`: reúne as regras visuais do projeto.
 
 O código-fonte foi formatado com estruturas distribuídas em múltiplas linhas para facilitar leitura, revisão e manutenção.
+
+## Compatibilidade da instalação
+
+O Rollup usado pelo Vite está fixado na edição WebAssembly, que não depende do pacote nativo `@rollup/rollup-win32-x64-msvc`. Isso evita a falha de instalação desse pacote opcional no Windows, sem alterar as páginas ou os dados do projeto.
+
+Ao atualizar de um ZIP anterior, extraia esta versão em uma pasta nova e execute `npm install` e `npm run dev`. Não copie a pasta `node_modules` de outra versão ou de outro computador. A instalação ainda requer internet e o Node.js instalado; a conexão com os dados também requer internet.
