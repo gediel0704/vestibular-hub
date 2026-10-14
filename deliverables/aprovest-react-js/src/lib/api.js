@@ -1,8 +1,11 @@
 import { supabase } from "./supabase";
 
+const localApi = "http://localhost:8080/api/public/academic";
 const endpoint =
   import.meta.env.VITE_ACADEMIC_API_URL ||
-  "https://id-preview--e9888714-bf58-47ad-bf20-c65e58ff969c.lovable.app/api/public/academic";
+  (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+    ? localApi
+    : `${window.location.origin}/api/public/academic`);
 
 export async function api(action, data = {}, signal) {
   const { data: auth } = await supabase.auth.getSession();
@@ -22,6 +25,14 @@ export async function api(action, data = {}, signal) {
     if (signal?.aborted) throw error;
     throw new Error(
       "O serviço de estudo não está acessível. Confira a conexão e o endereço da API acadêmica.",
+    );
+  }
+  const contentType = response.headers.get("content-type") ?? "";
+  if (!contentType.includes("application/json")) {
+    throw new Error(
+      response.status === 401
+        ? "A API acadêmica ainda precisa ser publicada para funcionar fora do ambiente local."
+        : "A API acadêmica retornou uma resposta inválida.",
     );
   }
   const result = await response.json();
