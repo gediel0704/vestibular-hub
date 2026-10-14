@@ -27,7 +27,8 @@ export const officialResources = [
     title: "Cartilha da redação ENEM 2026",
     publisher: "INEP",
     edition: "ENEM 2026",
-    description: "Orientações oficiais para o texto dissertativo-argumentativo e suas competências.",
+    description:
+      "Orientações oficiais para o texto dissertativo-argumentativo e suas competências.",
     url: "https://www.gov.br/inep/pt-br/centrais-de-conteudo/acervo-linha-editorial/publicacoes-institucionais/avaliacoes-e-exames-da-educacao-basica/a-redacao-do-enem-2026-cartilha-do-a-participante",
   },
   {
@@ -47,7 +48,8 @@ export const officialResources = [
     title: "Microdados do ENEM",
     publisher: "INEP",
     edition: "Conjuntos históricos e documentação",
-    description: "Dados para pesquisa estatística; não são uma API de notas oficiais nem calibração pronta.",
+    description:
+      "Dados para pesquisa estatística; não são uma API de notas oficiais nem calibração pronta.",
     url: "https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/microdados/enem",
   },
   {
@@ -67,7 +69,8 @@ export const officialResources = [
     title: "Guia de provas FUVEST 2027",
     publisher: "FUVEST",
     edition: "Ingresso 2027",
-    description: "Estrutura das provas e orientações da banca. Consulte os critérios da edição, não os do ENEM.",
+    description:
+      "Estrutura das provas e orientações da banca. Consulte os critérios da edição, não os do ENEM.",
     url: "https://www.fuvest.br/wp-content/uploads/fuvest2027-guia-provas.pdf",
   },
   {
@@ -97,7 +100,8 @@ export const officialResources = [
     title: "Diretrizes de avaliação da redação Unicamp",
     publisher: "Comvest",
     edition: "Documento indicado no portal do ingresso 2027",
-    description: "Critérios próprios da banca, com atenção ao gênero, interlocução e tarefa proposta.",
+    description:
+      "Critérios próprios da banca, com atenção ao gênero, interlocução e tarefa proposta.",
     url: "https://www.comvest.unicamp.br/wp-content/uploads/2025/05/Diretrizes-de-Avaliacao-da-Redacao-site.pdf",
   },
   {
@@ -127,7 +131,8 @@ export const officialResources = [
     title: "Recursos educacionais digitais do MEC",
     publisher: "MEC",
     edition: "Repositório complementar",
-    description: "Apresenta o MECRED e seus recursos gratuitos. Verifique nível, autoria e licença de cada material.",
+    description:
+      "Apresenta o MECRED e seus recursos gratuitos. Verifique nível, autoria e licença de cada material.",
     url: "https://www.gov.br/mec/pt-br/escolas-conectadas/recursos-educacionais-digitais",
   },
 ];

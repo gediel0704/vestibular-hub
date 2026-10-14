@@ -32,9 +32,7 @@ export function studyPriorities(sessions = [], exam) {
 }
 
 export function recommendedMaterials(items = [], progress = [], priorities = [], exam) {
-  const completed = new Set(
-    progress.filter((row) => row.completed).map((row) => row.item_id),
-  );
+  const completed = new Set(progress.filter((row) => row.completed).map((row) => row.item_id));
   const position = new Map(priorities.map((row, index) => [row.subject, index]));
   return items
     .filter((item) => item.kind === "content" && item.exam === exam && !completed.has(item.id))

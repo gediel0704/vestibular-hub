@@ -58,10 +58,18 @@ export default function Library() {
       </div>
       <div className="resource-filters">
         <div className="resource-tabs" role="group" aria-label="Origem do material">
-          <Button variant={source === "authorial" ? "primary" : "secondary"} aria-pressed={source === "authorial"} onClick={() => setSource("authorial")}>
+          <Button
+            variant={source === "authorial" ? "primary" : "secondary"}
+            aria-pressed={source === "authorial"}
+            onClick={() => setSource("authorial")}
+          >
             Conteúdos AproVest
           </Button>
-          <Button variant={source === "official" ? "primary" : "secondary"} aria-pressed={source === "official"} onClick={() => setSource("official")}>
+          <Button
+            variant={source === "official" ? "primary" : "secondary"}
+            aria-pressed={source === "official"}
+            onClick={() => setSource("official")}
+          >
             Fontes oficiais
           </Button>
         </div>
@@ -80,52 +88,59 @@ export default function Library() {
         <OfficialResources exam={exam} kind={kind} search={search} />
       ) : (
         <>
-      <ErrorNotice error={error} retry={load} />
-      {selected ? (
-        <article className="reading-view">
-          <Button variant="secondary" onClick={() => setSelected(null)}>
-            ← Voltar
-          </Button>
-          <span className="kicker">
-            {selected.subject} · {selected.topic}
-          </span>
-          <h2>{selected.title}</h2>
-          <p className="reading-text">{selected.statement}</p>
-          <p className="muted">Material autoral de fundamentos, não reprodução de prova oficial.</p>
-          {selected.source_url && (
-            <a className="back-link" href={selected.source_url} target="_blank" rel="noreferrer">
-              Consultar a referência da banca ↗
-            </a>
-          )}
-          <Button onClick={() => mark(selected)}>
-            <Check size={17} />
-            {data.progress.some((row) => row.item_id === selected.id && row.completed)
-              ? "Marcar como não concluído"
-              : "Concluir leitura"}
-          </Button>
-        </article>
-      ) : (
-        <div className="essay-grid">
-          {items.map((item) => (
-            <article className="panel essay-card" key={item.id}>
-              <BookOpen />
-              <span className="kicker">
-                {item.subject} · {item.exam}
-              </span>
-              <h2>{item.title}</h2>
-              <p>{item.statement.slice(0, 150)}…</p>
-              <Button variant="secondary" onClick={() => setSelected(item)}>
-                Ler conteúdo
+          <ErrorNotice error={error} retry={load} />
+          {selected ? (
+            <article className="reading-view">
+              <Button variant="secondary" onClick={() => setSelected(null)}>
+                ← Voltar
               </Button>
-              {data.progress.some((row) => row.item_id === item.id && row.completed) && (
-                <span className="status status-corrected">Concluído</span>
+              <span className="kicker">
+                {selected.subject} · {selected.topic}
+              </span>
+              <h2>{selected.title}</h2>
+              <p className="reading-text">{selected.statement}</p>
+              <p className="muted">
+                Material autoral de fundamentos, não reprodução de prova oficial.
+              </p>
+              {selected.source_url && (
+                <a
+                  className="back-link"
+                  href={selected.source_url}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Consultar a referência da banca ↗
+                </a>
               )}
+              <Button onClick={() => mark(selected)}>
+                <Check size={17} />
+                {data.progress.some((row) => row.item_id === selected.id && row.completed)
+                  ? "Marcar como não concluído"
+                  : "Concluir leitura"}
+              </Button>
             </article>
-          ))}
-        </div>
-      )}
-      {!data && !error && <p>Carregando materiais…</p>}
-      {data && !items.length && <p>Nenhum material encontrado.</p>}
+          ) : (
+            <div className="essay-grid">
+              {items.map((item) => (
+                <article className="panel essay-card" key={item.id}>
+                  <BookOpen />
+                  <span className="kicker">
+                    {item.subject} · {item.exam}
+                  </span>
+                  <h2>{item.title}</h2>
+                  <p>{item.statement.slice(0, 150)}…</p>
+                  <Button variant="secondary" onClick={() => setSelected(item)}>
+                    Ler conteúdo
+                  </Button>
+                  {data.progress.some((row) => row.item_id === item.id && row.completed) && (
+                    <span className="status status-corrected">Concluído</span>
+                  )}
+                </article>
+              ))}
+            </div>
+          )}
+          {!data && !error && <p>Carregando materiais…</p>}
+          {data && !items.length && <p>Nenhum material encontrado.</p>}
         </>
       )}
     </StudyLayout>

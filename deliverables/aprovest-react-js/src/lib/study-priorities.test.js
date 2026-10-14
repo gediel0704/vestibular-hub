@@ -13,9 +13,27 @@ describe("Academic study recommendations", () => {
 
   it("uses each subject's latest completed assessment and ranks its performance gap", () => {
     const sessions = [
-      { id: "old", exam: "ENEM", status: "completed", completed_at: "2026-10-01", score_by_topic: { Matemática: 0, História: 0.4 } },
-      { id: "new", exam: "ENEM", status: "completed", completed_at: "2026-10-14", score_by_topic: { Matemática: 0.9 } },
-      { id: "pending", exam: "ENEM", status: "in_progress", completed_at: "2026-10-15", score_by_topic: { História: 1 } },
+      {
+        id: "old",
+        exam: "ENEM",
+        status: "completed",
+        completed_at: "2026-10-01",
+        score_by_topic: { Matemática: 0, História: 0.4 },
+      },
+      {
+        id: "new",
+        exam: "ENEM",
+        status: "completed",
+        completed_at: "2026-10-14",
+        score_by_topic: { Matemática: 0.9 },
+      },
+      {
+        id: "pending",
+        exam: "ENEM",
+        status: "in_progress",
+        completed_at: "2026-10-15",
+        score_by_topic: { História: 1 },
+      },
     ];
     const priorities = studyPriorities(sessions, "ENEM");
     expect(priorities.map((row) => row.subject)).toEqual(["História", "Matemática"]);
@@ -25,7 +43,9 @@ describe("Academic study recommendations", () => {
 
   it("does not turn missing or invalid results into a diagnosis", () => {
     expect(studyPriorities([], "ENEM")).toEqual([]);
-    const sessions = [{ exam: "ENEM", status: "completed", score_by_topic: { A: null, B: 80, C: -1, D: "0.4" } }];
+    const sessions = [
+      { exam: "ENEM", status: "completed", score_by_topic: { A: null, B: 80, C: -1, D: "0.4" } },
+    ];
     expect(studyPriorities(sessions, "ENEM")).toEqual([]);
   });
 
@@ -36,7 +56,14 @@ describe("Academic study recommendations", () => {
       { id: "history", exam: "ENEM", kind: "content", subject: "História", title: "C" },
       { id: "math", exam: "ENEM", kind: "content", subject: "Matemática", title: "D" },
     ];
-    expect(recommendedMaterials(items, [{ item_id: "done", completed: true }], [{ subject: "Matemática" }], "ENEM").map((item) => item.id)).toEqual(["math", "history"]);
+    expect(
+      recommendedMaterials(
+        items,
+        [{ item_id: "done", completed: true }],
+        [{ subject: "Matemática" }],
+        "ENEM",
+      ).map((item) => item.id),
+    ).toEqual(["math", "history"]);
   });
 
   it("provides official resources for all three target exams without mixing their rubrics", () => {
