@@ -8,9 +8,9 @@ export default function Password() {
   const [password, setPassword] = useState("");
   const [recovery, setRecovery] = useState(false);
   useEffect(() => {
-    if (location.hash.includes('type=recovery')) setRecovery(true);
+    if (location.hash.includes("type=recovery")) setRecovery(true);
     const { data } = supabase.auth.onAuthStateChange((event) => {
-      if (event === 'PASSWORD_RECOVERY') setRecovery(true);
+      if (event === "PASSWORD_RECOVERY") setRecovery(true);
     });
     return () => data.subscription.unsubscribe();
   }, []);
@@ -19,7 +19,7 @@ export default function Password() {
     if (recovery) {
       const { error } = await supabase.auth.updateUser({ password });
       if (error) toast.error(error.message);
-      else toast.success('Senha atualizada.');
+      else toast.success("Senha atualizada.");
       return;
     }
     const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
@@ -37,17 +37,21 @@ export default function Password() {
           <h1>Redefina sua senha</h1>
           <form onSubmit={submit}>
             <label>
-              {recovery ? 'Nova senha' : 'Email'}
+              {recovery ? "Nova senha" : "Email"}
               <input
-                type={recovery ? 'password' : 'email'}
+                type={recovery ? "password" : "email"}
                 maxLength="255"
                 required
                 minLength={recovery ? 6 : undefined}
                 value={recovery ? password : email}
-                onChange={(e) => recovery ? setPassword(e.target.value) : setEmail(e.target.value)}
+                onChange={(e) =>
+                  recovery ? setPassword(e.target.value) : setEmail(e.target.value)
+                }
               />
             </label>
-            <button className="btn primary full">{recovery ? 'Salvar nova senha' : 'Enviar link'}</button>
+            <button className="btn primary full">
+              {recovery ? "Salvar nova senha" : "Enviar link"}
+            </button>
           </form>
         </section>
         <Link to="/auth">← Voltar para entrar</Link>

@@ -53,9 +53,9 @@ export function AppHeader() {
   const nav = useNavigate();
   const [dark, setDark] = useState(false);
   useEffect(() => {
-    const value = localStorage.getItem('aprovest-theme') === 'dark';
+    const value = localStorage.getItem("aprovest-theme") === "dark";
     setDark(value);
-    document.documentElement.dataset.theme = value ? 'dark' : 'light';
+    document.documentElement.dataset.theme = value ? "dark" : "light";
   }, []);
   return (
     <header>
@@ -63,12 +63,19 @@ export function AppHeader() {
         <Brand />
         <nav>
           <Link to="/dashboard">Painel</Link>
-          <button className="icon" aria-label={dark ? 'Ativar tema claro' : 'Ativar tema escuro'} title={dark ? 'Ativar tema claro' : 'Ativar tema escuro'} onClick={() => {
-            const next = !dark;
-            setDark(next);
-            document.documentElement.dataset.theme = next ? 'dark' : 'light';
-            localStorage.setItem('aprovest-theme', next ? 'dark' : 'light');
-          }}>{dark ? <Sun size={19} /> : <Moon size={19} />}</button>
+          <button
+            className="icon"
+            aria-label={dark ? "Ativar tema claro" : "Ativar tema escuro"}
+            title={dark ? "Ativar tema claro" : "Ativar tema escuro"}
+            onClick={() => {
+              const next = !dark;
+              setDark(next);
+              document.documentElement.dataset.theme = next ? "dark" : "light";
+              localStorage.setItem("aprovest-theme", next ? "dark" : "light");
+            }}
+          >
+            {dark ? <Sun size={19} /> : <Moon size={19} />}
+          </button>
           <button
             className="icon"
             title="Sair"
