@@ -5,7 +5,7 @@ Versão acadêmica web em React 19, JavaScript, Vite, React Router, Bootstrap Gr
 ## Executar o site
 
 1. Instale Node.js 20.19+ ou 22.12+ (LTS recomendado).
-2. Extraia o ZIP em uma pasta nova e abra essa pasta no VS Code.
+2. Clone o repositório GitHub e abra `deliverables/aprovest-react-js` no VS Code, ou extraia o ZIP em uma pasta nova.
 3. Execute `npm install`.
 4. Execute `npm run dev`.
 5. Abra o endereço exibido no terminal.
@@ -66,3 +66,20 @@ O Rollup do Vite é substituído oficialmente pela edição WebAssembly, evitand
 - `src/styles.css`: identidade visual preservada e adaptação a telas menores.
 
 O código foi formatado em múltiplas linhas para facilitar a revisão.
+
+## Atualizar pelo VS Code sem baixar ZIP
+
+1. No editor Lovable, abra **+ → GitHub → Connect project**, autorize sua conta e crie o repositório. Essa etapa é feita pelo proprietário; o código não conecta a conta automaticamente.
+2. Instale Git no computador. No VS Code, abra a paleta de comandos e escolha **Git: Clone**; cole a URL do repositório criado e abra a pasta clonada.
+3. O repositório contém as duas versões. No terminal, execute `cd deliverables/aprovest-react-js`, `npm install` e `npm run dev` para trabalhar na versão acadêmica.
+4. Para receber alterações feitas no Lovable, use **Controle do Código-Fonte → … → Pull**. Para enviar alterações locais, revise os arquivos, faça um commit e use **Push**. Essas ações são executadas por você no VS Code; não são automáticas no computador.
+5. Se houver alterações locais pendentes, faça commit antes do Pull e resolva eventuais conflitos. Não edite o mesmo arquivo nos dois lugares simultaneamente. Nunca envie chaves privadas ou senhas ao GitHub.
+6. Se o arquivo de dependências mudar, execute `npm install` novamente. O GitHub elimina downloads repetidos, mas não hospeda a API nem fornece saldo de IA.
+
+## Fontes oficiais e preparação sem serviços novos pagos
+
+A biblioteca tem um seletor entre materiais AproVest e fontes oficiais gratuitas, com filtros por banca e tipo. O catálogo `src/lib/official-resources.js` referencia matriz e cartilha ENEM 2026, programa e guia FUVEST 2027, programa e diretrizes Unicamp 2027, acervos, microdados e recursos do MEC. Os portais foram consultados em 14/10/2026. Consulte `docs/FONTES-E-LIMITES.md` para cobertura e pendências.
+
+O plano considera exclusivamente avaliações concluídas da banca escolhida, usa o resultado mais recente de cada disciplina e ordena pela menor taxa de acertos. Recomenda até três leituras pendentes. Não usa chamadas de IA e não inventa diagnósticos quando não há resultados. O agrupamento disponível é por disciplina, ainda não por habilidade oficial individual.
+
+Não foram contratadas APIs nem assinaturas adicionais. Fontes gratuitas não tornam a operação da IA gratuita: a correção atual consome o saldo disponível. O limite gratuito do aluno não representa gratuidade para o responsável pelo serviço. Para uma apresentação sem consumo adicional, use fontes, leituras, questões e recomendações determinísticas e não acione correção por IA. Não substituímos correção de redação por contagem de palavras ou regex.

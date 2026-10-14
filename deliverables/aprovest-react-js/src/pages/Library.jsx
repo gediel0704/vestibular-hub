@@ -3,6 +3,7 @@ import { BookOpen, Check } from "lucide-react";
 import { StudyLayout, ErrorNotice, ExamSelect } from "../components/StudyLayout";
 import { Button } from "../components/Button";
 import { api } from "../lib/api";
+import { OfficialResources } from "../components/OfficialResources";
 
 export default function Library() {
   const [exam, setExam] = useState("ENEM");
@@ -10,6 +11,8 @@ export default function Library() {
   const [error, setError] = useState("");
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState(null);
+  const [source, setSource] = useState("authorial");
+  const [kind, setKind] = useState("Todos");
   async function load() {
     setError("");
     try {
@@ -53,6 +56,30 @@ export default function Library() {
           <input type="search" value={search} onChange={(event) => setSearch(event.target.value)} />
         </label>
       </div>
+      <div className="resource-filters">
+        <div className="resource-tabs" role="group" aria-label="Origem do material">
+          <Button variant={source === "authorial" ? "primary" : "secondary"} aria-pressed={source === "authorial"} onClick={() => setSource("authorial")}>
+            Conteúdos AproVest
+          </Button>
+          <Button variant={source === "official" ? "primary" : "secondary"} aria-pressed={source === "official"} onClick={() => setSource("official")}>
+            Fontes oficiais
+          </Button>
+        </div>
+        {source === "official" && (
+          <label className="exam-select">
+            Tipo de referência
+            <select value={kind} onChange={(event) => setKind(event.target.value)}>
+              {["Todos", "Programa", "Provas", "Redação", "Dados", "Conteúdos"].map((value) => (
+                <option key={value}>{value}</option>
+              ))}
+            </select>
+          </label>
+        )}
+      </div>
+      {source === "official" ? (
+        <OfficialResources exam={exam} kind={kind} search={search} />
+      ) : (
+        <>
       <ErrorNotice error={error} retry={load} />
       {selected ? (
         <article className="reading-view">
@@ -99,6 +126,8 @@ export default function Library() {
       )}
       {!data && !error && <p>Carregando materiais…</p>}
       {data && !items.length && <p>Nenhum material encontrado.</p>}
+        </>
+      )}
     </StudyLayout>
   );
 }
