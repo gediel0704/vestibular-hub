@@ -9,6 +9,14 @@ import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/diagnostico")({
+  head: () => ({ meta: [
+    { title: "Diagnóstico — AproVest" },
+    { name: "description", content: "Avalie seu ponto de partida por área no AproVest." },
+    { property: "og:title", content: "Diagnóstico — AproVest" },
+    { property: "og:description", content: "Avalie seu ponto de partida por área no AproVest." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary" },
+  ] }),
   component: Diagnostico,
 });
 

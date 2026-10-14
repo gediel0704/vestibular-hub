@@ -10,6 +10,10 @@ export const Route = createFileRoute("/about")({
         content:
           "Conheça o AproVest: a plataforma de estudos que usa IA para personalizar a preparação para o vestibular.",
       },
+      { property: "og:title", content: "Sobre — AproVest" },
+      { property: "og:description", content: "Conheça a proposta pedagógica e tecnológica do AproVest para a preparação de vestibulandos." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: About,

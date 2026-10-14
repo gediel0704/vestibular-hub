@@ -20,6 +20,10 @@ export const Route = createFileRoute("/auth")({
     meta: [
       { title: "Entrar — AproVest" },
       { name: "description", content: "Acesse sua conta AproVest e continue seus estudos." },
+      { property: "og:title", content: "Entrar — AproVest" },
+      { property: "og:description", content: "Acesse sua conta AproVest e continue sua preparação para o vestibular." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: AuthPage,

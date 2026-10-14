@@ -16,6 +16,8 @@ export const Route = createFileRoute("/")({
         content:
           "Banca infinita de questões, plano de estudos adaptativo e simulados que preveem sua nota.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: Index,

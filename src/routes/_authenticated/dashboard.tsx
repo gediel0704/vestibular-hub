@@ -7,6 +7,14 @@ import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
+  head: () => ({ meta: [
+    { title: "Painel da meta — AproVest" },
+    { name: "description", content: "Acompanhe sua meta e evolução acadêmica no AproVest." },
+    { property: "og:title", content: "Painel da meta — AproVest" },
+    { property: "og:description", content: "Acompanhe sua meta e evolução acadêmica no AproVest." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary" },
+  ] }),
   component: Dashboard,
 });
 

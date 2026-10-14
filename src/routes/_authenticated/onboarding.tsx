@@ -8,6 +8,14 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/onboarding")({
+  head: () => ({ meta: [
+    { title: "Definir meta — AproVest" },
+    { name: "description", content: "Configure seu curso, escola e ano-alvo no AproVest." },
+    { property: "og:title", content: "Definir meta — AproVest" },
+    { property: "og:description", content: "Configure seu curso, escola e ano-alvo no AproVest." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary" },
+  ] }),
   component: Onboarding,
 });
 
