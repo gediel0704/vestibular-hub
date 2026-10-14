@@ -37,3 +37,16 @@
 - [x] Aprimorar relevos, foco, cartões, formulários, navegação e modo escuro
 - [x] Validar login social real, acervo ENEM e telas principais de ponta a ponta
 - [x] Atualizar e inspecionar o ZIP acadêmico
+
+## Fontes gratuitas e atualização pelo VS Code
+
+- [x] Consultar e verificar programas, provas, matrizes e critérios oficiais gratuitos
+- [x] Integrar referências oficiais à biblioteca acadêmica e ao plano de estudos
+- [x] Tornar as prioridades adaptativas transparentes e testar as regras
+- [x] Documentar limitações de TRI e custos da IA, sem contratar serviços adicionais
+- [x] Documentar atualização pelo GitHub e execução acadêmica no VS Code
+- [x] Validar a navegação e recomendações acadêmicas
+- [ ] Conectar GitHub: depende da autorização do proprietário no editor Lovable
+- [ ] Validar correções por competência: depende de redações autorizadas e avaliações docentes de referência
+
+Escopo desta etapa: referências externas e prioridade por disciplina; não confundir com importação completa de provas, classificação docente por habilidade ou TRI calibrada. As lacunas e critérios de evolução estão documentados em `deliverables/aprovest-react-js/docs/FONTES-E-LIMITES.md`.

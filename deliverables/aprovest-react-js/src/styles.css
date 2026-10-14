@@ -1045,6 +1045,59 @@ footer .container {
   margin: 14px 0 0;
   color: var(--ink);
 }
+.resource-filters,
+.resource-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 12px;
+}
+.resource-filters {
+  justify-content: space-between;
+  margin: 24px 0;
+}
+.official-resources {
+  margin: 32px 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+.official-resources h3 {
+  font-size: 20px;
+  line-height: 1.4;
+}
+.official-resources .btn {
+  margin-top: auto;
+}
+.resource-disclaimer {
+  margin-top: 24px;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.priority-section {
+  margin: 28px 0;
+}
+.priority-row {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) minmax(64px, 160px);
+  align-items: center;
+  gap: 12px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+.priority-row h3 {
+  font-size: 18px;
+  margin: 0 0 4px;
+  overflow-wrap: anywhere;
+}
+.priority-row p {
+  margin: 0;
+  font-size: 14px;
+}
+.priority-number {
+  color: var(--blue);
+  font-size: 20px;
+  font-weight: 700;
+}
 @media (max-width: 760px) {
   .study-nav a {
     display: block !important;

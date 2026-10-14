@@ -8,3 +8,5 @@
 - Keep SQL Server academic scripts separate from PostgreSQL Cloud migrations and package both with explicit runtime prerequisites so each delivery matches its execution engine.
 - Academic AI evaluations preserve the submitted essay snapshot and board-specific feedback; never replace historical corrections when a student edits a draft.
 - Consume the community ENEM question bank only through its external HTTP API and keep it complementary to the curated academic engine, avoiding GPL source-code coupling and provider lock-in.
+- Keep official academic references in a browser-safe curated catalog with provenance and edition labels; external links are not imported interactive items or republication licenses.
+- Academic study priorities use completed assessments from the selected exam and each subject's latest valid ratio, excluding completed readings; keep this deterministic heuristic separate from TRI and AI.
