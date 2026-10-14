@@ -27,4 +27,4 @@
 - [x] Completar banco de questões, conteúdos, diagnóstico e preparação alinhados às bancas
 - [x] Integrar e validar correção de redações e demais automações de IA aprovadas
 - [x] Completar e testar todas as páginas e os fluxos por perfil
-- [ ] Empacotar e inspecionar nova versão web acadêmica completa
+- [x] Empacotar e inspecionar nova versão web acadêmica completa
