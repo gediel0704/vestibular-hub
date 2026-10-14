@@ -9,14 +9,16 @@ import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/diagnostico")({
-  head: () => ({ meta: [
-    { title: "Diagnóstico — AproVest" },
-    { name: "description", content: "Avalie seu ponto de partida por área no AproVest." },
-    { property: "og:title", content: "Diagnóstico — AproVest" },
-    { property: "og:description", content: "Avalie seu ponto de partida por área no AproVest." },
-    { property: "og:type", content: "website" },
-    { name: "twitter:card", content: "summary" },
-  ] }),
+  head: () => ({
+    meta: [
+      { title: "Diagnóstico — AproVest" },
+      { name: "description", content: "Avalie seu ponto de partida por área no AproVest." },
+      { property: "og:title", content: "Diagnóstico — AproVest" },
+      { property: "og:description", content: "Avalie seu ponto de partida por área no AproVest." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+    ],
+  }),
   component: Diagnostico,
 });
 
@@ -85,7 +87,10 @@ function Diagnostico() {
       is_correct: (answers[q.id] ?? "") === q.correct_key,
     }));
     const { error: insErr } = await supabase.from("diagnostic_answers").insert(rows);
-    if (insErr) { setSubmitting(false); return toast.error(insErr.message); }
+    if (insErr) {
+      setSubmitting(false);
+      return toast.error(insErr.message);
+    }
 
     const byArea: Record<string, { correct: number; total: number }> = {};
     let correct = 0;
@@ -98,7 +103,7 @@ function Diagnostico() {
       }
     }
     const score_by_area = Object.fromEntries(
-      Object.entries(byArea).map(([k, v]) => [k, v.total ? v.correct / v.total : 0])
+      Object.entries(byArea).map(([k, v]) => [k, v.total ? v.correct / v.total : 0]),
     );
     const score = questions.length ? correct / questions.length : 0;
 
@@ -106,7 +111,10 @@ function Diagnostico() {
       .from("diagnostic_attempts")
       .update({ status: "completed", completed_at: new Date().toISOString(), score, score_by_area })
       .eq("id", attemptId);
-    if (updErr) { setSubmitting(false); return toast.error(updErr.message); }
+    if (updErr) {
+      setSubmitting(false);
+      return toast.error(updErr.message);
+    }
 
     toast.success("Diagnóstico concluído!");
     navigate({ to: "/dashboard" });

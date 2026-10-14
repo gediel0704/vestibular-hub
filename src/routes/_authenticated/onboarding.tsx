@@ -8,14 +8,19 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/onboarding")({
-  head: () => ({ meta: [
-    { title: "Definir meta — AproVest" },
-    { name: "description", content: "Configure seu curso, escola e ano-alvo no AproVest." },
-    { property: "og:title", content: "Definir meta — AproVest" },
-    { property: "og:description", content: "Configure seu curso, escola e ano-alvo no AproVest." },
-    { property: "og:type", content: "website" },
-    { name: "twitter:card", content: "summary" },
-  ] }),
+  head: () => ({
+    meta: [
+      { title: "Definir meta — AproVest" },
+      { name: "description", content: "Configure seu curso, escola e ano-alvo no AproVest." },
+      { property: "og:title", content: "Definir meta — AproVest" },
+      {
+        property: "og:description",
+        content: "Configure seu curso, escola e ano-alvo no AproVest.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+    ],
+  }),
   component: Onboarding,
 });
 
@@ -80,15 +85,34 @@ function Onboarding() {
             <form onSubmit={handleSave} className="space-y-4">
               <div className="space-y-1">
                 <Label htmlFor="name">Nome completo</Label>
-                <Input id="name" required value={fullName} onChange={(e) => setFullName(e.target.value)} />
+                <Input
+                  id="name"
+                  required
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                />
               </div>
               <div className="space-y-1">
                 <Label htmlFor="course">Curso-alvo</Label>
-                <Input id="course" required placeholder="Ex: Medicina, Engenharia, Direito…" value={targetCourse} onChange={(e) => setTargetCourse(e.target.value)} />
+                <Input
+                  id="course"
+                  required
+                  placeholder="Ex: Medicina, Engenharia, Direito…"
+                  value={targetCourse}
+                  onChange={(e) => setTargetCourse(e.target.value)}
+                />
               </div>
               <div className="space-y-1">
                 <Label htmlFor="year">Ano do vestibular</Label>
-                <Input id="year" type="number" min={2026} max={2035} required value={targetYear} onChange={(e) => setTargetYear(Number(e.target.value))} />
+                <Input
+                  id="year"
+                  type="number"
+                  min={2026}
+                  max={2035}
+                  required
+                  value={targetYear}
+                  onChange={(e) => setTargetYear(Number(e.target.value))}
+                />
               </div>
               <div className="space-y-1">
                 <Label htmlFor="school">Escola atual (opcional)</Label>
