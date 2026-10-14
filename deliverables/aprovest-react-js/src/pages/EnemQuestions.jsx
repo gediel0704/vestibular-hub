@@ -7,7 +7,8 @@ import { api } from "../lib/api";
 function QuestionContent({ text }) {
   if (!text) return null;
 
-  const parts = text.split(/(!\[[^\]]*\]\(https?:\/\/[^)]+\))/g);
+  const cleanText = text.replace(/\*\*(.*?)\*\*/g, "$1");
+  const parts = cleanText.split(/(!\[[^\]]*\]\(https?:\/\/[^)]+\))/g);
 
   return (
     <div className="official-question-text">
@@ -21,6 +22,9 @@ function QuestionContent({ text }) {
               src={image[2]}
               alt={image[1] || "Ilustração da questão"}
               loading="lazy"
+              onError={(event) => {
+                event.currentTarget.hidden = true;
+              }}
             />
           );
         }
