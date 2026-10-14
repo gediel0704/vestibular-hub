@@ -37,3 +37,12 @@
 - [x] Aprimorar relevos, foco, cartões, formulários, navegação e modo escuro
 - [x] Validar login social real, acervo ENEM e telas principais de ponta a ponta
 - [x] Atualizar e inspecionar o ZIP acadêmico
+
+## Fontes gratuitas e atualização pelo VS Code
+
+- [ ] Consultar e verificar programas, provas, matrizes e critérios oficiais gratuitos
+- [ ] Integrar referências oficiais à biblioteca acadêmica e ao plano de estudos
+- [ ] Tornar as prioridades adaptativas transparentes e testar as regras
+- [ ] Documentar limitações de TRI e custos da IA, sem contratar serviços adicionais
+- [ ] Documentar atualização pelo GitHub e execução acadêmica no VS Code
+- [ ] Validar a navegação e recomendações acadêmicas
