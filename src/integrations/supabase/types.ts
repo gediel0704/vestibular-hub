@@ -309,6 +309,33 @@ export type Database = {
           },
         ]
       }
+      academic_scholarships: {
+        Row: {
+          created_at: string
+          id: string
+          month: string
+          position: number
+          score: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          month: string
+          position: number
+          score: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          month?: string
+          position?: number
+          score?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
       academic_sessions: {
         Row: {
           completed_at: string | null
@@ -578,6 +605,19 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      academic_answer_session: {
+        Args: {
+          p_item: string
+          p_key: string
+          p_session: string
+          p_user: string
+        }
+        Returns: Json
+      }
+      academic_award_scholarships: {
+        Args: { p_month: string }
+        Returns: number
+      }
       academic_create_session: {
         Args: {
           p_course: string
