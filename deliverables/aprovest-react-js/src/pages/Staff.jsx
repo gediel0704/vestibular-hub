@@ -32,6 +32,7 @@ export default function Staff({ admin = false }) {
   const [selected, setSelected] = useState(null);
   const [summary, setSummary] = useState("");
   const [busy, setBusy] = useState(false);
+  const [scholarshipMonth, setScholarshipMonth] = useState("");
   async function load() {
     setError("");
     try {
@@ -350,6 +351,37 @@ export default function Staff({ admin = false }) {
           <Button variant="secondary" onClick={() => perform("admin_resume_ai", {})}>
             Reativar IA após regularização
           </Button>
+          <section className="privacy-actions">
+            <h2>Bolsas mensais do ranking</h2>
+            <p>Premia até 100 participantes que aceitaram o ranking, usando apenas simulados do mês encerrado.</p>
+            <label>
+              Mês encerrado
+              <input
+                type="month"
+                value={scholarshipMonth}
+                onChange={(event) => setScholarshipMonth(event.target.value)}
+              />
+            </label>
+            <Button
+              variant="secondary"
+              disabled={!scholarshipMonth || busy}
+              onClick={async () => {
+                setBusy(true);
+                try {
+                  const result = await api("admin_award_scholarships", {
+                    month: `${scholarshipMonth}-01`,
+                  });
+                  toast.success(`${result.awarded} bolsa(s) concedida(s).`);
+                } catch (err) {
+                  setError(err.message);
+                } finally {
+                  setBusy(false);
+                }
+              }}
+            >
+              Conceder bolsas do mês
+            </Button>
+          </section>
           <p className="muted">
             Pagamentos e relatórios financeiros dependem da configuração do serviço de cobrança.
           </p>

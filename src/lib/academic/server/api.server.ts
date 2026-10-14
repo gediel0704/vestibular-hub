@@ -73,6 +73,33 @@ export async function academicApi(request: Request) {
     ensure(EXAMS.includes(exam), "Selecione uma banca válida.");
 
     if (action === "bootstrap") {
+      const dueCount = dbResult(
+        await db
+          .from("academic_progress")
+          .select("id", { count: "exact", head: true })
+          .eq("user_id", userId)
+          .lte("due_at", new Date().toISOString()),
+      );
+      const today = new Date();
+      today.setUTCHours(0, 0, 0, 0);
+      const reminder = dbResult(
+        await db
+          .from("academic_notifications")
+          .select("id")
+          .eq("user_id", userId)
+          .eq("title", "Revisões disponíveis")
+          .gte("created_at", today.toISOString())
+          .maybeSingle(),
+      );
+      if (!reminder && Number(dueCount ?? 0) > 0) {
+        dbResult(
+          await db.from("academic_notifications").insert({
+            user_id: userId,
+            title: "Revisões disponíveis",
+            body: `${dueCount} conteúdo(s) ou exercício(s) estão prontos para revisão.`,
+          }),
+        );
+      }
       const entitlement = dbResult(
         await db.from("academic_entitlements").select("*").eq("user_id", userId).maybeSingle(),
       );
@@ -505,6 +532,12 @@ export async function academicApi(request: Request) {
         dbResult(
           await db.from("academic_ai_state").upsert({ id: "global", paused: false, reason: null }),
         );
+      } else if (action === "admin_award_scholarships") {
+        ensure(/^\d{4}-\d{2}-01$/.test(input.month ?? ""), "Informe o primeiro dia do mês.");
+        const awarded = dbResult(
+          await db.rpc("academic_award_scholarships", { p_month: input.month }),
+        );
+        return respond({ ok: true, awarded });
       } else throw new ApiError("Ação administrativa desconhecida.");
       return respond({ ok: true });
     }
