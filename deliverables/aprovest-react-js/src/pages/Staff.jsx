@@ -353,7 +353,10 @@ export default function Staff({ admin = false }) {
           </Button>
           <section className="privacy-actions">
             <h2>Bolsas mensais do ranking</h2>
-            <p>Premia até 100 participantes que aceitaram o ranking, usando apenas simulados do mês encerrado.</p>
+            <p>
+              Premia até 100 participantes que aceitaram o ranking, usando apenas simulados do mês
+              encerrado.
+            </p>
             <label>
               Mês encerrado
               <input
