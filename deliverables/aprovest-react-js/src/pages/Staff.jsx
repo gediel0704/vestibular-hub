@@ -65,7 +65,7 @@ export default function Staff({ admin = false }) {
     >
       <ErrorNotice error={error} retry={load} />
       {admin && (
-        <div className="tabs">
+        <div className="staff-tabs">
           {[
             ["items", "Conteúdos e questões"],
             ["users", "Usuários e papéis"],

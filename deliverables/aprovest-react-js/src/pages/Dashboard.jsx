@@ -44,11 +44,8 @@ export default function Dashboard() {
     },
   ];
   return (
-    <StudyLayout title="Painel da meta">
-      <main className="student">
-        <div className="dashboard">
+    <StudyLayout title={`Olá, ${profile.full_name?.split(" ")[0] || "estudante"}.`}>
           <span className="kicker">PAINEL DO ALUNO</span>
-          <h1>Olá, {profile.full_name?.split(" ")[0] || "estudante"}.</h1>
           <p className="goal">
             <Target size={18} /> Meta: <b>{profile.target_course}</b> · {profile.target_year}
           </p>
@@ -107,8 +104,6 @@ export default function Dashboard() {
               );
             })}
           </div>
-        </div>
-      </main>
     </StudyLayout>
   );
 }
