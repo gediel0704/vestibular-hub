@@ -28,3 +28,12 @@
 - [x] Integrar e validar correção de redações e demais automações de IA aprovadas
 - [x] Completar e testar todas as páginas e os fluxos por perfil
 - [x] Empacotar e inspecionar nova versão web acadêmica completa
+
+## Revisão visual, login social e acervo ENEM
+
+- [x] Auditar a API ENEM anexada, sua cobertura, licença e limitações
+- [x] Integrar o acervo como fonte complementar sem expor gabaritos antecipadamente
+- [x] Corrigir o redirecionamento Google e Apple no ambiente local
+- [x] Aprimorar relevos, foco, cartões, formulários, navegação e modo escuro
+- [ ] Validar login social real, acervo ENEM e telas principais de ponta a ponta
+- [ ] Atualizar e inspecionar o ZIP acadêmico

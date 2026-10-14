@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
+import { Apple } from "lucide-react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 import { createLovableAuth } from "@lovable.dev/cloud-auth-js";
 import { Brand } from "../components/Layout";
 import { supabase } from "../lib/supabase";
-const social = createLovableAuth();
+const DEFAULT_OAUTH_BROKER =
+  "https://id-preview--e9888714-bf58-47ad-bf20-c65e58ff969c.lovable.app/~oauth/initiate";
+const social = createLovableAuth({
+  oauthBrokerUrl: import.meta.env.VITE_OAUTH_BROKER_URL || DEFAULT_OAUTH_BROKER,
+});
 const valid = (e) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
 export default function Auth() {
   const [mode, setMode] = useState("in"),
@@ -54,16 +59,22 @@ export default function Auth() {
   }
   async function oauth(provider) {
     setBusy(true);
-    const r = await social.signInWithOAuth(provider, {
-      redirect_uri: `${location.origin}/auth?next=${encodeURIComponent(next)}`,
-    });
-    if (r.error) {
+    try {
+      const r = await social.signInWithOAuth(provider, {
+        redirect_uri: `${location.origin}/auth?next=${encodeURIComponent(next)}`,
+      });
+      if (r.error) {
+        return toast.error("Não foi possível continuar. Tente novamente.");
+      }
+      if (!r.redirected && r.tokens) {
+        const { error } = await supabase.auth.setSession(r.tokens);
+        if (error) return toast.error("Não foi possível concluir o login.");
+        nav(next);
+      }
+    } catch {
+      toast.error("O login social foi interrompido. Tente novamente.");
+    } finally {
       setBusy(false);
-      return toast.error("Não foi possível continuar.");
-    }
-    if (!r.redirected && r.tokens) {
-      await supabase.auth.setSession(r.tokens);
-      nav(next);
     }
   }
   return (
@@ -74,10 +85,12 @@ export default function Auth() {
           <span className="kicker">ÁREA DO ALUNO</span>
           <h1>Sua jornada até a aprovação</h1>
           <p>Entre ou crie sua conta gratuita.</p>
-          <button className="btn secondary full" disabled={busy} onClick={() => oauth("google")}>
+          <button className="btn secondary full social-button" disabled={busy} onClick={() => oauth("google")}>
+            <span className="google-mark" aria-hidden="true">G</span>
             Continuar com Google
           </button>
-          <button className="btn secondary full" disabled={busy} onClick={() => oauth("apple")}>
+          <button className="btn secondary full social-button" disabled={busy} onClick={() => oauth("apple")}>
+            <Apple size={19} aria-hidden="true" />
             Continuar com Apple
           </button>
           <div className="tabs">
