@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from "react";
 import { FilePenLine, Plus, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
-import { AppHeader } from "../components/Layout";
 import { supabase } from "../lib/supabase";
 import { EssayEvaluation } from "../components/EssayEvaluation";
 import { StudyLayout } from "../components/StudyLayout";

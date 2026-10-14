@@ -1,38 +1,28 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BrainCircuit, ChartNoAxesCombined, FilePenLine, Target } from "lucide-react";
-import { AppHeader } from "../components/Layout";
-import { supabase } from "../lib/supabase";
-import { StudyLayout } from "../components/StudyLayout";
+import { api } from "../lib/api";
+import { StudyLayout, ErrorNotice } from "../components/StudyLayout";
 export default function Dashboard() {
   const [profile, setProfile] = useState(null),
     [attempt, setAttempt] = useState(null),
     [loading, setLoading] = useState(true),
+    [error, setError] = useState(""),
     nav = useNavigate();
   useEffect(() => {
-    (async () => {
-      const { data: a } = await supabase.auth.getUser();
-      if (!a.user) return;
-      const { data: p } = await supabase
-        .from("profiles")
-        .select("full_name,target_course,target_year,onboarding_completed")
-        .eq("id", a.user.id)
-        .maybeSingle();
-      if (!p?.onboarding_completed) return nav("/onboarding");
-      setProfile(p);
-      const { data: d } = await supabase
-        .from("diagnostic_attempts")
-        .select("score,score_by_area")
-        .eq("user_id", a.user.id)
-        .eq("status", "completed")
-        .order("completed_at", { ascending: false })
-        .limit(1)
-        .maybeSingle();
-      setAttempt(d);
-      setLoading(false);
-    })();
+    Promise.all([api("bootstrap"), api("history")])
+      .then(([data, history]) => {
+        if (!data.profile?.onboarding_completed) return nav("/onboarding");
+        setProfile(data.profile);
+        const latest = history.sessions.find((session) => session.status === "completed");
+        setAttempt(latest ? { ...latest, score_by_area: latest.score_by_topic } : null);
+      })
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
   }, [nav]);
   if (loading) return <main className="center">Montando seu painel…</main>;
+  if (error) return <StudyLayout title="Painel da meta"><ErrorNotice error={error} /></StudyLayout>;
+  if (!profile) return null;
   const modules = [
     {
       Icon: BrainCircuit,

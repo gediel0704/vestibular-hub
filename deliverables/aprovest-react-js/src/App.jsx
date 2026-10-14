@@ -4,7 +4,6 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Auth from "./pages/Auth";
 import Onboarding from "./pages/Onboarding";
-import Diagnostic from "./pages/Diagnostic";
 import Dashboard from "./pages/Dashboard";
 import Password from "./pages/Password";
 import Essays from "./pages/Essays";

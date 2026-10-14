@@ -790,6 +790,9 @@ footer .container {
   text-align: center;
 }
 @media (max-width: 760px) {
+  .study-nav a {
+    display: block !important;
+  }
   nav > a:not(.btn) {
     display: none;
   }
