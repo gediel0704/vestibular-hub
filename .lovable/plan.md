@@ -4,6 +4,7 @@
 - Desenvolver apenas a versão acadêmica React e JavaScript, preservando o visual e a organização atual das páginas. Não alterar o produto comercial.
 - Usar o último documento norteador AproVest desta conversa como referência, incluindo RF01–RF19 e RN01–RN05. Priorizar ENEM, FUVEST e Unicamp.
 - Entregar um arquivo SQL Server separado para a atividade e uma nova versão numerada do ZIP web, com código legível em múltiplas linhas.
+- Incluir também no ZIP os scripts `.sql` do banco efetivamente usado pelo site: estrutura, relacionamentos, permissões, funções e dados pedagógicos iniciais, com instruções de instalação.
 - O escopo desta entrega é web, utilizável também em telas pequenas; aplicativo mobile nativo não está incluído.
 
 ## Situação real
@@ -14,6 +15,8 @@ Hoje existem início, sobre, autenticação, cadastro da meta, diagnóstico fixo
 - Modelar alunos, papéis, metas, disciplinas, tópicos, bancas e edições, questões e alternativas, respostas e proficiência, materiais, redações e correções, simulados e resultados, planos de estudo, notificações, assinaturas e créditos.
 - Incluir instruções de instalação e um roteiro de verificação de integridade. Nunca exportar usuários reais, redações reais, senhas ou chaves privadas.
 - **Distinção explícita:** o site atual permanece conectado ao banco PostgreSQL do Lovable Cloud. O arquivo SQL Server é uma versão equivalente do modelo para a atividade, não um backup executável do banco atual nem uma migração automática do site. Conectar o site a um SQL Server exige hospedagem e uma camada de acesso próprias, fora desta configuração.
+- **Duas entregas SQL:** `AproVest_SQLServer_v1.sql` para a atividade e scripts PostgreSQL do banco real do site dentro do ZIP. PostgreSQL também é um banco SQL. Ambos representam o mesmo modelo funcional, mas têm sintaxes próprias e instruções distintas. Os scripts do site dependem dos serviços de autenticação do Lovable Cloud e devem documentar essas dependências, sem afirmar instalação autônoma em qualquer PostgreSQL.
+- O site continua usando PostgreSQL no Lovable Cloud; não será migrado para SQL Server apenas para fornecer arquivos `.sql`. Uma exigência adicional de que o site execute especificamente sobre SQL Server muda a infraestrutura e precisa ser confirmada antes dessa migração.
 - Validar a sintaxe e as relações; declarar separadamente se não houver um SQL Server disponível para teste de execução.
 
 ## 2. Identidade, papéis e regras
@@ -64,7 +67,7 @@ Hoje existem início, sobre, autenticação, cadastro da meta, diagnóstico fixo
 - Criar testes concretos de limites, permissões, correção, adaptação, créditos e acesso apenas aos próprios dados.
 - Testar cada fluxo completo com contas autorizadas de aluno, professor e administrador, incluindo gravação e leitura após recarregar.
 - Verificar chamadas reais de IA, estados de erro, telas pequenas e grandes, instalação limpa e dependências portáteis. Não afirmar teste em Windows sem executá-lo nesse sistema.
-- Entregar SQL separado, documentação de instalação e nova versão do ZIP inspecionada, sem dependências geradas ou segredos.
+- Entregar SQL Server separado e incluir os scripts SQL PostgreSQL do banco efetivo na nova versão do ZIP, com documentação de instalação, sem dependências geradas ou segredos.
 - Manter lista objetiva de funções concluídas, limitações pedagógicas e dependências externas pendentes. Disponibilidade de 99%, resposta de dois segundos e retenção de backup de 30 dias exigem medição/configuração da hospedagem, não apenas código.
 
 ## Ordem de execução
