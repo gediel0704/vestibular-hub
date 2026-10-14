@@ -21,7 +21,12 @@ export default function Dashboard() {
       .finally(() => setLoading(false));
   }, [nav]);
   if (loading) return <main className="center">Montando seu painel…</main>;
-  if (error) return <StudyLayout title="Painel da meta"><ErrorNotice error={error} /></StudyLayout>;
+  if (error)
+    return (
+      <StudyLayout title="Painel da meta">
+        <ErrorNotice error={error} />
+      </StudyLayout>
+    );
   if (!profile) return null;
   const modules = [
     {
@@ -44,71 +49,66 @@ export default function Dashboard() {
     },
   ];
   return (
-    <StudyLayout title="Painel da meta">
-      <main className="student">
-        <div className="dashboard">
-          <span className="kicker">PAINEL DO ALUNO</span>
-          <h1>Olá, {profile.full_name?.split(" ")[0] || "estudante"}.</h1>
-          <p className="goal">
-            <Target size={18} /> Meta: <b>{profile.target_course}</b> · {profile.target_year}
-          </p>
-          {attempt ? (
-            <section className="panel results">
-              <div>
-                <span>RESULTADO GERAL</span>
-                <strong>{Math.round((attempt.score ?? 0) * 100)}%</strong>
-              </div>
-              <div>
-                {Object.entries(attempt.score_by_area ?? {}).map(([area, value]) => (
-                  <div className="metric" key={area}>
-                    <label>
-                      {area}
-                      <b>{Math.round(value * 100)}%</b>
-                    </label>
-                    <i>
-                      <em style={{ width: `${value * 100}%` }} />
-                    </i>
-                  </div>
-                ))}
-              </div>
-              <Link className="btn secondary" to="/diagnostico">
-                Refazer diagnóstico
-              </Link>
-            </section>
-          ) : (
-            <section className="panel empty">
-              <h2>Descubra seu ponto de partida</h2>
-              <p>Responda 30 exercícios de fundamentos nas quatro áreas.</p>
-              <Link className="btn primary" to="/diagnostico">
-                Começar diagnóstico
-              </Link>
-            </section>
-          )}
-          <div className="modules">
-            {modules.map(({ Icon, title, description, path }) => {
-              const content = (
-                <>
-                  <Icon />
-                  <div>
-                    <h3>{title}</h3>
-                    <p>{description}</p>
-                  </div>
-                </>
-              );
-
-              return path ? (
-                <Link className="panel module-link" key={title} to={path}>
-                  {content}
-                </Link>
-              ) : (
-                <article className="panel" key={title}>
-                  {content}
-                </article>
-              );
-            })}
+    <StudyLayout title={`Olá, ${profile.full_name?.split(" ")[0] || "estudante"}.`}>
+      <span className="kicker">PAINEL DO ALUNO</span>
+      <p className="goal">
+        <Target size={18} /> Meta: <b>{profile.target_course}</b> · {profile.target_year}
+      </p>
+      {attempt ? (
+        <section className="panel results">
+          <div>
+            <span>RESULTADO GERAL</span>
+            <strong>{Math.round((attempt.score ?? 0) * 100)}%</strong>
           </div>
-        </div>
-      </main>
+          <div>
+            {Object.entries(attempt.score_by_area ?? {}).map(([area, value]) => (
+              <div className="metric" key={area}>
+                <label>
+                  {area}
+                  <b>{Math.round(value * 100)}%</b>
+                </label>
+                <i>
+                  <em style={{ width: `${value * 100}%` }} />
+                </i>
+              </div>
+            ))}
+          </div>
+          <Link className="btn secondary" to="/diagnostico">
+            Refazer diagnóstico
+          </Link>
+        </section>
+      ) : (
+        <section className="panel empty">
+          <h2>Descubra seu ponto de partida</h2>
+          <p>Responda 30 exercícios de fundamentos nas quatro áreas.</p>
+          <Link className="btn primary" to="/diagnostico">
+            Começar diagnóstico
+          </Link>
+        </section>
+      )}
+      <div className="modules">
+        {modules.map(({ Icon, title, description, path }) => {
+          const content = (
+            <>
+              <Icon />
+              <div>
+                <h3>{title}</h3>
+                <p>{description}</p>
+              </div>
+            </>
+          );
+
+          return path ? (
+            <Link className="panel module-link" key={title} to={path}>
+              {content}
+            </Link>
+          ) : (
+            <article className="panel" key={title}>
+              {content}
+            </article>
+          );
+        })}
+      </div>
     </StudyLayout>
   );
 }

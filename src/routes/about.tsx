@@ -10,6 +10,14 @@ export const Route = createFileRoute("/about")({
         content:
           "Conheça o AproVest: a plataforma de estudos que usa IA para personalizar a preparação para o vestibular.",
       },
+      { property: "og:title", content: "Sobre — AproVest" },
+      {
+        property: "og:description",
+        content:
+          "Conheça a proposta pedagógica e tecnológica do AproVest para a preparação de vestibulandos.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: About,
@@ -42,9 +50,9 @@ function About() {
             <span style={{ color: "var(--brand)" }}>aposta no escuro.</span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
-            O AproVest nasce de uma ideia simples: cada vestibulando tem lacunas diferentes, e
-            seu tempo é curto demais para estudar tudo. A gente usa inteligência artificial para
-            mostrar exatamente o que estudar agora.
+            O AproVest nasce de uma ideia simples: cada vestibulando tem lacunas diferentes, e seu
+            tempo é curto demais para estudar tudo. A gente usa inteligência artificial para mostrar
+            exatamente o que estudar agora.
           </p>
         </div>
       </section>
@@ -66,13 +74,13 @@ function About() {
           <div className="space-y-4 text-muted-foreground">
             <p>
               Cursinhos premium custam o salário de uma família inteira. Plataformas gratuitas
-              entregam um oceano de vídeos sem direção. Resultado: a maioria dos estudantes
-              chega na prova com a sensação de não ter estudado o suficiente.
+              entregam um oceano de vídeos sem direção. Resultado: a maioria dos estudantes chega na
+              prova com a sensação de não ter estudado o suficiente.
             </p>
             <p>
-              O AproVest combina IA adaptativa, correção humana de redação e simulados
-              preditivos em uma plataforma única, acessível e baseada em dados — para que o
-              estudante saiba, todo dia, o que fazer e por quê.
+              O AproVest combina IA adaptativa, correção humana de redação e simulados preditivos em
+              uma plataforma única, acessível e baseada em dados — para que o estudante saiba, todo
+              dia, o que fazer e por quê.
             </p>
           </div>
         </div>
@@ -103,14 +111,8 @@ function About() {
                 d: "Os 100 melhores estudantes do ranking mensal ganham acesso Pro gratuito. Quem aprende mais, paga menos.",
               },
             ].map((d) => (
-              <article
-                key={d.n}
-                className="rounded-3xl border border-border bg-card p-7"
-              >
-                <span
-                  className="text-3xl font-extrabold"
-                  style={{ color: "var(--brand)" }}
-                >
+              <article key={d.n} className="rounded-3xl border border-border bg-card p-7">
+                <span className="text-3xl font-extrabold" style={{ color: "var(--brand)" }}>
                   {d.n}
                 </span>
                 <h3 className="mt-2 text-xl font-bold">{d.t}</h3>
@@ -145,8 +147,7 @@ function About() {
                   <span
                     className="mt-1 inline-block h-5 w-5 flex-none rounded-md"
                     style={{
-                      background:
-                        "linear-gradient(135deg, var(--brand), var(--accent-lime))",
+                      background: "linear-gradient(135deg, var(--brand), var(--accent-lime))",
                     }}
                     aria-hidden
                   />

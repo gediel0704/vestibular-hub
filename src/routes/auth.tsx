@@ -20,6 +20,13 @@ export const Route = createFileRoute("/auth")({
     meta: [
       { title: "Entrar — AproVest" },
       { name: "description", content: "Acesse sua conta AproVest e continue seus estudos." },
+      { property: "og:title", content: "Entrar — AproVest" },
+      {
+        property: "og:description",
+        content: "Acesse sua conta AproVest e continue sua preparação para o vestibular.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: AuthPage,
@@ -108,10 +115,22 @@ function AuthPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-2 mb-4">
-              <Button type="button" variant="outline" className="w-full" disabled={loading} onClick={() => oauth("google")}>
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full"
+                disabled={loading}
+                onClick={() => oauth("google")}
+              >
                 Continuar com Google
               </Button>
-              <Button type="button" variant="outline" className="w-full" disabled={loading} onClick={() => oauth("apple")}>
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full"
+                disabled={loading}
+                onClick={() => oauth("apple")}
+              >
                 Continuar com Apple
               </Button>
             </div>
@@ -130,11 +149,24 @@ function AuthPage() {
                 <form onSubmit={handleSignIn} className="space-y-3 mt-4">
                   <div className="space-y-1">
                     <Label htmlFor="si-email">Email</Label>
-                    <Input id="si-email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <Input
+                      id="si-email"
+                      type="email"
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
                   </div>
                   <div className="space-y-1">
                     <Label htmlFor="si-pw">Senha</Label>
-                    <Input id="si-pw" type="password" required minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <Input
+                      id="si-pw"
+                      type="password"
+                      required
+                      minLength={6}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
                   </div>
                   <Button type="submit" className="w-full" disabled={loading}>
                     Entrar
@@ -146,15 +178,33 @@ function AuthPage() {
                 <form onSubmit={handleSignUp} className="space-y-3 mt-4">
                   <div className="space-y-1">
                     <Label htmlFor="su-name">Nome completo</Label>
-                    <Input id="su-name" required value={fullName} onChange={(e) => setFullName(e.target.value)} />
+                    <Input
+                      id="su-name"
+                      required
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                    />
                   </div>
                   <div className="space-y-1">
                     <Label htmlFor="su-email">Email</Label>
-                    <Input id="su-email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <Input
+                      id="su-email"
+                      type="email"
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
                   </div>
                   <div className="space-y-1">
                     <Label htmlFor="su-pw">Senha</Label>
-                    <Input id="su-pw" type="password" required minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <Input
+                      id="su-pw"
+                      type="password"
+                      required
+                      minLength={6}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
                     <p className="text-xs text-muted-foreground">Mínimo 6 caracteres.</p>
                   </div>
                   <Button type="submit" className="w-full" disabled={loading}>
@@ -167,7 +217,10 @@ function AuthPage() {
         </Card>
 
         <p className="mt-6 text-center text-xs text-muted-foreground">
-          Ao continuar, você concorda com nossos termos de uso. <Link to="/" className="underline">Voltar ao início</Link>
+          Ao continuar, você concorda com nossos termos de uso.{" "}
+          <Link to="/" className="underline">
+            Voltar ao início
+          </Link>
         </p>
       </div>
     </div>

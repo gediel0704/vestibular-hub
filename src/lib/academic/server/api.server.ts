@@ -73,6 +73,33 @@ export async function academicApi(request: Request) {
     ensure(EXAMS.includes(exam), "Selecione uma banca válida.");
 
     if (action === "bootstrap") {
+      const dueResult = await db
+        .from("academic_progress")
+        .select("id", { count: "exact", head: true })
+        .eq("user_id", userId)
+        .lte("due_at", new Date().toISOString());
+      if (dueResult.error) throw new ApiError(dueResult.error.message);
+      const dueCount = dueResult.count ?? 0;
+      const today = new Date();
+      today.setUTCHours(0, 0, 0, 0);
+      const reminder = dbResult(
+        await db
+          .from("academic_notifications")
+          .select("id")
+          .eq("user_id", userId)
+          .eq("title", "Revisões disponíveis")
+          .gte("created_at", today.toISOString())
+          .maybeSingle(),
+      );
+      if (!reminder && Number(dueCount ?? 0) > 0) {
+        dbResult(
+          await db.from("academic_notifications").insert({
+            user_id: userId,
+            title: "Revisões disponíveis",
+            body: `${dueCount} conteúdo(s) ou exercício(s) estão prontos para revisão.`,
+          }),
+        );
+      }
       const entitlement = dbResult(
         await db.from("academic_entitlements").select("*").eq("user_id", userId).maybeSingle(),
       );
@@ -110,17 +137,15 @@ export async function academicApi(request: Request) {
       );
       ensure(item, "Conteúdo não encontrado.");
       dbResult(
-        await db
-          .from("academic_progress")
-          .upsert(
-            {
-              user_id: userId,
-              item_id: input.itemId,
-              completed: Boolean(input.completed),
-              updated_at: new Date().toISOString(),
-            },
-            { onConflict: "user_id,item_id" },
-          ),
+        await db.from("academic_progress").upsert(
+          {
+            user_id: userId,
+            item_id: input.itemId,
+            completed: Boolean(input.completed),
+            updated_at: new Date().toISOString(),
+          },
+          { onConflict: "user_id,item_id" },
+        ),
       );
       return respond({ ok: true });
     }
@@ -212,16 +237,31 @@ export async function academicApi(request: Request) {
       return respond({
         session,
         item: item ? safeItem(item) : null,
-        responses: session.mode === "exam" && session.status !== "completed" ? responses.map(({ is_correct, ...row }) => row) : responses,
+        responses:
+          session.mode === "exam" && session.status !== "completed"
+            ? responses.map(({ is_correct, ...row }) => row)
+            : responses,
         result: session.status === "completed" ? await sessionResult(db, session) : null,
       });
     }
     if (action === "answer") {
-      const result = dbResult(await db.rpc("academic_answer_session", {
-        p_user: userId, p_session: input.sessionId, p_item: input.itemId, p_key: input.key ?? "",
-      })) as Input;
+      const result = dbResult(
+        await db.rpc("academic_answer_session", {
+          p_user: userId,
+          p_session: input.sessionId,
+          p_item: input.itemId,
+          p_key: input.key ?? "",
+        }),
+      ) as Input;
       if (!result.completed) return respond(result);
-      const session = dbResult(await db.from("academic_sessions").select("*").eq("id", input.sessionId).eq("user_id", userId).single()) as Input;
+      const session = dbResult(
+        await db
+          .from("academic_sessions")
+          .select("*")
+          .eq("id", input.sessionId)
+          .eq("user_id", userId)
+          .single(),
+      ) as Input;
       return respond({ ...result, result: await sessionResult(db, session) });
     }
     if (action === "history") {
@@ -328,13 +368,11 @@ export async function academicApi(request: Request) {
             .eq("id", evaluationId),
         );
         dbResult(
-          await db
-            .from("academic_notifications")
-            .insert({
-              user_id: userId,
-              title: "Sua correção está disponível",
-              body: `Redação avaliada para ${exam}.`,
-            }),
+          await db.from("academic_notifications").insert({
+            user_id: userId,
+            title: "Sua correção está disponível",
+            body: `Redação avaliada para ${exam}.`,
+          }),
         );
         return respond({ evaluation: { ...evaluation, feedback, status: "completed" } });
       } catch (error) {
@@ -494,6 +532,12 @@ export async function academicApi(request: Request) {
         dbResult(
           await db.from("academic_ai_state").upsert({ id: "global", paused: false, reason: null }),
         );
+      } else if (action === "admin_award_scholarships") {
+        ensure(/^\d{4}-\d{2}-01$/.test(input.month ?? ""), "Informe o primeiro dia do mês.");
+        const awarded = dbResult(
+          await db.rpc("academic_award_scholarships", { p_month: input.month }),
+        );
+        return respond({ ok: true, awarded });
       } else throw new ApiError("Ação administrativa desconhecida.");
       return respond({ ok: true });
     }

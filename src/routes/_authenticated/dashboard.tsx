@@ -7,6 +7,19 @@ import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
+  head: () => ({
+    meta: [
+      { title: "Painel da meta — AproVest" },
+      { name: "description", content: "Acompanhe sua meta e evolução acadêmica no AproVest." },
+      { property: "og:title", content: "Painel da meta — AproVest" },
+      {
+        property: "og:description",
+        content: "Acompanhe sua meta e evolução acadêmica no AproVest.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+    ],
+  }),
   component: Dashboard,
 });
 
@@ -76,7 +89,9 @@ function Dashboard() {
           <Link to="/" className="font-display text-xl font-bold">
             Apro<span style={{ color: "var(--brand)" }}>Vest</span>
           </Link>
-          <Button variant="ghost" onClick={handleLogout}>Sair</Button>
+          <Button variant="ghost" onClick={handleLogout}>
+            Sair
+          </Button>
         </div>
       </header>
 
@@ -135,16 +150,28 @@ function Dashboard() {
 
         <div className="grid gap-4 md:grid-cols-3">
           <Card>
-            <CardHeader><CardTitle className="text-base">Banca Adaptativa</CardTitle></CardHeader>
-            <CardContent className="text-sm text-muted-foreground">Em breve: sua fila diária personalizada por IA.</CardContent>
+            <CardHeader>
+              <CardTitle className="text-base">Banca Adaptativa</CardTitle>
+            </CardHeader>
+            <CardContent className="text-sm text-muted-foreground">
+              Em breve: sua fila diária personalizada por IA.
+            </CardContent>
           </Card>
           <Card>
-            <CardHeader><CardTitle className="text-base">Redação Híbrida</CardTitle></CardHeader>
-            <CardContent className="text-sm text-muted-foreground">Em breve: envie sua redação e receba feedback.</CardContent>
+            <CardHeader>
+              <CardTitle className="text-base">Redação Híbrida</CardTitle>
+            </CardHeader>
+            <CardContent className="text-sm text-muted-foreground">
+              Em breve: envie sua redação e receba feedback.
+            </CardContent>
           </Card>
           <Card>
-            <CardHeader><CardTitle className="text-base">Simulado Preditivo</CardTitle></CardHeader>
-            <CardContent className="text-sm text-muted-foreground">Em breve: nota prevista e chance de aprovação.</CardContent>
+            <CardHeader>
+              <CardTitle className="text-base">Simulado Preditivo</CardTitle>
+            </CardHeader>
+            <CardContent className="text-sm text-muted-foreground">
+              Em breve: nota prevista e chance de aprovação.
+            </CardContent>
           </Card>
         </div>
       </main>

@@ -16,6 +16,8 @@ export const Route = createFileRoute("/")({
         content:
           "Banca infinita de questões, plano de estudos adaptativo e simulados que preveem sua nota.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: Index,
@@ -58,9 +60,9 @@ function Index() {
               </span>
             </h1>
             <p className="mt-6 max-w-lg text-lg text-muted-foreground">
-              O AproVest aprende como você estuda, identifica suas lacunas e monta um plano
-              diário focado no que mais cai — com correção de redação em até 24h e simulados
-              que preveem sua nota de corte.
+              O AproVest aprende como você estuda, identifica suas lacunas e monta um plano diário
+              focado no que mais cai — com correção de redação em até 24h e simulados que preveem
+              sua nota de corte.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
@@ -131,8 +133,7 @@ function Index() {
                         className="h-full rounded-full"
                         style={{
                           width: `${b.v}%`,
-                          background:
-                            "linear-gradient(90deg, var(--brand), var(--accent-lime))",
+                          background: "linear-gradient(90deg, var(--brand), var(--accent-lime))",
                         }}
                       />
                     </div>
@@ -156,7 +157,10 @@ function Index() {
       </section>
 
       {/* FEATURES */}
-      <section className="border-t border-border/60" style={{ backgroundColor: "var(--surface-2)" }}>
+      <section
+        className="border-t border-border/60"
+        style={{ backgroundColor: "var(--surface-2)" }}
+      >
         <div className="mx-auto max-w-6xl px-6 py-20">
           <div className="max-w-2xl">
             <p
