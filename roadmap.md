@@ -35,5 +35,5 @@
 - [x] Integrar o acervo como fonte complementar sem expor gabaritos antecipadamente
 - [x] Corrigir o redirecionamento Google e Apple no ambiente local
 - [x] Aprimorar relevos, foco, cartões, formulários, navegação e modo escuro
-- [ ] Validar login social real, acervo ENEM e telas principais de ponta a ponta
-- [ ] Atualizar e inspecionar o ZIP acadêmico
+- [x] Validar login social real, acervo ENEM e telas principais de ponta a ponta
+- [x] Atualizar e inspecionar o ZIP acadêmico
