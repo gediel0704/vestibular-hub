@@ -1,7 +1,8 @@
 import { supabase } from "./supabase";
 
 const endpoint =
-  import.meta.env.VITE_ACADEMIC_API_URL || "https://id-preview--e9888714-bf58-47ad-bf20-c65e58ff969c.lovable.app/api/public/academic";
+  import.meta.env.VITE_ACADEMIC_API_URL ||
+  "https://id-preview--e9888714-bf58-47ad-bf20-c65e58ff969c.lovable.app/api/public/academic";
 
 export async function api(action, data = {}, signal) {
   const { data: auth } = await supabase.auth.getSession();

@@ -110,17 +110,15 @@ export async function academicApi(request: Request) {
       );
       ensure(item, "Conteúdo não encontrado.");
       dbResult(
-        await db
-          .from("academic_progress")
-          .upsert(
-            {
-              user_id: userId,
-              item_id: input.itemId,
-              completed: Boolean(input.completed),
-              updated_at: new Date().toISOString(),
-            },
-            { onConflict: "user_id,item_id" },
-          ),
+        await db.from("academic_progress").upsert(
+          {
+            user_id: userId,
+            item_id: input.itemId,
+            completed: Boolean(input.completed),
+            updated_at: new Date().toISOString(),
+          },
+          { onConflict: "user_id,item_id" },
+        ),
       );
       return respond({ ok: true });
     }
@@ -212,16 +210,31 @@ export async function academicApi(request: Request) {
       return respond({
         session,
         item: item ? safeItem(item) : null,
-        responses: session.mode === "exam" && session.status !== "completed" ? responses.map(({ is_correct, ...row }) => row) : responses,
+        responses:
+          session.mode === "exam" && session.status !== "completed"
+            ? responses.map(({ is_correct, ...row }) => row)
+            : responses,
         result: session.status === "completed" ? await sessionResult(db, session) : null,
       });
     }
     if (action === "answer") {
-      const result = dbResult(await db.rpc("academic_answer_session", {
-        p_user: userId, p_session: input.sessionId, p_item: input.itemId, p_key: input.key ?? "",
-      })) as Input;
+      const result = dbResult(
+        await db.rpc("academic_answer_session", {
+          p_user: userId,
+          p_session: input.sessionId,
+          p_item: input.itemId,
+          p_key: input.key ?? "",
+        }),
+      ) as Input;
       if (!result.completed) return respond(result);
-      const session = dbResult(await db.from("academic_sessions").select("*").eq("id", input.sessionId).eq("user_id", userId).single()) as Input;
+      const session = dbResult(
+        await db
+          .from("academic_sessions")
+          .select("*")
+          .eq("id", input.sessionId)
+          .eq("user_id", userId)
+          .single(),
+      ) as Input;
       return respond({ ...result, result: await sessionResult(db, session) });
     }
     if (action === "history") {
@@ -328,13 +341,11 @@ export async function academicApi(request: Request) {
             .eq("id", evaluationId),
         );
         dbResult(
-          await db
-            .from("academic_notifications")
-            .insert({
-              user_id: userId,
-              title: "Sua correção está disponível",
-              body: `Redação avaliada para ${exam}.`,
-            }),
+          await db.from("academic_notifications").insert({
+            user_id: userId,
+            title: "Sua correção está disponível",
+            body: `Redação avaliada para ${exam}.`,
+          }),
         );
         return respond({ evaluation: { ...evaluation, feedback, status: "completed" } });
       } catch (error) {
