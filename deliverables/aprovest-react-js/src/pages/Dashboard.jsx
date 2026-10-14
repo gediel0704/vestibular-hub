@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { BrainCircuit, ChartNoAxesCombined, FilePenLine, Target } from "lucide-react";
 import { AppHeader } from "../components/Layout";
 import { supabase } from "../lib/supabase";
+import { StudyLayout } from "../components/StudyLayout";
 export default function Dashboard() {
   const [profile, setProfile] = useState(null),
     [attempt, setAttempt] = useState(null),
@@ -36,7 +37,8 @@ export default function Dashboard() {
     {
       Icon: BrainCircuit,
       title: "Banca adaptativa",
-      description: "Próxima etapa do projeto AproVest.",
+      description: "Sua revisão diária personalizada.",
+      path: "/banca",
     },
     {
       Icon: FilePenLine,
@@ -47,12 +49,12 @@ export default function Dashboard() {
     {
       Icon: ChartNoAxesCombined,
       title: "Simulado preditivo",
-      description: "Próxima etapa do projeto AproVest.",
+      description: "Avaliações cronometradas e histórico de treino.",
+      path: "/simulados",
     },
   ];
   return (
-    <>
-      <AppHeader />
+    <StudyLayout title="Painel da meta">
       <main className="student">
         <div className="dashboard">
           <span className="kicker">PAINEL DO ALUNO</span>
@@ -86,7 +88,7 @@ export default function Dashboard() {
           ) : (
             <section className="panel empty">
               <h2>Descubra seu ponto de partida</h2>
-              <p>Responda 20 questões e receba uma visão inicial das quatro áreas.</p>
+              <p>Responda 30 exercícios de fundamentos nas quatro áreas.</p>
               <Link className="btn primary" to="/diagnostico">
                 Começar diagnóstico
               </Link>
@@ -117,6 +119,6 @@ export default function Dashboard() {
           </div>
         </div>
       </main>
-    </>
+    </StudyLayout>
   );
 }
