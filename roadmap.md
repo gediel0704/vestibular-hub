@@ -18,3 +18,12 @@
 - [x] Gerar e inspecionar um novo ZIP portátil
 - [x] Eliminar a dependência nativa do Rollup na entrega acadêmica e testar instalação limpa
 - [x] Gerar e inspecionar o ZIP acadêmico atualizado para a correção do Windows
+
+## Entrega acadêmica completa solicitada
+- [ ] Confirmar documento de referência, formato SQL exigido e vestibulares prioritários
+- [ ] Entregar arquivo SQL separado, documentado e validado
+- [ ] Completar funções de aluno, professor e administrador com permissões seguras
+- [ ] Completar banco de questões, conteúdos, diagnóstico e preparação alinhados às bancas
+- [ ] Integrar e validar correção de redações e demais automações de IA aprovadas
+- [ ] Completar e testar todas as páginas e os fluxos por perfil
+- [ ] Empacotar e inspecionar nova versão web acadêmica completa
