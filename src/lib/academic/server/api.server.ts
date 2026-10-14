@@ -73,13 +73,13 @@ export async function academicApi(request: Request) {
     ensure(EXAMS.includes(exam), "Selecione uma banca válida.");
 
     if (action === "bootstrap") {
-      const dueCount = dbResult(
-        await db
-          .from("academic_progress")
-          .select("id", { count: "exact", head: true })
-          .eq("user_id", userId)
-          .lte("due_at", new Date().toISOString()),
-      );
+      const dueResult = await db
+        .from("academic_progress")
+        .select("id", { count: "exact", head: true })
+        .eq("user_id", userId)
+        .lte("due_at", new Date().toISOString());
+      if (dueResult.error) throw new ApiError(dueResult.error.message);
+      const dueCount = dueResult.count ?? 0;
       const today = new Date();
       today.setUTCHours(0, 0, 0, 0);
       const reminder = dbResult(
