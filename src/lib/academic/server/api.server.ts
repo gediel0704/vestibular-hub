@@ -125,6 +125,65 @@ export async function academicApi(request: Request) {
       );
       return respond({ items: items.map(safeItem), progress });
     }
+    if (action === "enem_exams") {
+      const exams = await fetchEnemApi("/exams");
+      ensure(Array.isArray(exams), "A fonte de questões retornou dados inválidos.");
+      return respond({
+        exams: exams.map((row: Input) => ({
+          title: String(row.title ?? ""),
+          year: Number(row.year),
+          disciplines: Array.isArray(row.disciplines) ? row.disciplines : [],
+          languages: Array.isArray(row.languages) ? row.languages : [],
+        })),
+        source: "enem.dev",
+      });
+    }
+    if (action === "enem_question" || action === "enem_answer") {
+      const year = Number(input.year);
+      const index = Number(input.index);
+      ensure(Number.isInteger(year) && year >= 2009 && year <= 2100, "Ano inválido.");
+      ensure(Number.isInteger(index) && index >= 1 && index <= 200, "Questão inválida.");
+      const language = input.language === "ingles" ? "ingles" : "espanhol";
+      const question = (await fetchEnemApi(
+        `/exams/${year}/questions/${index}?language=${language}`,
+      )) as Input;
+      ensure(question && Array.isArray(question.alternatives), "Questão indisponível.");
+
+      if (action === "enem_answer") {
+        const key = String(input.key ?? "").toUpperCase();
+        ensure(["A", "B", "C", "D", "E"].includes(key), "Selecione uma alternativa.");
+        return respond({
+          correct: key === question.correctAlternative,
+          correctAlternative: question.correctAlternative,
+        });
+      }
+
+      const disciplineLabels: Record<string, string> = {
+        "ciencias-humanas": "Ciências Humanas",
+        "ciencias-natureza": "Ciências da Natureza",
+        linguagens: "Linguagens",
+        matematica: "Matemática",
+      };
+      return respond({
+        question: {
+          title: question.title,
+          index: question.index,
+          year: question.year,
+          language: question.language,
+          discipline: question.discipline,
+          disciplineLabel: disciplineLabels[question.discipline] ?? question.discipline,
+          context: question.context,
+          files: Array.isArray(question.files) ? question.files : [],
+          alternativesIntroduction: question.alternativesIntroduction,
+          alternatives: question.alternatives.map((alternative: Input) => ({
+            letter: alternative.letter,
+            text: alternative.text,
+            file: alternative.file,
+          })),
+        },
+        source: "enem.dev",
+      });
+    }
     if (action === "progress") {
       const item = dbResult(
         await db
@@ -549,6 +608,28 @@ export async function academicApi(request: Request) {
       },
       error instanceof ApiError ? error.status : 500,
     );
+  }
+}
+
+async function fetchEnemApi(path: string) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
+
+  try {
+    const response = await fetch(`https://api.enem.dev/v1${path}`, {
+      headers: { Accept: "application/json" },
+      signal: controller.signal,
+    });
+    if (response.status === 429)
+      throw new ApiError("A fonte de questões atingiu o limite. Tente novamente em instantes.", 503);
+    if (response.status === 404) throw new ApiError("Questão não encontrada.", 404);
+    if (!response.ok) throw new ApiError("A fonte de questões está temporariamente indisponível.", 503);
+    return await response.json();
+  } catch (error) {
+    if (error instanceof ApiError) throw error;
+    throw new ApiError("A fonte de questões está temporariamente indisponível.", 503);
+  } finally {
+    clearTimeout(timeout);
   }
 }
 

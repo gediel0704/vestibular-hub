@@ -10,7 +10,7 @@ Versão acadêmica web em React 19, JavaScript, Vite, React Router, Bootstrap Gr
 4. Execute `npm run dev`.
 5. Abra o endereço exibido no terminal.
 
-A conexão pública com autenticação e banco já tem valores padrão no código. O `.env` não é obrigatório; `.env.example` documenta substituições opcionais.
+A conexão pública com autenticação e banco já tem valores padrão no código. O `.env` não é obrigatório; `.env.example` documenta substituições opcionais. O login Google e Apple usa o serviço de autenticação hospedado do projeto mesmo quando a interface roda em localhost.
 
 ## API acadêmica e IA
 
@@ -23,6 +23,7 @@ O ZIP não contém chave privada de IA. A chave é administrada de modo protegid
 - início, sobre, cadastro, login Google/e-mail, recuperação e troca de senha;
 - perfil, meta por curso/universidade/banca, modo escuro, exportação e pedido de exclusão;
 - biblioteca autoral de fundamentos para ENEM, FUVEST e Unicamp, com referências oficiais;
+- acervo complementar de questões oficiais do ENEM de 2009 a 2023, consultado pelo serviço externo enem.dev sem expor o gabarito antes da resposta;
 - diagnóstico com 30 exercícios, banca diária adaptativa e repetição espaçada;
 - plano de estudo, histórico, notificações e relatório imprimível em PDF;
 - simulados cronometrados, retomada e percentil apenas com pelo menos 5 participantes comparáveis;
@@ -34,6 +35,7 @@ O ZIP não contém chave privada de IA. A chave é administrada de modo protegid
 ## Limitações explícitas
 
 - os 30 exercícios por banca são autorais e introdutórios; não são questões oficiais completas nem substituem o programa oficial da edição;
+- o acervo enem.dev depende de um serviço comunitário, possui limite de uso e não inclui TRI, conteúdos teóricos, redação, diagnóstico adaptativo nem edições posteriores a 2023;
 - a adaptação usa estimativa Elo pedagógica, não TRI oficial do ENEM;
 - correções e notas da IA são estimativas para treino, não resultados oficiais;
 - pagamento recorrente e compra de créditos ficam indisponíveis até o responsável definir preços e conectar uma conta Stripe;

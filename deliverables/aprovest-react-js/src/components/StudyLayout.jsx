@@ -7,6 +7,7 @@ import { api } from "../lib/api";
 const links = [
   ["/dashboard", "Painel"],
   ["/biblioteca", "Conteúdos"],
+  ["/questoes-enem", "Questões ENEM"],
   ["/banca", "Banca diária"],
   ["/plano", "Plano de estudo"],
   ["/redacoes", "Redações"],

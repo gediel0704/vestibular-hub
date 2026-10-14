@@ -7,3 +7,4 @@
 - Academic browser clients use an authenticated HTTP API under `/api/public/academic` for AI, grading and privileged writes; handlers validate identities and roles before admin-client access to protect browser secrets and answer keys.
 - Keep SQL Server academic scripts separate from PostgreSQL Cloud migrations and package both with explicit runtime prerequisites so each delivery matches its execution engine.
 - Academic AI evaluations preserve the submitted essay snapshot and board-specific feedback; never replace historical corrections when a student edits a draft.
+- Consume the community ENEM question bank only through its external HTTP API and keep it complementary to the curated academic engine, avoiding GPL source-code coupling and provider lock-in.

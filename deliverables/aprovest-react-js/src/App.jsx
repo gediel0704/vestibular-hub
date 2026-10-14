@@ -12,6 +12,7 @@ import Practice from "./pages/Practice";
 import StudyPlan from "./pages/StudyPlan";
 import Account from "./pages/Account";
 import Staff from "./pages/Staff";
+import EnemQuestions from "./pages/EnemQuestions";
 export default function App() {
   const p = (x) => <Protected>{x}</Protected>;
   return (
@@ -26,6 +27,7 @@ export default function App() {
       <Route path="/dashboard" element={p(<Dashboard />)} />
       <Route path="/redacoes" element={p(<Essays />)} />
       <Route path="/biblioteca" element={p(<Library />)} />
+      <Route path="/questoes-enem" element={p(<EnemQuestions />)} />
       <Route path="/banca" element={p(<Practice />)} />
       <Route path="/simulados" element={p(<Practice mode="exam" />)} />
       <Route path="/plano" element={p(<StudyPlan />)} />
