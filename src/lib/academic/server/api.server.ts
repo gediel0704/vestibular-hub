@@ -89,6 +89,7 @@ export async function academicApi(request: Request) {
           const selected = input.mode === 'daily' ? items.sort((a, b) => rank(a) - rank(b)).slice(0, 10) : items.sort((a, b) => a.subject.localeCompare(b.subject)).slice(0, 30);
           ensure(selected.length >= (input.mode === 'daily' ? 1 : 30), 'Banco insuficiente para esta avaliação.');
           const id = dbResult(await db.rpc('academic_create_session', { p_user: userId, p_mode: input.mode, p_exam: exam, p_ids: selected.map((item) => item.id), p_course: profile?.target_course ?? '', p_university: profile?.target_university ?? '' }));
+          ensure(id, 'Não foi possível iniciar a avaliação.');
           session = dbResult(await db.from('academic_sessions').select('*').eq('id', id).single()) as Input;
         }
       }
@@ -152,6 +153,7 @@ export async function academicApi(request: Request) {
       const paused = dbResult(await db.from('academic_ai_state').select('*').eq('id', 'global').maybeSingle()) as Input | null;
       if (paused?.paused) throw new ApiError(paused.reason ?? 'IA pausada pelo responsável.', 503);
       const evaluationId = dbResult(await db.rpc('academic_reserve_evaluation', { p_user: userId, p_essay: input.essayId, p_exam: exam, p_type: input.type === 'human' ? 'human' : 'ai' }));
+      ensure(evaluationId, 'Não foi possível reservar a correção.');
       const evaluation = dbResult(await db.from('academic_evaluations').select('*').eq('id', evaluationId).single()) as Input;
       if (evaluation.type === 'human') return respond({ evaluation });
       dbResult(await db.from('academic_evaluations').update({ status: 'running' }).eq('id', evaluationId));
