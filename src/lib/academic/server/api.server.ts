@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { EXAMS, eloUpdate, percentile } from "../rules";
+import { EXAMS, percentile } from "../rules";
 
 type Input = Record<string, any>;
 class ApiError extends Error {
@@ -212,120 +212,17 @@ export async function academicApi(request: Request) {
       return respond({
         session,
         item: item ? safeItem(item) : null,
-        responses,
+        responses: session.mode === "exam" && session.status !== "completed" ? responses.map(({ is_correct, ...row }) => row) : responses,
         result: session.status === "completed" ? await sessionResult(db, session) : null,
       });
     }
     if (action === "answer") {
-      const session = dbResult(
-        await db
-          .from("academic_sessions")
-          .select("*")
-          .eq("id", input.sessionId)
-          .eq("user_id", userId)
-          .single(),
-      ) as Input;
-      ensure(session.status === "in_progress", "Esta avaliação já foi encerrada.");
-      const expired = session.expires_at && new Date(session.expires_at).getTime() <= Date.now();
-      if (!expired) {
-        const item = dbResult(
-          await db
-            .from("academic_items")
-            .select("*")
-            .eq("id", session.item_ids[session.current_index])
-            .single(),
-        ) as Input;
-        ensure(item.id === input.itemId, "A questão não corresponde à etapa atual.");
-        ensure(
-          item.choices.some((choice: Input) => choice.key === input.key),
-          "Selecione uma alternativa válida.",
-        );
-        const correct = item.correct_key === input.key;
-        dbResult(
-          await db
-            .from("academic_responses")
-            .insert({
-              user_id: userId,
-              session_id: session.id,
-              item_id: item.id,
-              selected_key: input.key,
-              is_correct: correct,
-            }),
-        );
-        const old = dbResult(
-          await db
-            .from("academic_progress")
-            .select("*")
-            .eq("user_id", userId)
-            .eq("item_id", item.id)
-            .maybeSingle(),
-        ) as Input | null;
-        dbResult(
-          await db
-            .from("academic_progress")
-            .upsert(
-              {
-                user_id: userId,
-                item_id: item.id,
-                completed: correct,
-                rating: eloUpdate(old?.rating ?? 1000, item.difficulty, correct),
-                due_at: new Date(Date.now() + (correct ? 7 : 1) * 86400000).toISOString(),
-                updated_at: new Date().toISOString(),
-              },
-              { onConflict: "user_id,item_id" },
-            ),
-        );
-        session.current_index++;
-        if (session.current_index < session.item_ids.length) {
-          dbResult(
-            await db
-              .from("academic_sessions")
-              .update({ current_index: session.current_index })
-              .eq("id", session.id),
-          );
-          return respond({
-            correct: session.mode === "exam" ? null : correct,
-            explanation: session.mode === "exam" ? "" : item.explanation,
-            next: true,
-          });
-        }
-      }
-      const responses = dbResult(
-        await db
-          .from("academic_responses")
-          .select("item_id,is_correct")
-          .eq("session_id", session.id),
-      ) as Input[];
-      const items = dbResult(
-        await db.from("academic_items").select("id,subject,topic").in("id", session.item_ids),
-      ) as Input[];
-      const scores: Input = {};
-      for (const item of items) {
-        const area = item.subject;
-        scores[area] ??= { right: 0, total: 0 };
-        scores[area].total++;
-        if (responses.find((row) => row.item_id === item.id)?.is_correct) scores[area].right++;
-      }
-      const score = responses.filter((row) => row.is_correct).length / session.item_ids.length;
-      const values = Object.fromEntries(
-        Object.entries(scores).map(([key, value]) => [
-          key,
-          (value as Input).right / (value as Input).total,
-        ]),
-      );
-      const completed = {
-        status: "completed",
-        completed_at: new Date().toISOString(),
-        score,
-        score_by_topic: values,
-        current_index: session.current_index,
-      };
-      dbResult(await db.from("academic_sessions").update(completed).eq("id", session.id));
-      return respond({
-        completed: true,
-        expired: Boolean(expired),
-        result: await sessionResult(db, { ...session, ...completed }),
-      });
+      const result = dbResult(await db.rpc("academic_answer_session", {
+        p_user: userId, p_session: input.sessionId, p_item: input.itemId, p_key: input.key ?? "",
+      })) as Input;
+      if (!result.completed) return respond(result);
+      const session = dbResult(await db.from("academic_sessions").select("*").eq("id", input.sessionId).eq("user_id", userId).single()) as Input;
+      return respond({ ...result, result: await sessionResult(db, session) });
     }
     if (action === "history") {
       return respond({
@@ -622,7 +519,8 @@ async function sessionResult(db: any, session: Input) {
         .eq("status", "completed")
         .eq("exam", session.exam)
         .eq("target_course", session.target_course)
-        .eq("target_university", session.target_university),
+        .eq("target_university", session.target_university)
+        .order("completed_at", { ascending: true }),
     ) as Input[];
     const sameQuestions = (ids: string[]) =>
       [...ids].sort().join(",") === [...session.item_ids].sort().join(",");
