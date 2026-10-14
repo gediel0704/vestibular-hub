@@ -20,7 +20,7 @@
 - [x] Gerar e inspecionar o ZIP acadêmico atualizado para a correção do Windows
 
 ## Entrega acadêmica completa solicitada
-- [ ] Confirmar documento de referência, formato SQL exigido e vestibulares prioritários
+- [x] Confirmar documento de referência, formato SQL exigido e vestibulares prioritários
 - [ ] Entregar arquivo SQL separado, documentado e validado
 - [ ] Completar funções de aluno, professor e administrador com permissões seguras
 - [ ] Completar banco de questões, conteúdos, diagnóstico e preparação alinhados às bancas
