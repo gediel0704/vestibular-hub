@@ -14,6 +14,352 @@ export type Database = {
   }
   public: {
     Tables: {
+      academic_ai_state: {
+        Row: {
+          id: string
+          paused: boolean
+          reason: string | null
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          paused?: boolean
+          reason?: string | null
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          paused?: boolean
+          reason?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      academic_entitlements: {
+        Row: {
+          human_credits: number
+          pro_until: string | null
+          subscription_status: string
+          user_id: string
+        }
+        Insert: {
+          human_credits?: number
+          pro_until?: string | null
+          subscription_status?: string
+          user_id: string
+        }
+        Update: {
+          human_credits?: number
+          pro_until?: string | null
+          subscription_status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      academic_evaluations: {
+        Row: {
+          assigned_to: string | null
+          completed_at: string | null
+          created_at: string
+          due_at: string | null
+          error_message: string | null
+          essay_id: string
+          essay_snapshot: Json
+          exam: string
+          feedback: Json | null
+          id: string
+          status: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          assigned_to?: string | null
+          completed_at?: string | null
+          created_at?: string
+          due_at?: string | null
+          error_message?: string | null
+          essay_id: string
+          essay_snapshot: Json
+          exam: string
+          feedback?: Json | null
+          id?: string
+          status?: string
+          type?: string
+          user_id: string
+        }
+        Update: {
+          assigned_to?: string | null
+          completed_at?: string | null
+          created_at?: string
+          due_at?: string | null
+          error_message?: string | null
+          essay_id?: string
+          essay_snapshot?: Json
+          exam?: string
+          feedback?: Json | null
+          id?: string
+          status?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "academic_evaluations_essay_id_fkey"
+            columns: ["essay_id"]
+            isOneToOne: false
+            referencedRelation: "essays"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      academic_items: {
+        Row: {
+          choices: Json
+          correct_key: string | null
+          created_at: string
+          difficulty: number
+          exam: string
+          explanation: string
+          id: string
+          kind: string
+          metadata: Json
+          origin: string
+          published: boolean
+          source_url: string
+          source_year: number | null
+          statement: string
+          subject: string
+          title: string
+          topic: string
+          updated_at: string
+        }
+        Insert: {
+          choices?: Json
+          correct_key?: string | null
+          created_at?: string
+          difficulty?: number
+          exam?: string
+          explanation?: string
+          id?: string
+          kind: string
+          metadata?: Json
+          origin?: string
+          published?: boolean
+          source_url?: string
+          source_year?: number | null
+          statement?: string
+          subject?: string
+          title: string
+          topic?: string
+          updated_at?: string
+        }
+        Update: {
+          choices?: Json
+          correct_key?: string | null
+          created_at?: string
+          difficulty?: number
+          exam?: string
+          explanation?: string
+          id?: string
+          kind?: string
+          metadata?: Json
+          origin?: string
+          published?: boolean
+          source_url?: string
+          source_year?: number | null
+          statement?: string
+          subject?: string
+          title?: string
+          topic?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      academic_notifications: {
+        Row: {
+          body: string
+          created_at: string
+          id: string
+          read_at: string | null
+          title: string
+          user_id: string
+        }
+        Insert: {
+          body?: string
+          created_at?: string
+          id?: string
+          read_at?: string | null
+          title: string
+          user_id: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          read_at?: string | null
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      academic_progress: {
+        Row: {
+          completed: boolean
+          due_at: string | null
+          id: string
+          item_id: string
+          rating: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed?: boolean
+          due_at?: string | null
+          id?: string
+          item_id: string
+          rating?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completed?: boolean
+          due_at?: string | null
+          id?: string
+          item_id?: string
+          rating?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "academic_progress_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "academic_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      academic_requests: {
+        Row: {
+          created_at: string
+          id: string
+          kind: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          kind: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          kind?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      academic_responses: {
+        Row: {
+          answered_at: string
+          id: string
+          is_correct: boolean
+          item_id: string
+          selected_key: string
+          session_id: string
+          user_id: string
+        }
+        Insert: {
+          answered_at?: string
+          id?: string
+          is_correct: boolean
+          item_id: string
+          selected_key: string
+          session_id: string
+          user_id: string
+        }
+        Update: {
+          answered_at?: string
+          id?: string
+          is_correct?: boolean
+          item_id?: string
+          selected_key?: string
+          session_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "academic_responses_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "academic_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "academic_responses_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "academic_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      academic_sessions: {
+        Row: {
+          completed_at: string | null
+          current_index: number
+          exam: string
+          expires_at: string | null
+          id: string
+          item_ids: string[]
+          mode: string
+          score: number | null
+          score_by_topic: Json
+          started_at: string
+          status: string
+          target_course: string
+          target_university: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          current_index?: number
+          exam: string
+          expires_at?: string | null
+          id?: string
+          item_ids: string[]
+          mode: string
+          score?: number | null
+          score_by_topic?: Json
+          started_at?: string
+          status?: string
+          target_course?: string
+          target_university?: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          current_index?: number
+          exam?: string
+          expires_at?: string | null
+          id?: string
+          item_ids?: string[]
+          mode?: string
+          score?: number | null
+          score_by_topic?: Json
+          started_at?: string
+          status?: string
+          target_course?: string
+          target_university?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       diagnostic_answers: {
         Row: {
           answered_at: string
@@ -167,9 +513,13 @@ export type Database = {
           created_at: string
           full_name: string | null
           id: string
+          notifications_enabled: boolean
           onboarding_completed: boolean
+          ranking_opt_in: boolean
           school: string | null
           target_course: string | null
+          target_exam: string
+          target_university: string
           target_year: number | null
           updated_at: string
         }
@@ -178,9 +528,13 @@ export type Database = {
           created_at?: string
           full_name?: string | null
           id: string
+          notifications_enabled?: boolean
           onboarding_completed?: boolean
+          ranking_opt_in?: boolean
           school?: string | null
           target_course?: string | null
+          target_exam?: string
+          target_university?: string
           target_year?: number | null
           updated_at?: string
         }
@@ -189,11 +543,33 @@ export type Database = {
           created_at?: string
           full_name?: string | null
           id?: string
+          notifications_enabled?: boolean
           onboarding_completed?: boolean
+          ranking_opt_in?: boolean
           school?: string | null
           target_course?: string | null
+          target_exam?: string
+          target_university?: string
           target_year?: number | null
           updated_at?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
         }
         Relationships: []
       }
@@ -202,10 +578,36 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      academic_create_session: {
+        Args: {
+          p_course: string
+          p_exam: string
+          p_ids: string[]
+          p_mode: string
+          p_university: string
+          p_user: string
+        }
+        Returns: string
+      }
+      academic_reserve_evaluation: {
+        Args: {
+          p_essay: string
+          p_exam: string
+          p_type: string
+          p_user: string
+        }
+        Returns: string
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "teacher" | "student"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -332,6 +734,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "teacher", "student"],
+    },
   },
 } as const
