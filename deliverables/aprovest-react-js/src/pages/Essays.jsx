@@ -2,8 +2,9 @@ import { useEffect, useMemo, useState } from "react";
 import { FilePenLine, Plus, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
-import { AppHeader } from "../components/Layout";
 import { supabase } from "../lib/supabase";
+import { EssayEvaluation } from "../components/EssayEvaluation";
+import { StudyLayout } from "../components/StudyLayout";
 
 const emptyForm = {
   title: "",
@@ -207,8 +208,7 @@ export default function Essays() {
   const currentWordCount = countWords(form.content);
 
   return (
-    <>
-      <AppHeader />
+    <StudyLayout title="Caderno de redações">
       <main className="student">
         <div className="dashboard">
           <Link className="back-link" to="/dashboard">
@@ -357,6 +357,7 @@ export default function Essays() {
                             Excluir
                           </button>
                         </div>
+                        <EssayEvaluation essay={essay} />
                       </article>
                     ))
                   ) : (
@@ -390,6 +391,6 @@ export default function Essays() {
           )}
         </div>
       </main>
-    </>
+    </StudyLayout>
   );
 }

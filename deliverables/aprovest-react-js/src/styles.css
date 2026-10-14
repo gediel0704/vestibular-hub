@@ -7,7 +7,205 @@
   --line: #dde3ed;
   --surface: #f5f7fb;
   --white: #fff;
+  --danger: #a12424;
+  --danger-surface: #fff2f2;
+  --header-glass: #fffffff2;
   --radius: 8px;
+}
+[data-theme="dark"] {
+  --ink: #edf2fa;
+  --muted: #bac5d5;
+  --white: #172033;
+  --surface: #101725;
+  --line: #354256;
+  --blue: #90b3ff;
+  --navy: #dce7ff;
+  --header-glass: #172033f2;
+  --danger: #ffb4b4;
+  --danger-surface: #3c242b;
+}
+.study-nav {
+  display: flex;
+  gap: 22px;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--line);
+  padding: 16px 24px;
+  background: var(--white);
+}
+.study-nav a {
+  display: block;
+  white-space: nowrap;
+  font-size: 14px;
+}
+.study-nav a.active {
+  color: var(--blue);
+  font-weight: 700;
+}
+.error-notice {
+  background: var(--danger-surface);
+  color: var(--danger);
+  border-left: 3px solid var(--danger);
+  padding: 16px;
+  margin: 20px 0;
+  overflow-wrap: anywhere;
+}
+.muted {
+  color: var(--muted);
+}
+.exam-select,
+.account-form label {
+  display: grid;
+  gap: 6px;
+  max-width: 420px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.exam-select select,
+.account-form input,
+.history-list select {
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--ink);
+  background: var(--white);
+  min-width: 0;
+}
+.reading-view,
+.practice-intro,
+.question-view,
+.results-view,
+.plans-view {
+  padding: 32px 0;
+  max-width: 800px;
+}
+.reading-view > .kicker {
+  display: block;
+  margin: 24px 0 10px;
+}
+.reading-text {
+  white-space: pre-wrap;
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+.question-meta {
+  display: flex;
+  gap: 18px;
+  justify-content: space-between;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+progress {
+  width: 100%;
+  height: 8px;
+  accent-color: var(--blue);
+}
+.answers {
+  display: grid;
+  gap: 12px;
+  margin: 24px 0;
+}
+.answer-option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  cursor: pointer;
+}
+.answer-option.selected {
+  border-color: var(--blue);
+  background: var(--surface);
+}
+.answer-option input {
+  accent-color: var(--blue);
+}
+.answer-feedback {
+  padding: 20px 0;
+  border-top: 1px solid var(--line);
+}
+.study-steps {
+  list-style: none;
+  padding: 0;
+}
+.study-steps li,
+.privacy-actions {
+  padding: 28px 0;
+  border-bottom: 1px solid var(--line);
+}
+.account-form {
+  display: grid;
+  gap: 18px;
+  margin: 28px 0;
+}
+.checkbox-label {
+  display: flex !important;
+  align-items: center;
+  gap: 12px;
+}
+.history-list {
+  margin: 24px 0;
+}
+.history-list article {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 18px 0;
+  gap: 16px;
+  border-bottom: 1px solid var(--line);
+}
+.history-list h2,
+.history-list h3 {
+  font-size: 18px;
+  margin: 0;
+}
+.history-list p {
+  color: var(--muted);
+  margin: 5px 0;
+}
+.essay-evaluation {
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+  margin-top: 18px;
+}
+.essay-evaluation .editor-actions {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-top: 12px;
+}
+.evaluation-history section {
+  border-top: 1px solid var(--line);
+  padding: 20px 0;
+}
+.evaluation-history blockquote {
+  border-left: 3px solid var(--blue);
+  margin: 12px 0;
+  padding-left: 15px;
+}
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+@media print {
+  header,
+  .study-nav,
+  .btn {
+    display: none !important;
+  }
+  .student {
+    padding: 0;
+  }
+  .history-list article {
+    break-inside: avoid;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
 }
 * {
   box-sizing: border-box;
@@ -67,7 +265,7 @@ header {
   position: sticky;
   top: 0;
   z-index: 5;
-  background: #fffffff2;
+  background: var(--header-glass);
   border-bottom: 1px solid var(--line);
   backdrop-filter: blur(12px);
 }
@@ -592,6 +790,9 @@ footer .container {
   text-align: center;
 }
 @media (max-width: 760px) {
+  .study-nav a {
+    display: block !important;
+  }
   nav > a:not(.btn) {
     display: none;
   }
