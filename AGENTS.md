@@ -11,3 +11,5 @@
 - Consume the community ENEM question bank only through its external HTTP API and keep it complementary to the curated academic engine, avoiding GPL source-code coupling and provider lock-in.
 - Keep official academic references in a browser-safe curated catalog with provenance and edition labels; external links are not imported interactive items or republication licenses.
 - Academic study priorities use completed assessments from the selected exam and each subject's latest valid ratio, excluding completed readings; keep this deterministic heuristic separate from TRI and AI.
+- Academic npm lifecycle scripts validate supported Node versions and probe the hosted API without credentials; network warnings must not block offline UI startup because installation and hosted service availability are separate concerns.
+- Academic AI grading returns authenticated NDJSON progress and terminal result/error events; keep long hosted responses active without artificial generation deadlines or automatic billed retries.

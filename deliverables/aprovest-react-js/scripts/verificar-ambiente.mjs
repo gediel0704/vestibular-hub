@@ -8,9 +8,10 @@
  * Uso: node scripts/verificar-ambiente.mjs
  */
 
-import { existsSync } from 'node:fs';
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { existsSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { supportedNodeVersion } from "./node-version.mjs";
 
 const raiz = dirname(dirname(fileURLToPath(import.meta.url)));
 
@@ -28,42 +29,45 @@ function erro(mensagem, solucao) {
   }
 }
 
-console.log('');
-console.log('=== AproVest - verificacao do ambiente ===');
-console.log('');
+console.log("");
+console.log("=== AproVest - verificacao do ambiente ===");
+console.log("");
 
 const versaoNode = process.versions.node;
-const majorNode = Number(versaoNode.split('.')[0]);
+const instalar = process.argv.includes("--instalacao");
 
-if (majorNode >= 20) {
-  ok(`Node.js ${versaoNode} (minimo exigido: 20)`);
+if (supportedNodeVersion(versaoNode)) {
+  ok(`Node.js ${versaoNode} compativel`);
 } else {
   erro(
     `Node.js ${versaoNode} e antigo demais.`,
-    'Instale a versao 20 ou superior em https://nodejs.org'
+    "Instale Node.js LTS 22.12+ ou 24 em https://nodejs.org",
   );
 }
 
-if (existsSync(join(raiz, 'node_modules'))) {
-  ok('Dependencias instaladas (pasta node_modules presente)');
+if (instalar) {
+  ok("Verificacao antes da instalacao concluida");
+} else if (existsSync(join(raiz, "node_modules", "vite", "package.json"))) {
+  ok("Dependencias instaladas (pasta node_modules presente)");
 } else {
-  erro(
-    'Dependencias ainda nao instaladas.',
-    'Execute npm install na pasta do projeto'
-  );
+  erro("Dependencias ainda nao instaladas.", "Execute npm install na pasta do projeto");
 }
 
-if (existsSync(join(raiz, 'package-lock.json'))) {
-  ok('Arquivo de versoes travadas presente (instalacao reproduzivel)');
+if (existsSync(join(raiz, "package-lock.json"))) {
+  ok("Arquivo de versoes travadas presente (instalacao reproduzivel)");
 }
 
-console.log('');
+console.log("");
 
 if (falhas > 0) {
   console.error(`Foram encontrados ${falhas} problema(s). Corrija e tente novamente.`);
-  console.log('');
+  console.log("");
   process.exit(1);
 }
 
-console.log('Ambiente pronto. Execute npm run dev para abrir o site.');
-console.log('');
+console.log(
+  instalar
+    ? "Instalacao pode continuar."
+    : "Ambiente pronto. Execute npm run dev para abrir o site.",
+);
+console.log("");
