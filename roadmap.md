@@ -92,3 +92,11 @@ Escopo desta etapa: referências externas e prioridade por disciplina; não conf
 - [x] Documentado alinhamento com fontes oficiais em docs/FONTES-E-LIMITES.md
 - [ ] Republicar a API (choose_role, target_exams, correct_key) — depende de publicação autorizada
 - [ ] Validar login social no site hospedado após novo deploy do pacote estático
+
+## Banca oficial FUVEST/Unicamp — 16/10/2026 (noite)
+- [x] 626 questões oficiais FUVEST/Unicamp (2018–2024) importadas para o banco (origem "official")
+- [x] Ação admin_import na API para importação em lote validada no servidor
+- [x] Apuração de assuntos por vestibular em docs/ANALISE-ASSUNTOS.md
+- [x] Script reproduzível scripts/importar-bluex.py
+- [ ] ENEM 2024: aguardando publicação na API pública enem.dev (hoje vai até 2023)
+- [ ] 634 questões com imagens das provas FUVEST/Unicamp aguardam revisão com figuras oficiais
