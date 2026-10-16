@@ -35,6 +35,44 @@ export type Database = {
         }
         Relationships: []
       }
+      academic_content_reviews: {
+        Row: {
+          comments: string
+          created_at: string
+          id: string
+          item_id: string
+          item_snapshot: Json
+          teacher_id: string
+          verdict: string
+        }
+        Insert: {
+          comments: string
+          created_at?: string
+          id?: string
+          item_id: string
+          item_snapshot?: Json
+          teacher_id: string
+          verdict: string
+        }
+        Update: {
+          comments?: string
+          created_at?: string
+          id?: string
+          item_id?: string
+          item_snapshot?: Json
+          teacher_id?: string
+          verdict?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "academic_content_reviews_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "academic_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       academic_entitlements: {
         Row: {
           human_credits: number
@@ -386,6 +424,53 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      academic_teacher_earnings: {
+        Row: {
+          amount_minor: number
+          created_at: string
+          currency: string
+          evaluation_id: string
+          id: string
+          paid_at: string | null
+          status: string
+          teacher_amount_minor: number | null
+          teacher_id: string
+          teacher_share_bps: number
+        }
+        Insert: {
+          amount_minor: number
+          created_at?: string
+          currency?: string
+          evaluation_id: string
+          id?: string
+          paid_at?: string | null
+          status?: string
+          teacher_amount_minor?: number | null
+          teacher_id: string
+          teacher_share_bps: number
+        }
+        Update: {
+          amount_minor?: number
+          created_at?: string
+          currency?: string
+          evaluation_id?: string
+          id?: string
+          paid_at?: string | null
+          status?: string
+          teacher_amount_minor?: number | null
+          teacher_id?: string
+          teacher_share_bps?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "academic_teacher_earnings_evaluation_id_fkey"
+            columns: ["evaluation_id"]
+            isOneToOne: true
+            referencedRelation: "academic_evaluations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       diagnostic_answers: {
         Row: {

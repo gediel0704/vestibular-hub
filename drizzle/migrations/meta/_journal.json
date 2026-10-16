@@ -15,6 +15,13 @@
       "when": 1791976143933,
       "tag": "0001_academic_atomic_answers",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1792123082191,
+      "tag": "0002_academic_staff_reviews_earnings",
+      "breakpoints": true
     }
   ]
 }
