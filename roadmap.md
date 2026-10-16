@@ -1,5 +1,12 @@
 # Roadmap
 
+## Finalização acadêmica — 16/10/2026
+- [ ] Conferir o documento norteador e registrar lacunas reais, sem confundir implementação com validação
+- [ ] Validar instalação limpa e automatizar verificações de Node e conexão no fluxo npm
+- [ ] Corrigir e testar API e correção por IA com sessão real
+- [ ] Testar fluxos de aluno, professor e administrador e registrar bloqueios externos
+- [ ] Confirmar acesso à API hospedada antes de declarar a entrega pronta
+
 ## Conexão acadêmica em outras máquinas
 - [x] Remover dependência automática da API em localhost e testar a seleção do endereço
 - [x] Documentar execução pelo terminal sem scripts PowerShell nem novos downloads ZIP
