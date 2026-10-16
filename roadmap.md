@@ -1,12 +1,15 @@
 # Roadmap
 
 ## Áreas distintas e gestão financeira por perfil
-- [ ] Separar navegação e acesso de aluno, professor e administrador, com permissões verificadas no servidor
-- [ ] Completar solicitações de correção e avaliação de conteúdos na área docente
-- [ ] Apresentar ganhos por redação e distribuição de valores sem inventar taxas
-- [ ] Completar relatórios administrativos de cadastros, assinaturas e finanças
-- [ ] Definir preços, percentual docente e uso de cobranças reais ou demonstração acadêmica: aguarda resposta do proprietário
-- [ ] Atualizar scripts SQL e validar fluxos e isolamento entre perfis
+- [x] Separar navegação e acesso por perfil, com autorização de ações no servidor e testes automatizados
+- [x] Acrescentar pareceres de conteúdo à fila de correções docentes
+- [x] Preparar relatório de remunerações registradas e distribuição bruta, sem inventar lucro líquido
+- [x] Apresentar cadastros, vigência de acessos e exportações; distinguir bolsas de assinaturas pagas
+- [x] Registrar decisão: preparar sem ativar cobrança; preços e repasse sugeridos não foram configurados
+- [x] Atualizar scripts PostgreSQL e SQL Server; testar as três áreas com conta administrativa existente
+- [ ] Concluir relatório de receitas reais, assinaturas pagas e pagamento de repasses: depende de ativação de cobrança autorizada e operações verificadas
+- [ ] Validar parecer enviado e isolamento com identidade docente real: depende de professor autorizado; não conceder papéis só para testar
+- [ ] Disponibilizar atualização da API hospedada: depende de publicação autorizada desta revisão
 
 ## Finalização acadêmica — 16/10/2026
 - [x] Conferir o documento norteador e registrar lacunas reais, sem confundir implementação com validação
