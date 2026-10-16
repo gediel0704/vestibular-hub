@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { EXAMS, percentile } from "../rules";
+import { academicRole, canUseAcademicAction } from "../access";
 
 type Input = Record<string, any>;
 class ApiError extends Error {
@@ -70,6 +71,9 @@ export async function academicApi(request: Request) {
     if (text.length > 60000) throw new ApiError("Solicitação muito grande.");
     const input: Input = JSON.parse(text);
     const action = input.action;
+    if (typeof action !== "string" || !canUseAcademicAction(academicRole(roles), action)) {
+      throw new ApiError("Esta operação não está disponível para seu perfil.", 403);
+    }
     const profile = dbResult(
       await db.from("profiles").select("*").eq("id", userId).maybeSingle(),
     ) as Input | null;
@@ -507,7 +511,32 @@ export async function academicApi(request: Request) {
         .eq("type", "human")
         .order("created_at");
       if (!admin) query = query.eq("assigned_to", userId);
-      return respond({ evaluations: dbResult(await query) });
+      let earningsQuery = db.from("academic_teacher_earnings").select("*").order("created_at", { ascending: false });
+      let reviewsQuery = db.from("academic_content_reviews").select("*").order("created_at", { ascending: false });
+      if (!admin) {
+        earningsQuery = earningsQuery.eq("teacher_id", userId);
+        reviewsQuery = reviewsQuery.eq("teacher_id", userId);
+      }
+      return respond({
+        evaluations: dbResult(await query),
+        items: dbResult(await db.from("academic_items").select("*").eq("kind", "content").order("title")),
+        earnings: dbResult(await earningsQuery),
+        reviews: dbResult(await reviewsQuery),
+      });
+    }
+    if (action === "content_review") {
+      if (!teacher && !admin) throw new ApiError("Acesso restrito.", 403);
+      ensure(["approved", "changes_requested"].includes(input.verdict), "Parecer inválido.");
+      ensure(typeof input.comments === "string" && input.comments.trim().length >= 20, "Descreva o parecer em pelo menos 20 caracteres.");
+      const item = dbResult(await db.from("academic_items").select("*").eq("id", input.itemId).eq("kind", "content").single());
+      dbResult(await db.from("academic_content_reviews").insert({
+        item_id: input.itemId,
+        teacher_id: userId,
+        verdict: input.verdict,
+        comments: input.comments.trim().slice(0, 12000),
+        item_snapshot: item,
+      }));
+      return respond({ ok: true });
     }
     if (action === "human_feedback") {
       if (!teacher && !admin) throw new ApiError("Acesso restrito.", 403);
@@ -521,6 +550,7 @@ export async function academicApi(request: Request) {
       ) as Input;
       if (!admin && evaluation.assigned_to !== userId)
         throw new ApiError("Redação não atribuída a você.", 403);
+      ensure(evaluation.status !== "completed", "Esta correção já foi entregue.");
       ensure(
         typeof input.summary === "string" && input.summary.trim().length >= 20,
         "Escreva uma devolutiva de pelo menos 20 caracteres.",
@@ -549,7 +579,7 @@ export async function academicApi(request: Request) {
             await db.from("academic_items").select("*").order("created_at", { ascending: false }),
           ),
           users: dbResult(
-            await db.from("profiles").select("id,full_name,target_course,target_exam"),
+            await db.from("profiles").select("id,full_name,target_course,target_exam,created_at"),
           ),
           roles: dbResult(await db.from("user_roles").select("*")),
           evaluations: dbResult(
@@ -557,9 +587,13 @@ export async function academicApi(request: Request) {
           ),
           requests: dbResult(await db.from("academic_requests").select("*")),
           entitlements: dbResult(await db.from("academic_entitlements").select("*")),
+          earnings: dbResult(await db.from("academic_teacher_earnings").select("*").order("created_at", { ascending: false })),
+          reviews: dbResult(await db.from("academic_content_reviews").select("*").order("created_at", { ascending: false })),
         });
       if (action === "admin_role") {
         ensure(["student", "teacher", "admin"].includes(input.role), "Papel inválido.");
+        ensure(input.userId !== userId || input.role === "admin", "Você não pode substituir seu próprio acesso administrativo.");
+        ensure(dbResult(await db.from("profiles").select("id").eq("id", input.userId).maybeSingle()), "Conta não encontrada.");
         if (input.remove) {
           ensure(
             input.userId !== userId || input.role !== "admin",
@@ -568,12 +602,14 @@ export async function academicApi(request: Request) {
           dbResult(
             await db.from("user_roles").delete().eq("user_id", input.userId).eq("role", input.role),
           );
-        } else
+        } else {
           dbResult(
             await db
               .from("user_roles")
               .upsert({ user_id: input.userId, role: input.role }, { onConflict: "user_id,role" }),
           );
+          dbResult(await db.from("user_roles").delete().eq("user_id", input.userId).neq("role", input.role));
+        }
       } else if (action === "admin_item") {
         const item = input.item;
         ensure(["question", "content", "theme", "exam"].includes(item.kind), "Tipo inválido.");
@@ -613,6 +649,8 @@ export async function academicApi(request: Request) {
       } else if (action === "admin_archive") {
         dbResult(await db.from("academic_items").update({ published: false }).eq("id", input.id));
       } else if (action === "admin_assign") {
+        const evaluation = dbResult(await db.from("academic_evaluations").select("status").eq("id", input.id).eq("type", "human").single()) as Input;
+        ensure(evaluation.status !== "completed", "Uma correção entregue não pode ser reatribuída.");
         const assignedRoles = dbResult(
           await db.from("user_roles").select("role").eq("user_id", input.teacherId),
         ) as Input[];
