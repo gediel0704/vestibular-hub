@@ -2,7 +2,16 @@
 
 Versão acadêmica web em React 19, JavaScript, Vite, React Router, Bootstrap Grid e Lovable Cloud.
 
-## Executar o site
+## Executar o site (qualquer computador)
+
+O projeto inclui inicializadores universais que verificam o ambiente, instalam as dependências e abrem o site, sem exigir comandos manuais:
+
+- **Windows:** dê dois cliques em `iniciar-windows.cmd` (ou execute-o no Prompt de Comando). Ele funciona mesmo quando o PowerShell bloqueia scripts, pois não depende do PowerShell.
+- **macOS e Linux:** execute `bash iniciar-mac-linux.sh` no terminal.
+
+Os inicializadores avisam com mensagens claras se o Node.js estiver ausente ou desatualizado. Para verificar o ambiente sem iniciar o site, execute `npm run verificar`.
+
+### Execução manual (alternativa)
 
 1. Instale Node.js 20.19+ ou 22.12+ (LTS recomendado).
 2. Clone o repositório GitHub e abra `deliverables/aprovest-react-js` no VS Code, ou extraia o ZIP em uma pasta nova.
@@ -57,10 +66,11 @@ O Rollup do Vite é substituído oficialmente pela edição WebAssembly, evitand
 
 ### Se o PowerShell bloquear o npm
 
-Em Windows, o PowerShell pode proibir scripts e exibir "a execução de scripts foi desabilitada neste sistema" ao digitar `npm install`. Isso é uma regra do Windows, não um erro do projeto. Duas saídas:
+Em Windows, o PowerShell pode proibir scripts e exibir "a execução de scripts foi desabilitada neste sistema" ao digitar `npm install`. Isso é uma regra do Windows, não um erro do projeto. Três saídas:
 
-1. Use o Prompt de Comando (`cmd`) em vez do PowerShell: ele chama `npm.cmd` e não é afetado pela regra.
-2. Ou libere scripts apenas para o seu usuário, no PowerShell: `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned` e confirme com `S`. Depois, `npm install` funciona normalmente.
+1. **Recomendada:** use `iniciar-windows.cmd`, que não depende do PowerShell.
+2. Use o Prompt de Comando (`cmd`) em vez do PowerShell: ele chama `npm.cmd` e não é afetado pela regra.
+3. Ou libere scripts apenas para o seu usuário, no PowerShell: `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned` e confirme com `S`. Depois, `npm install` funciona normalmente.
 
 Para liberar só na janela aberta, sem alterar nada no sistema: `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass`.
 
