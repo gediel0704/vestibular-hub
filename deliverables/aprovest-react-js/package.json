@@ -4,14 +4,17 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "preinstall": "node scripts/verificar-ambiente.mjs --instalacao",
+    "postinstall": "node scripts/verificar-api.mjs",
+    "predev": "node scripts/verificar-ambiente.mjs && node scripts/verificar-api.mjs",
     "dev": "vite",
     "build": "vite build",
     "lint": "oxlint src",
     "preview": "vite preview",
-    "verificar": "node scripts/verificar-ambiente.mjs"
+    "verificar": "node scripts/verificar-ambiente.mjs && node scripts/verificar-api.mjs --obrigatorio"
   },
   "engines": {
-    "node": ">=20"
+    "node": "^20.19.0 || ^22.12.0 || >=24.0.0"
   },
   "dependencies": {
     "@lovable.dev/cloud-auth-js": "^1.1.2",

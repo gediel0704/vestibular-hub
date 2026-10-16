@@ -5,6 +5,7 @@ Versão acadêmica web em React 19, JavaScript, Vite, React Router, Bootstrap Gr
 ## Executar o site (qualquer computador)
 
 O projeto inclui inicializadores universais que verificam o ambiente, instalam as dependências e abrem o site, sem exigir comandos manuais:
+Os mesmos testes agora são executados automaticamente pelo próprio `npm install` e pelo `npm run dev`; os inicializadores são opcionais. A instalação verifica a versão real exigida pelo Vite (Node 20.19+, 22.12+ ou 24+) e verifica se a API hospedada responde como serviço protegido. Sem internet, a instalação pode falhar ao baixar dependências; a verificação da API mostra um aviso, sem apagar ou modificar configurações do computador.
 
 - **Windows:** dê dois cliques em `iniciar-windows.cmd` (ou execute-o no Prompt de Comando). Ele funciona mesmo quando o PowerShell bloqueia scripts, pois não depende do PowerShell.
 - **macOS e Linux:** execute `bash iniciar-mac-linux.sh` no terminal.
@@ -24,6 +25,7 @@ A conexão pública com autenticação e banco já tem valores padrão no códig
 ## API acadêmica e IA
 
 Questões, limites, notas, papéis, gabaritos e IA passam pela API autenticada `/api/public/academic`, incluída no projeto Lovable que acompanha esta entrega. O cliente usa por padrão o endereço hospedado estável, inclusive em localhost: o responsável precisa publicar o projeto Lovable antes de a API estar disponível. Não é necessário iniciar um segundo servidor no computador do professor. Para desenvolvimento local completo, substitua `VITE_ACADEMIC_API_URL` por `http://localhost:8080/api/public/academic` e inicie também o servidor principal. A IA nunca funciona sem internet, API no servidor e saldo disponível.
+A API hospedada respondeu ao teste autenticado de `bootstrap` em 16/10/2026. Isso confirma a conexão naquela data, não uma garantia de disponibilidade futura nem uma verificação da correção de IA. Execute `npm run verificar` para testar novamente a conexão pública.
 
 ### Windows: executar no próprio terminal, sem baixar inicializador
 
