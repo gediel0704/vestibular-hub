@@ -14,7 +14,7 @@ import Account from "./pages/Account";
 import Staff from "./pages/Staff";
 import EnemQuestions from "./pages/EnemQuestions";
 export default function App() {
-  const p = (x) => <Protected>{x}</Protected>;
+  const p = (x, area = "student") => <Protected area={area}>{x}</Protected>;
   return (
     <Routes>
       <Route path="/" element={<Home />} />
@@ -31,12 +31,12 @@ export default function App() {
       <Route path="/banca" element={p(<Practice />)} />
       <Route path="/simulados" element={p(<Practice mode="exam" />)} />
       <Route path="/plano" element={p(<StudyPlan />)} />
-      <Route path="/perfil" element={p(<Account />)} />
+      <Route path="/perfil" element={p(<Account />, "shared")} />
       <Route path="/historico" element={p(<Account view="history" />)} />
-      <Route path="/notificacoes" element={p(<Account view="notifications" />)} />
+      <Route path="/notificacoes" element={p(<Account view="notifications" />, "shared")} />
       <Route path="/planos" element={p(<Account view="plans" />)} />
-      <Route path="/professor" element={p(<Staff />)} />
-      <Route path="/admin" element={p(<Staff admin />)} />
+      <Route path="/professor" element={p(<Staff />, "teacher")} />
+      <Route path="/admin" element={p(<Staff admin />, "admin")} />
       <Route
         path="*"
         element={

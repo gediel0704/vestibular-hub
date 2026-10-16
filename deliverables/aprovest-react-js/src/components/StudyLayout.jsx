@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { AppHeader } from "./Layout";
 import { Button } from "./Button";
-import { api } from "../lib/api";
+import { useAuth } from "../contexts/AuthContext";
 
 const links = [
   ["/dashboard", "Painel"],
@@ -19,23 +18,21 @@ const links = [
 ];
 
 export function StudyLayout({ title, eyebrow = "SUA PREPARAÇÃO", children }) {
-  const [role, setRole] = useState("student");
-  useEffect(() => {
-    api("bootstrap")
-      .then((data) => setRole(data.role))
-      .catch(() => {});
-  }, []);
+  const { role } = useAuth();
+  const studentLinks = role === "student" || role === "admin" ? links : [];
   return (
     <>
       <AppHeader />
       <nav className="study-nav" aria-label="Preparação">
-        {links.map(([path, label]) => (
+        {studentLinks.map(([path, label]) => (
           <NavLink key={path} to={path}>
             {label}
           </NavLink>
         ))}
-        {["teacher", "admin"].includes(role) && <NavLink to="/professor">Correções</NavLink>}
+        {["teacher", "admin"].includes(role) && <NavLink to="/professor">Área docente</NavLink>}
         {role === "admin" && <NavLink to="/admin">Administração</NavLink>}
+        {role === "teacher" && <NavLink to="/perfil">Perfil</NavLink>}
+        {role === "teacher" && <NavLink to="/notificacoes">Notificações</NavLink>}
       </nav>
       <main className="student">
         <div className="dashboard">

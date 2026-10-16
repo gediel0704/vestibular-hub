@@ -1,11 +1,25 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
+import { api } from "../lib/api";
 
 const Context = createContext(null);
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [role, setRole] = useState(null);
+  const [roleError, setRoleError] = useState("");
+
+  useEffect(() => {
+    let active = true;
+    setRole(null);
+    setRoleError("");
+    if (!user) return () => { active = false; };
+    api("bootstrap")
+      .then((data) => { if (active) setRole(data.role); })
+      .catch((error) => { if (active) setRoleError(error.message); });
+    return () => { active = false; };
+  }, [user?.id]);
 
   useEffect(() => {
     let active = true;
@@ -37,7 +51,7 @@ export function AuthProvider({ children }) {
     };
   }, []);
 
-  return <Context.Provider value={{ user, loading }}>{children}</Context.Provider>;
+  return <Context.Provider value={{ user, loading, role, roleError }}>{children}</Context.Provider>;
 }
 
 export function useAuth() {

@@ -3,6 +3,7 @@ import { LogOut, Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { supabase } from "../lib/supabase";
+import { roleHome, canOpenArea } from "../lib/access";
 export const Brand = () => (
   <Link to="/" className="brand">
     <b>A</b>
@@ -12,7 +13,7 @@ export const Brand = () => (
   </Link>
 );
 export function PublicLayout({ children }) {
-  const { user } = useAuth();
+  const { user, role } = useAuth();
   return (
     <>
       <header>
@@ -23,8 +24,8 @@ export function PublicLayout({ children }) {
               Início
             </NavLink>
             <NavLink to="/sobre">Sobre</NavLink>
-            <Link className="btn primary" to={user ? "/dashboard" : "/auth"}>
-              {user ? "Meu painel" : "Entrar"}
+            <Link className="btn primary" to={user ? roleHome(role) : "/auth"}>
+              {user ? "Minha área" : "Entrar"}
             </Link>
           </nav>
         </div>
@@ -39,10 +40,15 @@ export function PublicLayout({ children }) {
     </>
   );
 }
-export function Protected({ children }) {
-  const { user, loading } = useAuth(),
+export function Protected({ children, area = "student" }) {
+  const { user, loading, role, roleError } = useAuth(),
     loc = useLocation();
   if (loading) return <main className="center">Carregando…</main>;
+  if (user && roleError) return <main className="center" role="alert">{roleError}</main>;
+  if (user && !role) return <main className="center">Verificando seu acesso…</main>;
+  if (user && area !== "shared" && !canOpenArea(role, area)) {
+    return <Navigate to={roleHome(role)} replace />;
+  }
   return user ? (
     children
   ) : (
@@ -50,6 +56,7 @@ export function Protected({ children }) {
   );
 }
 export function AppHeader() {
+  const { role } = useAuth();
   const nav = useNavigate();
   const [dark, setDark] = useState(false);
   useEffect(() => {
@@ -62,7 +69,7 @@ export function AppHeader() {
       <div className="container nav">
         <Brand />
         <nav>
-          <Link to="/dashboard">Painel</Link>
+          <Link to={roleHome(role)}>Minha área</Link>
           <button
             className="icon"
             aria-label={dark ? "Ativar tema claro" : "Ativar tema escuro"}
@@ -81,7 +88,7 @@ export function AppHeader() {
             title="Sair"
             onClick={async () => {
               await supabase.auth.signOut();
-              nav("/");
+              nav("/auth", { replace: true });
             }}
           >
             <LogOut size={19} />
