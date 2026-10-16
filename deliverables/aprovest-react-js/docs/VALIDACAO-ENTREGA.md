@@ -8,6 +8,7 @@
 - Páginas autenticadas abertas: painel, biblioteca, plano, redações, professor, administrador, diagnóstico, banca, simulados, questões ENEM, histórico, notificações, perfil e planos. Abrir a página não equivale a concluir todo seu fluxo.
 - Redação de teste criada pela interface, avaliação real ENEM retornando 840/1000 e cinco competências, comentários e próximos passos; histórico lido novamente após recarregar. Dados temporários removidos.
 - Falha observada somente na correção hospedada: resposta de IA incompleta. O mesmo texto funcionou no serviço local. A atualização mantém a resposta ativa com eventos de progresso e resultado, sem repetir automaticamente chamadas faturadas.
+- Após a publicação da atualização, a interface sem configuração local concluiu uma correção pela API hospedada: 880/1000, cinco competências e histórico relido após recarregar, sem alerta de erro. A variação da nota entre execuções reforça a necessidade de calibração docente. Redação temporária removida.
 - Testes automatizados de regras, prioridades, versão de Node, endereço de API e fluxo de avaliação: 18 testes aprovados.
 - Verificação de código acadêmico: zero erros e avisos. A execução em Windows real não foi realizada neste ambiente.
 
@@ -39,7 +40,7 @@ Também faltam acervo completo revisado, classificação por habilidades oficiai
 
 ## Próximos testes obrigatórios
 
-1. Confirmar a correção contínua no serviço publicado após implantação.
+1. Calibrar a avaliação de IA com redações autorizadas e avaliações docentes de referência.
 2. Concluir avaliação de 30 questões, repetir leitura do resultado e testar os limites diários/mensais.
 3. Validar atribuição e correção com conta real de professor, sem conceder papéis arbitrariamente.
 4. Implementar os requisitos pendentes acima e somente então declarar conclusão integral.

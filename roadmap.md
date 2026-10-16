@@ -5,7 +5,7 @@
 - [x] Validar instalação limpa e automatizar verificações de Node e conexão no fluxo npm
 - [x] Corrigir e testar API e correção por IA com sessão real no serviço local
 - [x] Abrir todas as páginas autenticadas e testar criação, IA e leitura do histórico de redação
-- [ ] Confirmar correção contínua publicada: depende da conclusão da implantação solicitada
+- [x] Confirmar correção contínua publicada: avaliação ENEM 880/1000 retornada pela interface sem override local e histórico relido
 - [ ] Validar correção com conta real de professor: depende de identidade docente autorizada
 - [ ] Validar TRI e acervo por habilidades: depende de parâmetros e revisão pedagógica; não inventar notas oficiais
 - [ ] Ativar pagamentos: depende de conta de recebimento e preços aprovados, preservando ausência de novos gastos
