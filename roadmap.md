@@ -1,5 +1,13 @@
 # Roadmap
 
+## Áreas distintas e gestão financeira por perfil
+- [ ] Separar navegação e acesso de aluno, professor e administrador, com permissões verificadas no servidor
+- [ ] Completar solicitações de correção e avaliação de conteúdos na área docente
+- [ ] Apresentar ganhos por redação e distribuição de valores sem inventar taxas
+- [ ] Completar relatórios administrativos de cadastros, assinaturas e finanças
+- [ ] Definir preços, percentual docente e uso de cobranças reais ou demonstração acadêmica: aguarda resposta do proprietário
+- [ ] Atualizar scripts SQL e validar fluxos e isolamento entre perfis
+
 ## Finalização acadêmica — 16/10/2026
 - [x] Conferir o documento norteador e registrar lacunas reais, sem confundir implementação com validação
 - [x] Validar instalação limpa e automatizar verificações de Node e conexão no fluxo npm
