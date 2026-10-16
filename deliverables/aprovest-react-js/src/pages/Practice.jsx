@@ -6,7 +6,10 @@ import { api } from "../lib/api";
 
 export default function Practice({ mode = "daily" }) {
   const [params, setParams] = useSearchParams();
-  const [exam, setExam] = useState("ENEM");
+  const initialExam = ["ENEM", "FUVEST", "Unicamp"].includes(params.get("banca"))
+    ? params.get("banca")
+    : "ENEM";
+  const [exam, setExam] = useState(initialExam);
   const [data, setData] = useState(null);
   const [key, setKey] = useState("");
   const [error, setError] = useState("");
@@ -57,8 +60,8 @@ export default function Practice({ mode = "daily" }) {
           session: { ...data.session, status: "completed" },
           result: result.result,
         });
-      else if (mode === "exam") await load(data.session.id);
-      else setFeedback(result);
+      else if (mode === "daily") setFeedback(result);
+      else await load(data.session.id);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -131,9 +134,15 @@ export default function Practice({ mode = "daily" }) {
             <h2>{data.item.statement}</h2>
             <p className="muted">Exercício autoral de fundamentos · Nível {data.item.difficulty}</p>
             <div className="answers">
-              {data.item.choices.map((choice) => (
+              {data.item.choices.map((choice) => {
+                let state = key === choice.key ? "selected" : "";
+                if (feedback && choice.key === key)
+                  state = feedback.correct ? "answer-correct" : "answer-incorrect";
+                if (feedback && !feedback.correct && choice.key === feedback.correct_key)
+                  state = "answer-correct";
+                return (
                 <label
-                  className={`answer-option ${key === choice.key ? "selected" : ""}`}
+                  className={`answer-option ${state}`}
                   key={choice.key}
                 >
                   <input
@@ -147,11 +156,24 @@ export default function Practice({ mode = "daily" }) {
                   <b>{choice.key}</b>
                   <span>{choice.text}</span>
                 </label>
-              ))}
+                );
+              })}
             </div>
             {feedback ? (
-              <div className="answer-feedback">
-                <h3>{feedback.correct ? "Resposta correta" : "Vamos revisar"}</h3>
+              <div
+                className={
+                  feedback.correct
+                    ? "answer-feedback feedback-correct"
+                    : "answer-feedback feedback-incorrect"
+                }
+                role="status"
+              >
+                <h3>{feedback.correct ? "✓ Resposta correta!" : "✗ Resposta incorreta"}</h3>
+                {!feedback.correct && feedback.correct_key && (
+                  <p>
+                    A alternativa correta é <b>{feedback.correct_key}</b>.
+                  </p>
+                )}
                 <p>{feedback.explanation}</p>
                 <Button onClick={() => load(data.session.id)}>Próxima questão</Button>
               </div>

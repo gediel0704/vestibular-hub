@@ -28,6 +28,10 @@ export default function Dashboard() {
       </StudyLayout>
     );
   if (!profile) return null;
+  const targetExams =
+    Array.isArray(profile.target_exams) && profile.target_exams.length
+      ? profile.target_exams
+      : [profile.target_exam || "ENEM"];
   const modules = [
     {
       Icon: BrainCircuit,
@@ -86,6 +90,30 @@ export default function Dashboard() {
           </Link>
         </section>
       )}
+      <section className="exam-panels">
+        <span className="kicker">SEUS VESTIBULARES</span>
+        <div className="exam-panel-grid">
+          {targetExams.map((exam) => (
+            <article className="panel exam-panel" key={exam}>
+              <h3>{exam}</h3>
+              <p className="muted">
+                Conteúdos, banca diária e simulados filtrados para {exam}.
+              </p>
+              <div className="exam-panel-actions">
+                <Link className="btn secondary" to={`/banca?banca=${encodeURIComponent(exam)}`}>
+                  Banca diária
+                </Link>
+                <Link className="btn secondary" to={`/simulados?banca=${encodeURIComponent(exam)}`}>
+                  Simulado
+                </Link>
+                <Link className="btn secondary" to="/biblioteca">
+                  Conteúdos
+                </Link>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
       <div className="modules">
         {modules.map(({ Icon, title, description, path }) => {
           const content = (

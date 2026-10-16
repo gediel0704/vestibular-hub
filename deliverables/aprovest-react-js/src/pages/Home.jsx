@@ -1,6 +1,9 @@
 import { ArrowRight, BrainCircuit, ChartNoAxesCombined, FilePenLine, Target } from "lucide-react";
 import { Link } from "react-router-dom";
 import { PublicLayout } from "../components/Layout";
+import heroPhoto from "../assets/estudantes-hero.jpg";
+import approvalPhoto from "../assets/aprovacao.jpg";
+import essayPhoto from "../assets/redacao.jpg";
 export default function Home() {
   const cards = [
     [BrainCircuit, "Banca adaptativa", "Questões selecionadas conforme seu desempenho."],
@@ -32,6 +35,14 @@ export default function Home() {
               </div>
             </div>
             <aside className="preview">
+              <figure className="hero-photo">
+                <img
+                  src={heroPhoto}
+                  alt="Estudantes estudando juntos em uma biblioteca"
+                  width={1280}
+                  height={960}
+                />
+              </figure>
               <span>PAINEL DA META</span>
               <h3>Engenharia · USP</h3>
               <strong className="score">74%</strong>
@@ -74,6 +85,36 @@ export default function Home() {
                 </article>
               ))}
             </div>
+          </div>
+        </section>
+        <section className="section">
+          <div className="container photo-strip">
+            <figure>
+              <img
+                src={essayPhoto}
+                alt="Estudante escrevendo uma redação em folha de respostas"
+                loading="lazy"
+                width={1280}
+                height={960}
+              />
+              <figcaption>
+                <h3>Redação com correção real</h3>
+                <p>Análise por competências, como nas bancas oficiais.</p>
+              </figcaption>
+            </figure>
+            <figure>
+              <img
+                src={approvalPhoto}
+                alt="Estudante comemorando a aprovação no vestibular"
+                loading="lazy"
+                width={1280}
+                height={960}
+              />
+              <figcaption>
+                <h3>Foco na aprovação</h3>
+                <p>Cada sessão de estudo aponta o próximo passo.</p>
+              </figcaption>
+            </figure>
           </div>
         </section>
         <section className="cta">

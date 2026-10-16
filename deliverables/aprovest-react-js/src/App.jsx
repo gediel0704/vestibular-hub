@@ -11,6 +11,7 @@ import Library from "./pages/Library";
 import Practice from "./pages/Practice";
 import StudyPlan from "./pages/StudyPlan";
 import Account from "./pages/Account";
+import Settings from "./pages/Settings";
 import Staff from "./pages/Staff";
 import EnemQuestions from "./pages/EnemQuestions";
 export default function App() {
@@ -32,6 +33,7 @@ export default function App() {
       <Route path="/simulados" element={p(<Practice mode="exam" />)} />
       <Route path="/plano" element={p(<StudyPlan />)} />
       <Route path="/perfil" element={p(<Account />, "shared")} />
+      <Route path="/configuracoes" element={p(<Settings />, "shared")} />
       <Route path="/historico" element={p(<Account view="history" />)} />
       <Route path="/notificacoes" element={p(<Account view="notifications" />, "shared")} />
       <Route path="/planos" element={p(<Account view="plans" />)} />

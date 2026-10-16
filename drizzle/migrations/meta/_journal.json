@@ -22,6 +22,20 @@
       "when": 1792123082191,
       "tag": "0002_academic_staff_reviews_earnings",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1792179269823,
+      "tag": "0003_academic_target_exams",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1792179399078,
+      "tag": "0004_academic_answer_correct_key",
+      "breakpoints": true
     }
   ]
 }

@@ -631,6 +631,7 @@ export type Database = {
           school: string | null
           target_course: string | null
           target_exam: string
+          target_exams: string[]
           target_university: string
           target_year: number | null
           updated_at: string
@@ -646,6 +647,7 @@ export type Database = {
           school?: string | null
           target_course?: string | null
           target_exam?: string
+          target_exams?: string[]
           target_university?: string
           target_year?: number | null
           updated_at?: string
@@ -661,6 +663,7 @@ export type Database = {
           school?: string | null
           target_course?: string | null
           target_exam?: string
+          target_exams?: string[]
           target_university?: string
           target_year?: number | null
           updated_at?: string
