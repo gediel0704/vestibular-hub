@@ -1,5 +1,10 @@
 # Roadmap
 
+## Conexão acadêmica em outras máquinas
+- [ ] Remover dependência automática da API em localhost e testar a seleção do endereço
+- [ ] Documentar execução pelo terminal sem scripts PowerShell nem novos downloads ZIP
+- [ ] Publicar a API: depende da publicação autorizada pelo proprietário
+
 - [x] Auditar o código React + JavaScript entregue
 - [x] Pesquisar mercado, concorrentes, custos e obrigações em Barueri/SP
 - [x] Revisar proposta de valor e diferenciais do AproVest
