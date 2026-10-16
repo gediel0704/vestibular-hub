@@ -12,6 +12,11 @@ describe("Academic server permissions", () => {
     expect(canUseAcademicAction("teacher", "admin_role")).toBe(false);
     expect(canUseAcademicAction("teacher", "content_review")).toBe(true);
   });
+  it("every authenticated profile can choose its own initial role", () => {
+    expect(canUseAcademicAction("student", "choose_role")).toBe(true);
+    expect(canUseAcademicAction("teacher", "choose_role")).toBe(true);
+    expect(canUseAcademicAction("admin", "choose_role")).toBe(true);
+  });
   it("admins access every area and role precedence is deterministic", () => {
     expect(canUseAcademicAction("admin", "teacher")).toBe(true);
     expect(canUseAcademicAction("admin", "library")).toBe(true);
