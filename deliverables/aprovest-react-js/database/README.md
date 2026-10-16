@@ -2,7 +2,7 @@
 
 ## Banco real do site — PostgreSQL / Lovable Cloud
 
-Execute em ordem cronológica os arquivos de `postgresql/`. Eles usam `auth.users`, `auth.uid()`, RLS, JSONB e PL/pgSQL da plataforma. Os arquivos `20261014_pedagogical_seed.sql` contêm apenas exercícios e materiais autorais; podem ser aplicados depois da estrutura. Em uma instalação gerenciada, use o mecanismo de migrações da plataforma, não cole chaves privadas no SQL.
+Execute em ordem cronológica os arquivos de `postgresql/`. Eles usam `auth.users`, `auth.uid()`, RLS, JSONB e PL/pgSQL da plataforma. Os arquivos `20261014_pedagogical_seed.sql` contêm apenas exercícios e materiais autorais; podem ser aplicados depois da estrutura. O arquivo `20261016_academic_items_official.sql` contém as 627 questões oficiais do FUVEST (339) e da Unicamp (288), de 2018 a 2024, com gabarito, alternativa correta, explicação e endereço da fonte; é reaplicável e ignora linhas já existentes. Em uma instalação gerenciada, use o mecanismo de migrações da plataforma, não cole chaves privadas no SQL.
 
 Verificação sugerida:
 
