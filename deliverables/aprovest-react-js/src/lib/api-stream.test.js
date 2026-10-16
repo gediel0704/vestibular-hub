@@ -17,12 +17,14 @@ describe("Resposta de correção em fluxo", () => {
   });
 
   it("não apresenta um fluxo incompleto como avaliação concluída", async () => {
-    await expect(readAcademicStream(new Response('{"type":"progress"}\n')))
-      .rejects.toThrow("interrompida");
+    await expect(readAcademicStream(new Response('{"type":"progress"}\n'))).rejects.toThrow(
+      "interrompida",
+    );
   });
 
   it("apresenta erro terminal sem repetir a chamada", async () => {
-    await expect(readAcademicStream(new Response('{"type":"error","error":"IA indisponível"}\n')))
-      .rejects.toThrow("IA indisponível");
+    await expect(
+      readAcademicStream(new Response('{"type":"error","error":"IA indisponível"}\n')),
+    ).rejects.toThrow("IA indisponível");
   });
 });

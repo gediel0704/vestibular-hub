@@ -29,7 +29,9 @@ export async function api(action, data = {}, signal) {
     return readAcademicStream(response);
   }
   if (!contentType.includes("application/json")) {
-    throw new Error("O serviço de estudo não respondeu corretamente. O responsável precisa conferir se a API acadêmica foi publicada no endereço configurado.");
+    throw new Error(
+      "O serviço de estudo não respondeu corretamente. O responsável precisa conferir se a API acadêmica foi publicada no endereço configurado.",
+    );
   }
   const result = await response.json();
   if (!response.ok) throw new Error(result.error || "Não foi possível concluir.");

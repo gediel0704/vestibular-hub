@@ -29,7 +29,11 @@ export async function academicApi(request: Request) {
   const origin = request.headers.get("origin") ?? "";
   const local = /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin);
   const same = origin === new URL(request.url).origin;
-  const headers = new Headers({ "Content-Type": "application/json", Vary: "Origin", "Cache-Control": "no-store" });
+  const headers = new Headers({
+    "Content-Type": "application/json",
+    Vary: "Origin",
+    "Cache-Control": "no-store",
+  });
   if (local || same) {
     headers.set("Access-Control-Allow-Origin", origin);
     headers.set("Access-Control-Allow-Headers", "Authorization, Content-Type");
@@ -421,67 +425,79 @@ export async function academicApi(request: Request) {
       streamHeaders.set("Content-Type", "application/x-ndjson");
       const encoder = new TextEncoder();
       let disconnected = false;
-      return new Response(new ReadableStream({
-        start(controller) {
-          const send = (event: unknown) => {
-            if (!disconnected) controller.enqueue(encoder.encode(JSON.stringify(event) + "\n"));
-          };
-          send({ type: "progress" });
-          const heartbeat = setInterval(() => send({ type: "progress" }), 1000);
-          const evaluate = async () => {
-      try {
-        const { gradeEssay } = await import("./ai.server");
-        const feedback = await gradeEssay(request, exam, evaluation.essay_snapshot);
-        dbResult(
-          await db
-            .from("academic_evaluations")
-            .update({ feedback, status: "completed", completed_at: new Date().toISOString() })
-            .eq("id", evaluationId),
-        );
-        dbResult(
-          await db.from("academic_notifications").insert({
-            user_id: userId,
-            title: "Sua correção está disponível",
-            body: `Redação avaliada para ${exam}.`,
-          }),
-        );
-        send({ type: "result", data: { evaluation: { ...evaluation, feedback, status: "completed" } } });
-      } catch (error) {
-        const status = (error as { statusCode?: number }).statusCode ?? 500;
-        const message =
-          status === 402
-            ? "Saldo de IA insuficiente. O responsável precisa adicionar créditos."
-            : status === 403
-              ? "O serviço de IA bloqueou a avaliação; o responsável precisa revisar a autorização."
-              : error instanceof Error
-                ? error.message
-                : "A correção falhou.";
-        dbResult(
-          await db
-            .from("academic_evaluations")
-            .update({ status: "failed", error_message: message.slice(0, 500) })
-            .eq("id", evaluationId),
-        );
-        if ([401, 402, 403, 404].includes(status))
-          dbResult(
-            await db
-              .from("academic_ai_state")
-              .upsert({ id: "global", paused: true, reason: message }),
-          );
-        send({ type: "error", error: message, status });
-      }
-          };
-          void evaluate().catch(() => {
-            send({ type: "error", error: "Não foi possível salvar a avaliação." });
-          }).finally(() => {
-            clearInterval(heartbeat);
-            if (!disconnected) controller.close();
-          });
-        },
-        cancel() {
-          disconnected = true;
-        },
-      }), { headers: streamHeaders });
+      return new Response(
+        new ReadableStream({
+          start(controller) {
+            const send = (event: unknown) => {
+              if (!disconnected) controller.enqueue(encoder.encode(JSON.stringify(event) + "\n"));
+            };
+            send({ type: "progress" });
+            const heartbeat = setInterval(() => send({ type: "progress" }), 1000);
+            const evaluate = async () => {
+              try {
+                const { gradeEssay } = await import("./ai.server");
+                const feedback = await gradeEssay(request, exam, evaluation.essay_snapshot);
+                dbResult(
+                  await db
+                    .from("academic_evaluations")
+                    .update({
+                      feedback,
+                      status: "completed",
+                      completed_at: new Date().toISOString(),
+                    })
+                    .eq("id", evaluationId),
+                );
+                dbResult(
+                  await db.from("academic_notifications").insert({
+                    user_id: userId,
+                    title: "Sua correção está disponível",
+                    body: `Redação avaliada para ${exam}.`,
+                  }),
+                );
+                send({
+                  type: "result",
+                  data: { evaluation: { ...evaluation, feedback, status: "completed" } },
+                });
+              } catch (error) {
+                const status = (error as { statusCode?: number }).statusCode ?? 500;
+                const message =
+                  status === 402
+                    ? "Saldo de IA insuficiente. O responsável precisa adicionar créditos."
+                    : status === 403
+                      ? "O serviço de IA bloqueou a avaliação; o responsável precisa revisar a autorização."
+                      : error instanceof Error
+                        ? error.message
+                        : "A correção falhou.";
+                dbResult(
+                  await db
+                    .from("academic_evaluations")
+                    .update({ status: "failed", error_message: message.slice(0, 500) })
+                    .eq("id", evaluationId),
+                );
+                if ([401, 402, 403, 404].includes(status))
+                  dbResult(
+                    await db
+                      .from("academic_ai_state")
+                      .upsert({ id: "global", paused: true, reason: message }),
+                  );
+                send({ type: "error", error: message, status });
+              }
+            };
+            void evaluate()
+              .catch(() => {
+                send({ type: "error", error: "Não foi possível salvar a avaliação." });
+              })
+              .finally(() => {
+                clearInterval(heartbeat);
+                if (!disconnected) controller.close();
+              });
+          },
+          cancel() {
+            disconnected = true;
+          },
+        }),
+        { headers: streamHeaders },
+      );
     }
     if (action === "teacher") {
       if (!teacher && !admin) throw new ApiError("Acesso restrito.", 403);
@@ -645,9 +661,13 @@ async function fetchEnemApi(path: string) {
       signal: controller.signal,
     });
     if (response.status === 429)
-      throw new ApiError("A fonte de questões atingiu o limite. Tente novamente em instantes.", 503);
+      throw new ApiError(
+        "A fonte de questões atingiu o limite. Tente novamente em instantes.",
+        503,
+      );
     if (response.status === 404) throw new ApiError("Questão não encontrada.", 404);
-    if (!response.ok) throw new ApiError("A fonte de questões está temporariamente indisponível.", 503);
+    if (!response.ok)
+      throw new ApiError("A fonte de questões está temporariamente indisponível.", 503);
     return await response.json();
   } catch (error) {
     if (error instanceof ApiError) throw error;
