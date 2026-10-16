@@ -153,11 +153,24 @@ export default function Practice({ mode = "daily" }) {
                   <b>{choice.key}</b>
                   <span>{choice.text}</span>
                 </label>
-              ))}
+                );
+              })}
             </div>
             {feedback ? (
-              <div className="answer-feedback">
-                <h3>{feedback.correct ? "Resposta correta" : "Vamos revisar"}</h3>
+              <div
+                className={
+                  feedback.correct
+                    ? "answer-feedback feedback-correct"
+                    : "answer-feedback feedback-incorrect"
+                }
+                role="status"
+              >
+                <h3>{feedback.correct ? "✓ Resposta correta!" : "✗ Resposta incorreta"}</h3>
+                {!feedback.correct && feedback.correct_key && (
+                  <p>
+                    A alternativa correta é <b>{feedback.correct_key}</b>.
+                  </p>
+                )}
                 <p>{feedback.explanation}</p>
                 <Button onClick={() => load(data.session.id)}>Próxima questão</Button>
               </div>
