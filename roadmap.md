@@ -1,5 +1,9 @@
 # Roadmap
 
+## Menu acadêmico e nova cópia local — 16/10/2026
+- [ ] Corrigir corte e sobreposição dos menus; verificar abertura no computador e no celular
+- [ ] Orientar nova clonagem no VS Code sem desconectar o repositório do Lovable
+
 ## Áreas distintas e gestão financeira por perfil
 - [x] Separar navegação e acesso por perfil, com autorização de ações no servidor e testes automatizados
 - [x] Acrescentar pareceres de conteúdo à fila de correções docentes
@@ -75,7 +79,7 @@ Lacunas verificadas do documento estão em `deliverables/aprovest-react-js/docs/
 - [x] Documentar limitações de TRI e custos da IA, sem contratar serviços adicionais
 - [x] Documentar atualização pelo GitHub e execução acadêmica no VS Code
 - [x] Validar a navegação e recomendações acadêmicas
-- [ ] Conectar GitHub: depende da autorização do proprietário no editor Lovable
+- [x] Conectar GitHub: conexão concluída pelo proprietário, conforme informado na conversa
 - [ ] Validar correções por competência: depende de redações autorizadas e avaliações docentes de referência
 
 Escopo desta etapa: referências externas e prioridade por disciplina; não confundir com importação completa de provas, classificação docente por habilidade ou TRI calibrada. As lacunas e critérios de evolução estão documentados em `deliverables/aprovest-react-js/docs/FONTES-E-LIMITES.md`.
