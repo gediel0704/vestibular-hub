@@ -79,3 +79,16 @@ Lacunas verificadas do documento estão em `deliverables/aprovest-react-js/docs/
 - [ ] Validar correções por competência: depende de redações autorizadas e avaliações docentes de referência
 
 Escopo desta etapa: referências externas e prioridade por disciplina; não confundir com importação completa de provas, classificação docente por habilidade ou TRI calibrada. As lacunas e critérios de evolução estão documentados em `deliverables/aprovest-react-js/docs/FONTES-E-LIMITES.md`.
+
+## Aprimoramentos acadêmicos — 16/10/2026 (noite)
+- [x] Imagens reais de estudantes na página inicial e no login; estilos com relevos e seções visuais
+- [x] Escolha de perfil (aluno/professor) no cadastro, gravada no servidor via ação choose_role
+- [x] Correção do 404 no login social: arquivo _redirects para hospedagem estática (SPA fallback)
+- [x] Seleção de 1 a 3 vestibulares-alvo no onboarding e nas configurações; painel por vestibular no dashboard
+- [x] Diagnóstico e simulado sem revelar resposta; treino (banca diária) com relevo verde/vermelho, resposta correta e explicação
+- [x] Menu de estudos agrupado com expansão ao passar o mouse
+- [x] Página de configurações: perfil, vestibulares, curso, email e senha
+- [x] Catálogo curado de cursos por vestibular (src/lib/courses.js) — sem API pública gratuita disponível
+- [x] Documentado alinhamento com fontes oficiais em docs/FONTES-E-LIMITES.md
+- [ ] Republicar a API (choose_role, target_exams, correct_key) — depende de publicação autorizada
+- [ ] Validar login social no site hospedado após novo deploy do pacote estático
