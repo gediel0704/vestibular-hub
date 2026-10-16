@@ -602,6 +602,12 @@ export async function academicApi(request: Request) {
             await db.from("profiles").select("id,full_name,target_course,target_exam,created_at"),
           ),
           roles: dbResult(await db.from("user_roles").select("*")),
+          teacherRequests: await (async () => {
+            const { data: list } = await db.auth.admin.listUsers({ perPage: 1000 });
+            return (list?.users ?? [])
+              .filter((account) => account.user_metadata?.requested_role === "teacher")
+              .map((account) => account.id);
+          })(),
           evaluations: dbResult(
             await db.from("academic_evaluations").select("*").eq("type", "human"),
           ),

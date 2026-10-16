@@ -18,6 +18,7 @@ export default function Auth() {
     [email, setEmail] = useState(""),
     [password, setPassword] = useState(""),
     [name, setName] = useState(""),
+    [profile, setProfile] = useState("student"),
     [busy, setBusy] = useState(false),
     [params] = useSearchParams(),
     nav = useNavigate();
@@ -59,7 +60,10 @@ export default function Auth() {
       password,
       options: {
         emailRedirectTo: `${location.origin}/auth`,
-        data: { full_name: name.trim().slice(0, 100) },
+        data: {
+          full_name: name.trim().slice(0, 100),
+          requested_role: profile,
+        },
       },
     });
     setBusy(false);
@@ -70,7 +74,11 @@ export default function Auth() {
       return;
     }
 
-    toast.success("Confirme seu email para entrar.");
+    toast.success(
+      profile === "teacher"
+        ? "Confirme seu email. O acesso de professor será liberado após aprovação do administrador."
+        : "Confirme seu email para entrar.",
+    );
   }
   async function oauth(provider) {
     setBusy(true);
@@ -127,6 +135,35 @@ export default function Auth() {
             </button>
           </div>
           <form onSubmit={submit}>
+            {mode === "up" && (
+              <fieldset className="profile-choice">
+                <legend>Eu sou</legend>
+                <button
+                  type="button"
+                  className={profile === "student" ? "active" : ""}
+                  aria-pressed={profile === "student"}
+                  onClick={() => setProfile("student")}
+                >
+                  <strong>Aluno</strong>
+                  <span>Estudar, praticar e enviar redações</span>
+                </button>
+                <button
+                  type="button"
+                  className={profile === "teacher" ? "active" : ""}
+                  aria-pressed={profile === "teacher"}
+                  onClick={() => setProfile("teacher")}
+                >
+                  <strong>Professor</strong>
+                  <span>Corrigir redações e avaliar conteúdos</span>
+                </button>
+                {profile === "teacher" && (
+                  <small>
+                    Por segurança, o acesso de professor é liberado pelo administrador após a
+                    confirmação do cadastro.
+                  </small>
+                )}
+              </fieldset>
+            )}
             {mode === "up" && (
               <label>
                 Nome completo
