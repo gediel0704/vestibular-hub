@@ -56,3 +56,15 @@ A sincronização GitHub atualiza arquivos, não publica a API. Conectar GitHub 
   completa de cursos; a lista é revisada manualmente a cada edição dos vestibulares.
 - **Regra de qualidade**: nenhum conteúdo é publicado sem revisão. Itens autorais passam
   pela avaliação de conteúdo da área docente antes de aparecer para os alunos.
+
+## Banca oficial FUVEST/Unicamp importada (outubro de 2026)
+
+- 626 questões oficiais de 1ª fase (2018–2024) importadas para a banca interna, a partir do
+  conjunto acadêmico BLUEX (Portuguese-Benchmark-Datasets, arXiv:2307.05410), que catalogou
+  manualmente as provas da FUVEST e da COMVEST.
+- Questões com imagens associadas (634) não foram importadas porque dependem das figuras
+  das provas originais; podem ser adicionadas em revisão futura com as imagens oficiais.
+- A apuração de assuntos por vestibular está em `docs/ANALISE-ASSUNTOS.md`.
+- O script de importação reproduzível está em `scripts/importar-bluex.py`.
+- ENEM: a API pública enem.dev cobre 2009–2023; a edição 2024 entra automaticamente
+  quando for publicada lá. Não há TRI oficial pública.

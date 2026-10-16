@@ -709,6 +709,43 @@ export async function academicApi(request: Request) {
             ? await db.from("academic_items").update(clean).eq("id", item.id)
             : await db.from("academic_items").insert(clean),
         );
+      } else if (action === "admin_import") {
+        const items = Array.isArray(input.items) ? input.items : [];
+        ensure(items.length >= 1 && items.length <= 100, "Envie entre 1 e 100 itens por lote.");
+        const rows = items.map((item: Input) => {
+          ensure(item.kind === "question", "A importação em lote aceita apenas questões.");
+          ensure(
+            item.title?.trim().length >= 3 && item.topic?.trim() && item.subject?.trim(),
+            "Título, disciplina e tópico são obrigatórios.",
+          );
+          ensure(EXAMS.includes(item.exam), "Banca inválida.");
+          ensure(
+            Array.isArray(item.choices) &&
+              item.choices.length >= 2 &&
+              item.choices.some((choice: Input) => choice.key === item.correct_key),
+            "Alternativas e gabarito inválidos.",
+          );
+          return {
+            kind: "question",
+            title: String(item.title).slice(0, 180),
+            subject: item.subject,
+            topic: item.topic,
+            exam: item.exam,
+            statement: String(item.statement ?? "").slice(0, 20000),
+            choices: item.choices,
+            correct_key: item.correct_key,
+            explanation: String(item.explanation ?? ""),
+            difficulty: Number(item.difficulty ?? 3),
+            published: Boolean(item.published),
+            origin: item.origin ?? "authorial",
+            source_url: String(item.source_url ?? ""),
+            source_year: item.source_year ? Number(item.source_year) : null,
+            metadata: item.metadata ?? {},
+            updated_at: new Date().toISOString(),
+          };
+        });
+        dbResult(await db.from("academic_items").insert(rows));
+        return respond({ imported: rows.length });
       } else if (action === "admin_archive") {
         dbResult(await db.from("academic_items").update({ published: false }).eq("id", input.id));
       } else if (action === "admin_assign") {
