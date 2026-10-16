@@ -266,12 +266,6 @@ export default function Staff({ admin = false }) {
                     .map((row) => row.role)
                     .join(", ") || "student"}
                 </span>
-                {data.teacherRequests?.includes(user.id) &&
-                  !data.roles.some(
-                    (row) => row.user_id === user.id && row.role === "teacher",
-                  ) && (
-                    <span className="request-badge">Pediu acesso de professor</span>
-                  )}
               </div>
               <select
                 aria-label={`Atribuir papel a ${user.full_name || "estudante"}`}
