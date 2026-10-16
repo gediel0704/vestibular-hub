@@ -6,7 +6,10 @@ import { api } from "../lib/api";
 
 export default function Practice({ mode = "daily" }) {
   const [params, setParams] = useSearchParams();
-  const [exam, setExam] = useState("ENEM");
+  const initialExam = ["ENEM", "FUVEST", "Unicamp"].includes(params.get("banca"))
+    ? params.get("banca")
+    : "ENEM";
+  const [exam, setExam] = useState(initialExam);
   const [data, setData] = useState(null);
   const [key, setKey] = useState("");
   const [error, setError] = useState("");
