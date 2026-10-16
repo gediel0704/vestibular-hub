@@ -1,8 +1,8 @@
 # Roadmap
 
 ## Menu acadêmico e nova cópia local — 16/10/2026
-- [ ] Corrigir corte e sobreposição dos menus; verificar abertura no computador e no celular
-- [ ] Orientar nova clonagem no VS Code sem desconectar o repositório do Lovable
+- [x] Corrigir corte e sobreposição dos menus; quatro menus verificados com CSS real em 1280px e 390px, sem corte nem bloqueio de clique
+- [x] Orientar nova clonagem no VS Code sem desconectar o repositório do Lovable
 
 ## Áreas distintas e gestão financeira por perfil
 - [x] Separar navegação e acesso por perfil, com autorização de ações no servidor e testes automatizados
