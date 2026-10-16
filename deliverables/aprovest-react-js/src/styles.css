@@ -606,7 +606,7 @@ footer .container {
   padding: 40px 20px;
 }
 .auth-wrap {
-  width: min(440px, 100%);
+  width: min(1020px, 100%);
 }
 .auth-wrap > .brand {
   margin-bottom: 18px;
