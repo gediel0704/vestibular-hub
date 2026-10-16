@@ -1,5 +1,11 @@
 # Roadmap
 
+## Acervo oficial dentro do script do banco do site — 16/10/2026
+- [x] Exportar as 627 questões oficiais (339 FUVEST, 288 Unicamp) para `database/postgresql/20261016_academic_items_official.sql`, com gabarito, explicação e fonte
+- [x] Executar o script inteiro numa cópia temporária isolada: 627 inseridas, 627 com alternativas e gabarito, conferência por banca correta
+- [x] Conferir reaplicação: repetir a mesma questão não duplica nem gera erro
+- [ ] Incluir as 634 questões dependentes de imagem: depende das figuras oficiais das provas
+
 ## Menu acadêmico e nova cópia local — 16/10/2026
 - [x] Corrigir corte e sobreposição dos menus; quatro menus verificados com CSS real em 1280px e 390px, sem corte nem bloqueio de clique
 - [x] Orientar nova clonagem no VS Code sem desconectar o repositório do Lovable
