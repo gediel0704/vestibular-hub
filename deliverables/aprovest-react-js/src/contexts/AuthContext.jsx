@@ -14,11 +14,20 @@ export function AuthProvider({ children }) {
     let active = true;
     setRole(null);
     setRoleError("");
-    if (!user) return () => { active = false; };
+    if (!user)
+      return () => {
+        active = false;
+      };
     api("bootstrap")
-      .then((data) => { if (active) setRole(data.role); })
-      .catch((error) => { if (active) setRoleError(error.message); });
-    return () => { active = false; };
+      .then((data) => {
+        if (active) setRole(data.role);
+      })
+      .catch((error) => {
+        if (active) setRoleError(error.message);
+      });
+    return () => {
+      active = false;
+    };
   }, [user?.id]);
 
   useEffect(() => {

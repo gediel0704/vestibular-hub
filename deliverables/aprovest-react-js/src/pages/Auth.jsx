@@ -29,7 +29,8 @@ export default function Auth() {
     nav(raw && canOpenArea(role, area) ? next : roleHome(role), { replace: true });
   }
   useEffect(() => {
-    supabase.auth.getSession()
+    supabase.auth
+      .getSession()
       .then(({ data }) => data.session && enter())
       .catch(() => toast.error("Não foi possível verificar sua área. Tente novamente."));
   }, [nav, next]);
@@ -42,7 +43,11 @@ export default function Auth() {
       const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
       setBusy(false);
       if (error) return toast.error("Email ou senha inválidos.");
-      try { await enter(); } catch (error) { toast.error(error.message); }
+      try {
+        await enter();
+      } catch (error) {
+        toast.error(error.message);
+      }
       return;
     }
     if (name.trim().length < 2) {
@@ -95,11 +100,21 @@ export default function Auth() {
           <span className="kicker">ACESSO APROVEST</span>
           <h1>Sua jornada até a aprovação</h1>
           <p>Entre ou crie sua conta gratuita.</p>
-          <button className="btn secondary full social-button" disabled={busy} onClick={() => oauth("google")}>
-            <span className="google-mark" aria-hidden="true">G</span>
+          <button
+            className="btn secondary full social-button"
+            disabled={busy}
+            onClick={() => oauth("google")}
+          >
+            <span className="google-mark" aria-hidden="true">
+              G
+            </span>
             Continuar com Google
           </button>
-          <button className="btn secondary full social-button" disabled={busy} onClick={() => oauth("apple")}>
+          <button
+            className="btn secondary full social-button"
+            disabled={busy}
+            onClick={() => oauth("apple")}
+          >
             <Apple size={19} aria-hidden="true" />
             Continuar com Apple
           </button>

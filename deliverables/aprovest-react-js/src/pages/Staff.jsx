@@ -69,22 +69,34 @@ export default function Staff({ admin = false }) {
     >
       <ErrorNotice error={error} retry={load} />
       {!data && !error && <p>Carregando sua área…</p>}
-      {(
+      {
         <div className="staff-tabs">
-          {(admin ? [
-            ["reports", "Relatórios"],
-            ["items", "Conteúdos e questões"],
-            ["users", "Usuários e papéis"],
-            ["evaluations", "Correção humana"],
-            ["requests", "Solicitações"],
-            ["review", "Avaliação de conteúdos"],
-          ] : [["evaluations", "Solicitações de correção"], ["review", "Avaliação de conteúdos"], ["earnings", "Meus ganhos"]]).map(([key, label]) => (
-            <Button key={key} variant={tab === key ? "primary" : "secondary"} aria-pressed={tab === key} onClick={() => setTab(key)}>
+          {(admin
+            ? [
+                ["reports", "Relatórios"],
+                ["items", "Conteúdos e questões"],
+                ["users", "Usuários e papéis"],
+                ["evaluations", "Correção humana"],
+                ["requests", "Solicitações"],
+                ["review", "Avaliação de conteúdos"],
+              ]
+            : [
+                ["evaluations", "Solicitações de correção"],
+                ["review", "Avaliação de conteúdos"],
+                ["earnings", "Meus ganhos"],
+              ]
+          ).map(([key, label]) => (
+            <Button
+              key={key}
+              variant={tab === key ? "primary" : "secondary"}
+              aria-pressed={tab === key}
+              onClick={() => setTab(key)}
+            >
               {label}
             </Button>
           ))}
         </div>
-      )}
+      }
       {data && admin && tab === "reports" && <AdminReports data={data} />}
       {data && tab === "review" && <ContentReview data={data} onSubmit={perform} busy={busy} />}
       {data && tab === "earnings" && <EarningsReport data={data} />}

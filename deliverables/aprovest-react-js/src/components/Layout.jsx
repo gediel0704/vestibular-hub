@@ -44,7 +44,12 @@ export function Protected({ children, area = "student" }) {
   const { user, loading, role, roleError } = useAuth(),
     loc = useLocation();
   if (loading) return <main className="center">Carregando…</main>;
-  if (user && roleError) return <main className="center" role="alert">{roleError}</main>;
+  if (user && roleError)
+    return (
+      <main className="center" role="alert">
+        {roleError}
+      </main>
+    );
   if (user && !role) return <main className="center">Verificando seu acesso…</main>;
   if (user && area !== "shared" && !canOpenArea(role, area)) {
     return <Navigate to={roleHome(role)} replace />;
