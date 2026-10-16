@@ -23,7 +23,20 @@ A conexão pública com autenticação e banco já tem valores padrão no códig
 
 ## API acadêmica e IA
 
-Questões, limites, notas, papéis, gabaritos e IA passam pela API autenticada `/api/public/academic`, incluída no projeto Lovable que acompanha esta entrega. No desenvolvimento local completo, ela roda em `http://localhost:8080`. Fora desse ambiente, publique a API junto ao projeto ou preencha `VITE_ACADEMIC_API_URL` com sua URL publicada. A IA nunca funciona sem internet, API no servidor e saldo disponível.
+Questões, limites, notas, papéis, gabaritos e IA passam pela API autenticada `/api/public/academic`, incluída no projeto Lovable que acompanha esta entrega. O cliente usa por padrão o endereço hospedado estável, inclusive em localhost: o responsável precisa publicar o projeto Lovable antes de a API estar disponível. Não é necessário iniciar um segundo servidor no computador do professor. Para desenvolvimento local completo, substitua `VITE_ACADEMIC_API_URL` por `http://localhost:8080/api/public/academic` e inicie também o servidor principal. A IA nunca funciona sem internet, API no servidor e saldo disponível.
+
+### Windows: executar no próprio terminal, sem baixar inicializador
+
+No PowerShell do VS Code, na pasta `deliverables/aprovest-react-js`, execute:
+
+```powershell
+npm.cmd install
+npm.cmd run dev
+```
+
+`npm.cmd` evita o script `npm.ps1` bloqueado pelo PowerShell, sem alterar a política de segurança do Windows. Ainda exige Node.js compatível e internet para instalar dependências; nenhum código pode garantir ausência de conflitos em todas as máquinas. Se as dependências já estiverem instaladas e não tiverem mudado, basta o segundo comando.
+
+O professor só precisa instalar dependências se for executar ou avaliar o código localmente. Para acesso somente pelo navegador, a interface acadêmica React/Vite deve ser hospedada também: publicar o projeto principal disponibiliza sua API, mas não transforma automaticamente a pasta acadêmica no site público. Para evitar novos ZIPs durante a revisão, conecte o GitHub e atualize a cópia local pelo Git.
 
 O ZIP não contém chave privada de IA. A chave é administrada de modo protegido pelo Lovable. O código acadêmico do navegador não recebe gabaritos nem pode atribuir papéis ou notas.
 

@@ -1,11 +1,7 @@
 import { supabase } from "./supabase";
+import { academicApiEndpoint } from "./api-endpoint";
 
-const localApi = "http://localhost:8080/api/public/academic";
-const endpoint =
-  import.meta.env.VITE_ACADEMIC_API_URL ||
-  (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
-    ? localApi
-    : `${window.location.origin}/api/public/academic`);
+const endpoint = academicApiEndpoint(import.meta.env.VITE_ACADEMIC_API_URL);
 
 export async function api(action, data = {}, signal) {
   const { data: auth } = await supabase.auth.getSession();
@@ -24,16 +20,12 @@ export async function api(action, data = {}, signal) {
   } catch (error) {
     if (signal?.aborted) throw error;
     throw new Error(
-      "O serviço de estudo não está acessível. Confira a conexão e o endereço da API acadêmica.",
+      "O serviço de estudo não está acessível. Confira a internet. O responsável precisa publicar a API acadêmica e conferir seu endereço.",
     );
   }
   const contentType = response.headers.get("content-type") ?? "";
   if (!contentType.includes("application/json")) {
-    throw new Error(
-      response.status === 401
-        ? "A API acadêmica ainda precisa ser publicada para funcionar fora do ambiente local."
-        : "A API acadêmica retornou uma resposta inválida.",
-    );
+    throw new Error("O serviço de estudo não respondeu corretamente. O responsável precisa conferir se a API acadêmica foi publicada no endereço configurado.");
   }
   const result = await response.json();
   if (!response.ok) throw new Error(result.error || "Não foi possível concluir.");
