@@ -55,6 +55,15 @@ Nenhum script contém usuários, senhas, redações ou notas reais.
 
 O Rollup do Vite é substituído oficialmente pela edição WebAssembly, evitando a falha do pacote nativo opcional no Windows. Não copie `node_modules` de outro computador. O pacote foi instalado e compilado em ambiente Linux; a execução final em Windows precisa ser confirmada na máquina da entrega.
 
+### Se o PowerShell bloquear o npm
+
+Em Windows, o PowerShell pode proibir scripts e exibir "a execução de scripts foi desabilitada neste sistema" ao digitar `npm install`. Isso é uma regra do Windows, não um erro do projeto. Duas saídas:
+
+1. Use o Prompt de Comando (`cmd`) em vez do PowerShell: ele chama `npm.cmd` e não é afetado pela regra.
+2. Ou libere scripts apenas para o seu usuário, no PowerShell: `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned` e confirme com `S`. Depois, `npm install` funciona normalmente.
+
+Para liberar só na janela aberta, sem alterar nada no sistema: `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass`.
+
 ## Estrutura principal
 
 - `src/App.jsx`: rotas das páginas;
