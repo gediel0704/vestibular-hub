@@ -57,8 +57,8 @@ export default function Practice({ mode = "daily" }) {
           session: { ...data.session, status: "completed" },
           result: result.result,
         });
-      else if (mode === "exam") await load(data.session.id);
-      else setFeedback(result);
+      else if (mode === "daily") setFeedback(result);
+      else await load(data.session.id);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -131,9 +131,15 @@ export default function Practice({ mode = "daily" }) {
             <h2>{data.item.statement}</h2>
             <p className="muted">Exercício autoral de fundamentos · Nível {data.item.difficulty}</p>
             <div className="answers">
-              {data.item.choices.map((choice) => (
+              {data.item.choices.map((choice) => {
+                let state = key === choice.key ? "selected" : "";
+                if (feedback && choice.key === key)
+                  state = feedback.correct ? "answer-correct" : "answer-incorrect";
+                if (feedback && !feedback.correct && choice.key === feedback.correct_key)
+                  state = "answer-correct";
+                return (
                 <label
-                  className={`answer-option ${key === choice.key ? "selected" : ""}`}
+                  className={`answer-option ${state}`}
                   key={choice.key}
                 >
                   <input
