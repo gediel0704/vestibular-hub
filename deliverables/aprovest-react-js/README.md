@@ -58,6 +58,8 @@ O ZIP não contém chave privada de IA. A chave é administrada de modo protegid
 
 ## Limitações explícitas
 
+Consulte `docs/VALIDACAO-ENTREGA.md` para os testes desta revisão e as lacunas frente aos 19 requisitos do documento norteador. A entrega ainda não foi declarada integralmente concluída.
+
 - os 30 exercícios por banca são autorais e introdutórios; não são questões oficiais completas nem substituem o programa oficial da edição;
 - o acervo enem.dev depende de um serviço comunitário, possui limite de uso e não inclui TRI, conteúdos teóricos, redação, diagnóstico adaptativo nem edições posteriores a 2023;
 - a adaptação usa estimativa Elo pedagógica, não TRI oficial do ENEM;

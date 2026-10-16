@@ -1,11 +1,17 @@
 # Roadmap
 
 ## Finalização acadêmica — 16/10/2026
-- [ ] Conferir o documento norteador e registrar lacunas reais, sem confundir implementação com validação
-- [ ] Validar instalação limpa e automatizar verificações de Node e conexão no fluxo npm
-- [ ] Corrigir e testar API e correção por IA com sessão real
-- [ ] Testar fluxos de aluno, professor e administrador e registrar bloqueios externos
-- [ ] Confirmar acesso à API hospedada antes de declarar a entrega pronta
+- [x] Conferir o documento norteador e registrar lacunas reais, sem confundir implementação com validação
+- [x] Validar instalação limpa e automatizar verificações de Node e conexão no fluxo npm
+- [x] Corrigir e testar API e correção por IA com sessão real no serviço local
+- [x] Abrir todas as páginas autenticadas e testar criação, IA e leitura do histórico de redação
+- [ ] Confirmar correção contínua publicada: depende da conclusão da implantação solicitada
+- [ ] Validar correção com conta real de professor: depende de identidade docente autorizada
+- [ ] Validar TRI e acervo por habilidades: depende de parâmetros e revisão pedagógica; não inventar notas oficiais
+- [ ] Ativar pagamentos: depende de conta de recebimento e preços aprovados, preservando ausência de novos gastos
+- [ ] Testar Windows real: depende de acesso a esse ambiente; PowerShell bloqueia npm antes do código do projeto
+
+Lacunas verificadas do documento estão em `deliverables/aprovest-react-js/docs/VALIDACAO-ENTREGA.md`; os checkboxes históricos abaixo não comprovam conclusão integral.
 
 ## Conexão acadêmica em outras máquinas
 - [x] Remover dependência automática da API em localhost e testar a seleção do endereço
