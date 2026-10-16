@@ -260,6 +260,37 @@ CREATE TABLE dbo.credit_ledger (
 );
 GO
 
+CREATE TABLE dbo.academic_content_reviews (
+    id uniqueidentifier NOT NULL DEFAULT NEWID() PRIMARY KEY,
+    item_id uniqueidentifier NOT NULL REFERENCES dbo.academic_items(id),
+    teacher_id uniqueidentifier NOT NULL REFERENCES dbo.users(id),
+    verdict nvarchar(30) NOT NULL,
+    comments nvarchar(max) NOT NULL,
+    item_snapshot nvarchar(max) NOT NULL DEFAULT N'{}',
+    created_at datetime2 NOT NULL DEFAULT SYSUTCDATETIME(),
+    CONSTRAINT CK_review_verdict CHECK(verdict IN(N'approved',N'changes_requested')),
+    CONSTRAINT CK_review_snapshot CHECK(ISJSON(item_snapshot)=1)
+);
+GO
+
+CREATE TABLE dbo.academic_teacher_earnings (
+    id uniqueidentifier NOT NULL DEFAULT NEWID() PRIMARY KEY,
+    evaluation_id uniqueidentifier NOT NULL UNIQUE REFERENCES dbo.academic_evaluations(id),
+    teacher_id uniqueidentifier NOT NULL REFERENCES dbo.users(id),
+    amount_minor int NOT NULL,
+    teacher_share_bps int NOT NULL,
+    teacher_amount_minor AS CONVERT(int, ROUND(CONVERT(decimal(18,4), amount_minor) * teacher_share_bps / 10000, 0)) PERSISTED,
+    currency char(3) NOT NULL DEFAULT 'BRL',
+    status nvarchar(20) NOT NULL DEFAULT N'pending',
+    paid_at datetime2,
+    created_at datetime2 NOT NULL DEFAULT SYSUTCDATETIME(),
+    CONSTRAINT CK_earnings_amount CHECK(amount_minor>=0),
+    CONSTRAINT CK_earnings_share CHECK(teacher_share_bps BETWEEN 0 AND 10000),
+    CONSTRAINT CK_earnings_currency CHECK(currency='BRL'),
+    CONSTRAINT CK_earnings_status CHECK(status IN(N'pending',N'paid',N'cancelled'))
+);
+GO
+
 CREATE TABLE dbo.study_tasks (
     id uniqueidentifier NOT NULL DEFAULT NEWID() PRIMARY KEY,
     user_id uniqueidentifier NOT NULL REFERENCES dbo.users(id),
