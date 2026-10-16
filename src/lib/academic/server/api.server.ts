@@ -369,17 +369,38 @@ export async function academicApi(request: Request) {
         ),
       });
     }
+    if (action === "choose_role") {
+      // Self-service role choice at signup: only student or teacher may be
+      // self-assigned. Admin is never grantable through this action.
+      const requested = String(input.role ?? "");
+      ensure(
+        ["student", "teacher"].includes(requested),
+        "Escolha entre os perfis de aluno ou professor.",
+      );
+      if (!roles.length) {
+        dbResult(await db.from("user_roles").insert({ user_id: userId, role: requested }));
+      }
+      return respond({ ok: true, role: roles.length ? academicRole(roles) : requested });
+    }
     if (action === "profile") {
       ensure(
         typeof input.full_name === "string" && input.full_name.trim().length >= 2,
         "Informe seu nome.",
       );
+      const targetExams = (
+        Array.isArray(input.target_exams) ? input.target_exams : [exam]
+      )
+        .map((value) => String(value))
+        .filter((value) => EXAMS.includes(value))
+        .slice(0, 3);
+      ensure(targetExams.length >= 1, "Selecione ao menos um vestibular.");
       dbResult(
         await db
           .from("profiles")
           .update({
             full_name: input.full_name.trim().slice(0, 100),
-            target_exam: exam,
+            target_exam: targetExams[0],
+            target_exams: targetExams,
             target_course: String(input.target_course ?? "").slice(0, 100),
             target_university: String(input.target_university ?? "").slice(0, 120),
             notifications_enabled: Boolean(input.notifications_enabled),
