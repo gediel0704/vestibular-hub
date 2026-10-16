@@ -25,6 +25,21 @@ function safeItem(item: Input) {
   const { correct_key, explanation, ...safe } = item;
   return safe;
 }
+type Exam = (typeof EXAMS)[number];
+
+// Narrows an untrusted value to a self-assignable profile. Admin is never
+// grantable here; it is only ever set by an existing admin.
+function selfAssignableRole(value: unknown): "student" | "teacher" {
+  if (value === "student" || value === "teacher") return value;
+  throw new ApiError("Escolha entre os perfis de aluno ou professor.");
+}
+
+// Returns the matching exam or null, so callers keep the literal exam type
+// instead of widening everything to string.
+function examOf(value: unknown): Exam | null {
+  return EXAMS.find((name) => name === value) ?? null;
+}
+
 
 export async function academicApi(request: Request) {
   const origin = request.headers.get("origin") ?? "";
@@ -372,11 +387,8 @@ export async function academicApi(request: Request) {
     if (action === "choose_role") {
       // Self-service role choice at signup: only student or teacher may be
       // self-assigned. Admin is never grantable through this action.
-      const requested = String(input.role ?? "");
-      ensure(
-        ["student", "teacher"].includes(requested),
-        "Escolha entre os perfis de aluno ou professor.",
-      );
+      const requested = selfAssignableRole(input.role);
+
       if (!roles.length) {
         dbResult(await db.from("user_roles").insert({ user_id: userId, role: requested }));
       }
@@ -390,8 +402,9 @@ export async function academicApi(request: Request) {
       const targetExams = (
         Array.isArray(input.target_exams) ? input.target_exams : [exam]
       )
-        .map((value) => String(value))
-        .filter((value) => EXAMS.includes(value))
+        .map(examOf)
+        .filter((value): value is Exam => value !== null)
+
         .slice(0, 3);
       ensure(targetExams.length >= 1, "Selecione ao menos um vestibular.");
       dbResult(
