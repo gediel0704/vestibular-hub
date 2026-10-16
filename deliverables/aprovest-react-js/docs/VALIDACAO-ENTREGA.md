@@ -1,5 +1,14 @@
 # Verificação da entrega — 16/10/2026
 
+## Áreas distintas por perfil
+
+- Alunos navegam na preparação; professores entram na área docente; administradores acessam todas as áreas. O login consulta o perfil autorizado no serviço, sem seletor de papel que conceda privilégios.
+- A API valida o perfil em cada ação. Pareceres docentes não publicam conteúdos automaticamente. Correções entregues não podem ser reatribuídas nem sobrescritas por esse fluxo.
+- Área docente: fila atribuída, pareceres pedagógicos com histórico e relatório de remunerações registradas.
+- Administração: cadastros por perfil, vigência e créditos dos acessos, exportação e repasses. Acesso Pro não é apresentado como assinatura paga.
+- Cobrança permanece desativada por decisão do proprietário. Receitas, estornos e lucro líquido não são inventados. O registro de ganhos existe, mas será alimentado após conectar cobrança verificada; não há créditos fictícios nem declaração de pagamento automático a professores.
+- Preços e percentual apresentados na conversa são propostas, não configurações comerciais aprovadas ou produtos criados.
+
 ## Verificado nesta revisão
 
 - `npm install` em cópia limpa sem `.env`, sem dependências copiadas e usando o registro público: 85 pacotes instalados em Linux/Node 22.22.0.

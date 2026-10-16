@@ -3,6 +3,7 @@ import { toast } from "sonner";
 import { StudyLayout, ErrorNotice, ExamSelect } from "../components/StudyLayout";
 import { Button } from "../components/Button";
 import { api } from "../lib/api";
+import { AdminReports, EarningsReport, ContentReview } from "../components/StaffReports";
 
 const blank = {
   kind: "content",
@@ -27,7 +28,7 @@ const blank = {
 export default function Staff({ admin = false }) {
   const [data, setData] = useState(null);
   const [error, setError] = useState("");
-  const [tab, setTab] = useState("items");
+  const [tab, setTab] = useState(admin ? "reports" : "evaluations");
   const [form, setForm] = useState(null);
   const [selected, setSelected] = useState(null);
   const [summary, setSummary] = useState("");
@@ -53,32 +54,52 @@ export default function Staff({ admin = false }) {
       setSelected(null);
       setSummary("");
       await load();
+      return true;
     } catch (err) {
       setError(err.message);
+      return false;
     } finally {
       setBusy(false);
     }
   }
   return (
     <StudyLayout
-      title={admin ? "Administração" : "Correções atribuídas"}
+      title={admin ? "Administração" : "Área do professor"}
       eyebrow={admin ? "GESTÃO ACADÊMICA" : "ÁREA DO PROFESSOR"}
     >
       <ErrorNotice error={error} retry={load} />
-      {admin && (
+      {!data && !error && <p>Carregando sua área…</p>}
+      {
         <div className="staff-tabs">
-          {[
-            ["items", "Conteúdos e questões"],
-            ["users", "Usuários e papéis"],
-            ["evaluations", "Correção humana"],
-            ["requests", "Solicitações"],
-          ].map(([key, label]) => (
-            <Button key={key} variant="secondary" onClick={() => setTab(key)}>
+          {(admin
+            ? [
+                ["reports", "Relatórios"],
+                ["items", "Conteúdos e questões"],
+                ["users", "Usuários e papéis"],
+                ["evaluations", "Correção humana"],
+                ["requests", "Solicitações"],
+                ["review", "Avaliação de conteúdos"],
+              ]
+            : [
+                ["evaluations", "Solicitações de correção"],
+                ["review", "Avaliação de conteúdos"],
+                ["earnings", "Meus ganhos"],
+              ]
+          ).map(([key, label]) => (
+            <Button
+              key={key}
+              variant={tab === key ? "primary" : "secondary"}
+              aria-pressed={tab === key}
+              onClick={() => setTab(key)}
+            >
               {label}
             </Button>
           ))}
         </div>
-      )}
+      }
+      {data && admin && tab === "reports" && <AdminReports data={data} />}
+      {data && tab === "review" && <ContentReview data={data} onSubmit={perform} busy={busy} />}
+      {data && tab === "earnings" && <EarningsReport data={data} />}
       {data && admin && tab === "items" && (
         <>
           {!form && <Button onClick={() => setForm({ ...blank })}>Novo conteúdo ou questão</Button>}
@@ -265,7 +286,7 @@ export default function Staff({ admin = false }) {
           ))}
         </div>
       )}
-      {data && (admin ? tab === "evaluations" : true) && (
+      {data && tab === "evaluations" && (
         <>
           <div className="history-list">
             {data.evaluations.map((evaluation) => (
@@ -279,6 +300,7 @@ export default function Staff({ admin = false }) {
                 </div>
                 <Button
                   variant="secondary"
+                  disabled={evaluation.status === "completed"}
                   onClick={() => {
                     setSelected(evaluation);
                     setSummary(evaluation.feedback?.summary ?? "");
@@ -289,6 +311,7 @@ export default function Staff({ admin = false }) {
                 {admin && (
                   <select
                     aria-label="Atribuir corretor"
+                    disabled={evaluation.status === "completed"}
                     value={evaluation.assigned_to ?? ""}
                     onChange={(event) =>
                       perform("admin_assign", { id: evaluation.id, teacherId: event.target.value })

@@ -5,6 +5,8 @@ import { toast } from "sonner";
 import { createLovableAuth } from "@lovable.dev/cloud-auth-js";
 import { Brand } from "../components/Layout";
 import { supabase } from "../lib/supabase";
+import { api } from "../lib/api";
+import { roleHome, canOpenArea } from "../lib/access";
 const DEFAULT_OAUTH_BROKER =
   "https://id-preview--e9888714-bf58-47ad-bf20-c65e58ff969c.lovable.app/~oauth/initiate";
 const social = createLovableAuth({
@@ -21,8 +23,16 @@ export default function Auth() {
     nav = useNavigate();
   const raw = params.get("next"),
     next = raw?.startsWith("/") && !raw.startsWith("//") ? raw : "/dashboard";
+  async function enter() {
+    const { role } = await api("bootstrap");
+    const area = next === "/admin" ? "admin" : next === "/professor" ? "teacher" : "student";
+    nav(raw && canOpenArea(role, area) ? next : roleHome(role), { replace: true });
+  }
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => data.session && nav(next, { replace: true }));
+    supabase.auth
+      .getSession()
+      .then(({ data }) => data.session && enter())
+      .catch(() => toast.error("Não foi possível verificar sua área. Tente novamente."));
   }, [nav, next]);
   async function submit(e) {
     e.preventDefault();
@@ -33,7 +43,12 @@ export default function Auth() {
       const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
       setBusy(false);
       if (error) return toast.error("Email ou senha inválidos.");
-      return nav(next);
+      try {
+        await enter();
+      } catch (error) {
+        toast.error(error.message);
+      }
+      return;
     }
     if (name.trim().length < 2) {
       setBusy(false);
@@ -69,7 +84,7 @@ export default function Auth() {
       if (!r.redirected && r.tokens) {
         const { error } = await supabase.auth.setSession(r.tokens);
         if (error) return toast.error("Não foi possível concluir o login.");
-        nav(next);
+        await enter();
       }
     } catch {
       toast.error("O login social foi interrompido. Tente novamente.");
@@ -82,14 +97,24 @@ export default function Auth() {
       <div className="auth-wrap">
         <Brand />
         <section className="panel">
-          <span className="kicker">ÁREA DO ALUNO</span>
+          <span className="kicker">ACESSO APROVEST</span>
           <h1>Sua jornada até a aprovação</h1>
           <p>Entre ou crie sua conta gratuita.</p>
-          <button className="btn secondary full social-button" disabled={busy} onClick={() => oauth("google")}>
-            <span className="google-mark" aria-hidden="true">G</span>
+          <button
+            className="btn secondary full social-button"
+            disabled={busy}
+            onClick={() => oauth("google")}
+          >
+            <span className="google-mark" aria-hidden="true">
+              G
+            </span>
             Continuar com Google
           </button>
-          <button className="btn secondary full social-button" disabled={busy} onClick={() => oauth("apple")}>
+          <button
+            className="btn secondary full social-button"
+            disabled={busy}
+            onClick={() => oauth("apple")}
+          >
             <Apple size={19} aria-hidden="true" />
             Continuar com Apple
           </button>
