@@ -13,3 +13,5 @@
 - Academic study priorities use completed assessments from the selected exam and each subject's latest valid ratio, excluding completed readings; keep this deterministic heuristic separate from TRI and AI.
 - Academic npm lifecycle scripts validate supported Node versions and probe the hosted API without credentials; network warnings must not block offline UI startup because installation and hosted service availability are separate concerns.
 - Academic AI grading returns authenticated NDJSON progress and terminal result/error events; keep long hosted responses active without artificial generation deadlines or automatic billed retries.
+- Academic role areas use a server-verified role in shared auth context and action authorization in the academic API; frontend guards alone cannot protect private operations.
+- Academic content reviews and compensation are durable, owner-scoped records; financial reports must distinguish granted access from paid subscriptions and gross allocation from net profit until verified billing is connected.
