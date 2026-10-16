@@ -27,9 +27,15 @@ A conexão pública com autenticação e banco já tem valores padrão no códig
 Questões, limites, notas, papéis, gabaritos e IA passam pela API autenticada `/api/public/academic`, incluída no projeto Lovable que acompanha esta entrega. O cliente usa por padrão o endereço hospedado estável, inclusive em localhost: o responsável precisa publicar o projeto Lovable antes de a API estar disponível. Não é necessário iniciar um segundo servidor no computador do professor. Para desenvolvimento local completo, substitua `VITE_ACADEMIC_API_URL` por `http://localhost:8080/api/public/academic` e inicie também o servidor principal. A IA nunca funciona sem internet, API no servidor e saldo disponível.
 A API hospedada respondeu ao teste autenticado de `bootstrap` em 16/10/2026. Isso confirma a conexão naquela data, não uma garantia de disponibilidade futura nem uma verificação da correção de IA. Execute `npm run verificar` para testar novamente a conexão pública.
 
-### Windows: executar no próprio terminal, sem baixar inicializador
+### Windows: solução automática no VS Code
 
-No PowerShell do VS Code, na pasta `deliverables/aprovest-react-js`, execute:
+Abra no VS Code a própria pasta `aprovest-react-js` (**Arquivo → Abrir Pasta**) e confie na pasta quando o VS Code perguntar. A pasta `.vscode` incluída faz novos terminais abrirem no **Prompt de Comando**, que não é bloqueado pela política do PowerShell.
+
+1. Feche o terminal PowerShell aberto (ícone de lixeira no painel do terminal).
+2. Abra um novo terminal (**Terminal → Novo Terminal**) e execute `npm install` e depois `npm run dev`.
+3. Ou use **Terminal → Executar Tarefa de Build** (`Ctrl+Shift+B`): a tarefa instala e abre o site sem digitar comandos.
+
+Se ainda estiver no PowerShell, na pasta `deliverables/aprovest-react-js`, execute:
 
 ```powershell
 npm.cmd install
