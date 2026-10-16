@@ -1,5 +1,6 @@
 import { supabase } from "./supabase";
 import { academicApiEndpoint } from "./api-endpoint";
+import { readAcademicStream } from "./api-stream";
 
 const endpoint = academicApiEndpoint(import.meta.env.VITE_ACADEMIC_API_URL);
 
@@ -24,6 +25,9 @@ export async function api(action, data = {}, signal) {
     );
   }
   const contentType = response.headers.get("content-type") ?? "";
+  if (contentType.includes("application/x-ndjson")) {
+    return readAcademicStream(response);
+  }
   if (!contentType.includes("application/json")) {
     throw new Error("O serviço de estudo não respondeu corretamente. O responsável precisa conferir se a API acadêmica foi publicada no endereço configurado.");
   }

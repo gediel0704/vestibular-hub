@@ -29,7 +29,7 @@ export async function academicApi(request: Request) {
   const origin = request.headers.get("origin") ?? "";
   const local = /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin);
   const same = origin === new URL(request.url).origin;
-  const headers = new Headers({ "Content-Type": "application/json", Vary: "Origin" });
+  const headers = new Headers({ "Content-Type": "application/json", Vary: "Origin", "Cache-Control": "no-store" });
   if (local || same) {
     headers.set("Access-Control-Allow-Origin", origin);
     headers.set("Access-Control-Allow-Headers", "Authorization, Content-Type");
@@ -417,6 +417,18 @@ export async function academicApi(request: Request) {
       dbResult(
         await db.from("academic_evaluations").update({ status: "running" }).eq("id", evaluationId),
       );
+      const streamHeaders = new Headers(headers);
+      streamHeaders.set("Content-Type", "application/x-ndjson");
+      const encoder = new TextEncoder();
+      let disconnected = false;
+      return new Response(new ReadableStream({
+        start(controller) {
+          const send = (event: unknown) => {
+            if (!disconnected) controller.enqueue(encoder.encode(JSON.stringify(event) + "\n"));
+          };
+          send({ type: "progress" });
+          const heartbeat = setInterval(() => send({ type: "progress" }), 1000);
+          const evaluate = async () => {
       try {
         const { gradeEssay } = await import("./ai.server");
         const feedback = await gradeEssay(request, exam, evaluation.essay_snapshot);
@@ -433,7 +445,7 @@ export async function academicApi(request: Request) {
             body: `Redação avaliada para ${exam}.`,
           }),
         );
-        return respond({ evaluation: { ...evaluation, feedback, status: "completed" } });
+        send({ type: "result", data: { evaluation: { ...evaluation, feedback, status: "completed" } } });
       } catch (error) {
         const status = (error as { statusCode?: number }).statusCode ?? 500;
         const message =
@@ -456,8 +468,20 @@ export async function academicApi(request: Request) {
               .from("academic_ai_state")
               .upsert({ id: "global", paused: true, reason: message }),
           );
-        throw new ApiError(message, status);
+        send({ type: "error", error: message, status });
       }
+          };
+          void evaluate().catch(() => {
+            send({ type: "error", error: "Não foi possível salvar a avaliação." });
+          }).finally(() => {
+            clearInterval(heartbeat);
+            if (!disconnected) controller.close();
+          });
+        },
+        cancel() {
+          disconnected = true;
+        },
+      }), { headers: streamHeaders });
     }
     if (action === "teacher") {
       if (!teacher && !admin) throw new ApiError("Acesso restrito.", 403);
