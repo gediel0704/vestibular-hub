@@ -39,3 +39,20 @@ Um modelo local poderia evitar uma cobrança externa por chamada, mas exige hard
 O cliente acadêmico não contém o servidor de IA e avaliação. `npm run dev` nesta pasta inicia apenas a interface. A API padrão agora usa o endereço hospedado estável, inclusive em localhost, mas o responsável precisa **publicar o projeto principal** para esse endereço funcionar. A verificação em 16/10/2026 encontrou API local respondendo e endereço hospedado retornando 404: o acesso externo ainda está indisponível. Para desenvolvimento do servidor local, configure explicitamente `VITE_ACADEMIC_API_URL=http://localhost:8080/api/public/academic`. Não cole chaves privadas no `.env` do navegador. No PowerShell, use `npm.cmd install` e `npm.cmd run dev` para evitar o bloqueio de `npm.ps1` sem alterar políticas do Windows. Hospedar a interface acadêmica é uma etapa distinta de publicar a API do projeto principal.
 
 A sincronização GitHub atualiza arquivos, não publica a API. Conectar GitHub é uma ação do proprietário no editor Lovable; o procedimento está no README. A versão acadêmica continua React + JavaScript + Vite e o produto comercial não foi alterado.
+## Alinhamento pedagógico às fontes oficiais (outubro de 2026)
+
+- **ENEM**: banca de questões reais 2009–2023 via API pública enem.dev (acervo do INEP),
+  com gabarito protegido no servidor. Complementada pelas questões autorais curadas.
+  Não há API oficial do INEP para questões; os microdados e gabaritos oficiais estão em
+  gov.br/inep. Não existe TRI pública oficial — o simulado preditivo é estimativa de treino.
+- **FUVEST**: não existe API pública de questões. As referências oficiais (fuvest.br,
+  manual do candidato, provas anteriores publicadas pela fundação) estão catalogadas em
+  `src/lib/official-resources.js`. Os conteúdos FUVEST da plataforma são autorais e
+  seguem as habilidades dos editais oficiais.
+- **Unicamp**: idem — COMVEST (comvest.unicamp.br) publica provas e expectativas de
+  resposta; não há API pública. Conteúdos Unicamp são autorais, alinhados aos editais.
+- **Cursos**: o catálogo de cursos-alvo (`src/lib/courses.js`) é curado a partir dos
+  catálogos oficiais das três instituições. Não há API pública gratuita com a oferta
+  completa de cursos; a lista é revisada manualmente a cada edição dos vestibulares.
+- **Regra de qualidade**: nenhum conteúdo é publicado sem revisão. Itens autorais passam
+  pela avaliação de conteúdo da área docente antes de aparecer para os alunos.
