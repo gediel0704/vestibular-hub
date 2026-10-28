@@ -1,5 +1,11 @@
 # Roadmap
 
+## Revisão do documento norteador — 28/10/2026
+- [ ] Conferir os itens 1.1–1.8 e distinguir requisitos previstos de funcionalidades comprovadas
+- [ ] Revisar tabelas, casos de uso, DER, navegação e manual dos itens 1.9–1.13
+- [ ] Capturar telas reais da versão acadêmica, sem divulgar dados pessoais
+- [ ] Entregar nova edição DOCX/PDF e imagens, após revisão visual de todas as páginas
+
 ## Acervo oficial dentro do script do banco do site — 16/10/2026
 - [x] Exportar as 627 questões oficiais (339 FUVEST, 288 Unicamp) para `database/postgresql/20261016_academic_items_official.sql`, com gabarito, explicação e fonte
 - [x] Executar o script inteiro numa cópia temporária isolada: 627 inseridas, 627 com alternativas e gabarito, conferência por banca correta
