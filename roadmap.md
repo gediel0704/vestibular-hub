@@ -1,5 +1,10 @@
 # Roadmap
 
+## Documento norteador fiel ao site construído — 31/10/2026
+- [x] Auditar funcionalidades e modelo SQL atuais e retirar promessas de recursos não construídos; 25 testes existentes aprovados
+- [x] Adequar todas as seções, tabelas e diagramas ao escopo implementado, conservando 12 capturas acadêmicas e identificando dependências SQL reais
+- [x] Gerar edição v3 Word/PDF, validar e conferir visualmente as 37 páginas; corrigir sumário e campos do DER
+
 ## Revisão do documento norteador — 28/10/2026
 - [x] Conferir os itens 1.1–1.8 e distinguir requisitos previstos de funcionalidades comprovadas
 - [x] Revisar tabelas, casos de uso, DER, navegação e manual dos itens 1.9–1.13
