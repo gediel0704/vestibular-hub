@@ -1,10 +1,10 @@
 # Roadmap
 
 ## Revisão do documento norteador — 28/10/2026
-- [ ] Conferir os itens 1.1–1.8 e distinguir requisitos previstos de funcionalidades comprovadas
-- [ ] Revisar tabelas, casos de uso, DER, navegação e manual dos itens 1.9–1.13
-- [ ] Capturar telas reais da versão acadêmica, sem divulgar dados pessoais
-- [ ] Entregar nova edição DOCX/PDF e imagens, após revisão visual de todas as páginas
+- [x] Conferir os itens 1.1–1.8 e distinguir requisitos previstos de funcionalidades comprovadas
+- [x] Revisar tabelas, casos de uso, DER, navegação e manual dos itens 1.9–1.13
+- [x] Capturar 13 telas reais da versão acadêmica, com dados pessoais ocultados; área docente acessada pelo administrador, sem homologação docente real
+- [x] Entregar edição v2 DOCX/PDF e imagens, após validação do Word e revisão visual das 40 páginas
 
 ## Acervo oficial dentro do script do banco do site — 16/10/2026
 - [x] Exportar as 627 questões oficiais (339 FUVEST, 288 Unicamp) para `database/postgresql/20261016_academic_items_official.sql`, com gabarito, explicação e fonte
