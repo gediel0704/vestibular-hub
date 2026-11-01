@@ -1,5 +1,10 @@
 # Roadmap
 
+## Documentação conforme modelo LogiPilot — 01/11/2026
+- [x] Adaptar itens 1.9–1.13 em Word, com especificações de casos, DER, telas acadêmicas preservadas e manual
+- [x] Entregar 42 tabelas editáveis e diagrama UML completo em uma única imagem PNG
+- [x] Validar Word e conferir 68 páginas do complemento, 43 das tabelas e o diagrama; remover página vazia e corrigir condição da retomada de IA
+
 ## Documento norteador fiel ao site construído — 31/10/2026
 - [x] Auditar funcionalidades e modelo SQL atuais e retirar promessas de recursos não construídos; 25 testes existentes aprovados
 - [x] Adequar todas as seções, tabelas e diagramas ao escopo implementado, conservando 12 capturas acadêmicas e identificando dependências SQL reais
