@@ -1,5 +1,11 @@
 # Roadmap
 
+## Vídeo demonstrativo acadêmico — 06/11/2026
+- [x] Capturar telas atuais com acesso autorizado, sem divulgar dados pessoais nem alterar trabalhos reais
+- [x] Produzir vídeo com telas e destaques animados, mostrando funcionalidades observadas sem prometer recursos pendentes
+- [x] Conferir 16 quadros e áudio; entregar MP4 1080p de 127,1 segundos na coleção acadêmica
+- Rascunho para revisão: imagens vazias em cartões da página inicial; sem narração; não demonstra sessões concluídas, correção por IA, onboarding, troca de senha ou correção humana; animação de capturas, não gravação ao vivo
+
 ## Documentação conforme modelo LogiPilot — 01/11/2026
 - [x] Adaptar itens 1.9–1.13 em Word, com especificações de casos, DER, telas acadêmicas preservadas e manual
 - [x] Entregar 42 tabelas editáveis e diagrama UML completo em uma única imagem PNG
