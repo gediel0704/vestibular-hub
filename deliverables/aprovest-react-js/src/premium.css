@@ -485,3 +485,18 @@ footer.site-footer {
     transform: none;
   }
 }
+
+/* Ajustes finos */
+footer.site-footer > .container {
+  display: block;
+}
+.footer-grid span {
+  color: #c9d3ea;
+}
+.auth-wrap > .brand span,
+.auth-wrap > .brand strong {
+  color: #fff;
+}
+.auth-wrap > a:last-child {
+  color: #c9d3ea;
+}
