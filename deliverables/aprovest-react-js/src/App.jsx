@@ -42,9 +42,15 @@ export default function App() {
       <Route
         path="*"
         element={
-          <main className="center">
-            <h1>404</h1>
-            <a href="/">Voltar ao início</a>
+          <main className="not-found">
+            <div>
+              <strong>404</strong>
+              <h1>Página não encontrada</h1>
+              <p>O endereço acessado não existe ou foi movido.</p>
+              <a className="btn accent" href="/">
+                Voltar ao início
+              </a>
+            </div>
           </main>
         }
       />

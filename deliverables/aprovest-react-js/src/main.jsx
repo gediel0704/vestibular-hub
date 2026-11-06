@@ -8,6 +8,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { configurationError } from "./lib/supabase";
 import App from "./App";
 import "./styles.css";
+import "./premium.css";
 
 const rootElement = document.getElementById("root");
 

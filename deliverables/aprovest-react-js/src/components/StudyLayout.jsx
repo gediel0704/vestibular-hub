@@ -66,8 +66,10 @@ export function StudyLayout({ title, eyebrow = "SUA PREPARAÇÃO", children }) {
       </nav>
       <main className="student">
         <div className="dashboard">
-          <span className="kicker">{eyebrow}</span>
-          <h1>{title}</h1>
+          <section className="page-banner">
+            <span className="kicker">{eyebrow}</span>
+            <h1>{title}</h1>
+          </section>
           {children}
         </div>
       </main>
