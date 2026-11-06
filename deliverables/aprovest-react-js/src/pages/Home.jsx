@@ -33,6 +33,20 @@ export default function Home() {
                   Conhecer o projeto
                 </Link>
               </div>
+              <div className="hero-trust">
+                <span>
+                  <strong>3.300+</strong>
+                  questões oficiais
+                </span>
+                <span>
+                  <strong>3</strong>
+                  vestibulares
+                </span>
+                <span>
+                  <strong>IA</strong>
+                  na correção de redação
+                </span>
+              </div>
             </div>
             <aside className="preview">
               <figure className="hero-photo">
@@ -69,6 +83,38 @@ export default function Home() {
                 <b>Concluir diagnóstico de 20 questões</b>
               </div>
             </aside>
+          </div>
+        </section>
+        <div className="exam-band">
+          <div className="container">
+            <span>Conteúdo alinhado às bancas</span>
+            <b>ENEM</b>
+            <b>FUVEST</b>
+            <b>UNICAMP</b>
+          </div>
+        </div>
+        <section className="section">
+          <div className="container">
+            <span className="kicker">EM 4 PASSOS</span>
+            <h2>Do diagnóstico à aprovação.</h2>
+            <ol className="steps">
+              <li>
+                <h3>Crie seu perfil</h3>
+                <p>Escolha curso e vestibulares-alvo.</p>
+              </li>
+              <li>
+                <h3>Faça o diagnóstico</h3>
+                <p>Descubra seu nível por disciplina.</p>
+              </li>
+              <li>
+                <h3>Treine com a banca</h3>
+                <p>Questões oficiais com feedback imediato.</p>
+              </li>
+              <li>
+                <h3>Escreva redações</h3>
+                <p>Correção por competências com IA.</p>
+              </li>
+            </ol>
           </div>
         </section>
         <section className="section muted">

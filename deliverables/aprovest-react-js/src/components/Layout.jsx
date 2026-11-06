@@ -31,10 +31,41 @@ export function PublicLayout({ children }) {
         </div>
       </header>
       {children}
-      <footer>
+      <footer className="site-footer">
         <div className="container">
-          <Brand />
-          <span>© {new Date().getFullYear()} AproVest · Projeto acadêmico</span>
+          <div className="footer-grid">
+            <div>
+              <Brand />
+              <p>
+                Preparação orientada por dados para ENEM, FUVEST e Unicamp, com conteúdos
+                alinhados às fontes oficiais.
+              </p>
+            </div>
+            <div>
+              <h4>Plataforma</h4>
+              <Link to="/auth">Diagnóstico</Link>
+              <Link to="/auth">Banca de questões</Link>
+              <Link to="/auth">Redações</Link>
+            </div>
+            <div>
+              <h4>Projeto</h4>
+              <Link to="/sobre">Sobre</Link>
+              <Link to="/auth">Criar conta</Link>
+              <Link to="/auth">Entrar</Link>
+            </div>
+            <div>
+              <h4>Vestibulares</h4>
+              <span>ENEM</span>
+              <br />
+              <span>FUVEST</span>
+              <br />
+              <span>Unicamp</span>
+            </div>
+          </div>
+          <div className="footer-bottom">
+            <span>© {new Date().getFullYear()} AproVest · Projeto acadêmico</span>
+            <span>Feito para vestibulandos brasileiros</span>
+          </div>
         </div>
       </footer>
     </>
