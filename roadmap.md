@@ -1,5 +1,10 @@
 # Roadmap
 
+## Vídeo acadêmico revisado — 07/11/2026
+- [ ] Capturar demonstração real de criação, leitura no SQL, alteração e exclusão de redação de apresentação
+- [ ] Produzir vídeo curto com objetivo, justificativa, ODS e principais áreas efetivamente disponíveis
+- [ ] Entregar roteiro sincronizado para narração pelo aluno e verificar imagens e vídeo
+
 ## Vídeo demonstrativo acadêmico — 06/11/2026
 - [x] Capturar telas atuais com acesso autorizado, sem divulgar dados pessoais nem alterar trabalhos reais
 - [x] Produzir vídeo com telas e destaques animados, mostrando funcionalidades observadas sem prometer recursos pendentes
