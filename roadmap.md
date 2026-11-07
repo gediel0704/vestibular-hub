@@ -1,5 +1,10 @@
 # Roadmap
 
+## Narração gravada pelo aluno — 07/11/2026
+- [ ] Analisar a gravação, identificar repetições e editar pausas sem substituir a voz
+- [ ] Sincronizar cada trecho com as cenas da versão v3, preservando as capturas reais do banco
+- [ ] Conferir som, imagem e sincronização; entregar novo MP4 na coleção acadêmica
+
 ## Vídeo acadêmico revisado — 07/11/2026
 - [x] Capturar demonstração real de criação, alteração e exclusão de redação de apresentação; SQL confirmou atualização e zero registros após exclusão
 - [x] Produzir vídeo Full HD de 180 segundos com objetivo, justificativa, ODS e principais áreas efetivamente disponíveis
