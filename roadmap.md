@@ -2,9 +2,10 @@
 
 ## Vídeo acadêmico revisado — 07/11/2026
 - [x] Capturar demonstração real de criação, alteração e exclusão de redação de apresentação; SQL confirmou atualização e zero registros após exclusão
-- [ ] Produzir vídeo curto com objetivo, justificativa, ODS e principais áreas efetivamente disponíveis
+- [x] Produzir vídeo Full HD de 180 segundos com objetivo, justificativa, ODS e principais áreas efetivamente disponíveis
 - [x] Preparar roteiro Word de 3 minutos, validar e conferir as três páginas
-- [ ] Conferir vídeo montado e entregar os dois arquivos na coleção acadêmica: aguarda renderização pelo agente de vídeo
+- [x] Conferir vídeo: agente revisou 60 quadros, recortes e movimento; formato e duração confirmados; vídeo e roteiro disponíveis na coleção acadêmica
+- Limites: vídeo silencioso para voz do aluno; SQL apresentado como transcrição de resultados reais; confirmação de exclusão e ponteiro não aparecem; diagnóstico e simulado não são demonstrados até a conclusão; cobrança não ativada
 
 ## Vídeo demonstrativo acadêmico — 06/11/2026
 - [x] Capturar telas atuais com acesso autorizado, sem divulgar dados pessoais nem alterar trabalhos reais
