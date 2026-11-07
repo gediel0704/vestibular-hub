@@ -1,9 +1,10 @@
 # Roadmap
 
 ## Narração gravada pelo aluno — 07/11/2026
-- [ ] Analisar a gravação, identificar repetições e editar pausas sem substituir a voz
-- [ ] Sincronizar cada trecho com as cenas da versão v3, preservando as capturas reais do banco
-- [ ] Conferir som, imagem e sincronização; entregar novo MP4 na coleção acadêmica
+- [x] Analisar a gravação, identificar repetições e editar pausas sem substituir a voz
+- [x] Sincronizar cada trecho com as cenas da versão v3, preservando as capturas reais do banco
+- [x] Conferir níveis do som, decodificação completa, imagens das 12 partes e transições SQL; entregar MP4 narrado Full HD de 226,829 segundos
+- Limites da conferência: transcrição temporizada e níveis de áudio verificados, sem escuta humana; registro da coleção retornou pending.
 
 ## Vídeo acadêmico revisado — 07/11/2026
 - [x] Capturar demonstração real de criação, alteração e exclusão de redação de apresentação; SQL confirmou atualização e zero registros após exclusão
